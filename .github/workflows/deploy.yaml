@@ -182,8 +182,10 @@ jobs:
       - name: Install sfdx-git-delta
         if: steps.base.outputs.mode == 'delta'
         run: |
+          # `sf plugins install` asks an interactive y/N trust confirmation for unsigned plugins (sfdx-git-delta isn't Salesforce-signed) that never resolves in a non-TTY CI shell — the documented unsignedPluginAllowList.json bypass doesn't suppress it either; this is a known, unresolved sf CLI gap (forcedotcom/cli#2584). Installing the npm package directly and registering it with `sf plugins link` sidesteps the prompt entirely since linked (local dev) plugins skip the untrusted-registry trust check.
           # Pinned to major v6 — sfdx-git-delta's output layout has changed across major versions; re-verify these paths if the pin is bumped.
-          sf plugins install sfdx-git-delta@6
+          npm install --no-save --prefix /tmp/sgd-install sfdx-git-delta@6
+          sf plugins link /tmp/sgd-install/node_modules/sfdx-git-delta
 
       - name: Generate Delta Package
         id: build-delta
@@ -193,6 +195,7 @@ jobs:
 
           mkdir -p delta-output
 
+          # --source-dir tolerates force-app not existing (sgd treats a missing folder as "no content there" rather than erroring) so this is safe even before any real metadata has been added.
           sf sgd source delta \
             --to "${{ github.sha }}" \
             --from "${{ steps.base.outputs.from }}" \
@@ -209,14 +212,28 @@ jobs:
           fi
 
       - name: Generate Full Manifest
+        id: build-full
         if: steps.base.outputs.mode == 'full'
+        shell: bash
         run: |
+
+          # Unlike sgd, `sf project generate manifest --source-dir` hard-errors ("File or folder not found") if force-app doesn't exist at all rather than treating it as empty — which is the case on every branch until real metadata is first added. mkdir -p keeps this step from crashing in that state.
+          mkdir -p force-app
+
           # Generated fresh from the current force-app tree rather than copied from a checked-in manifest/package.xml — a hand-maintained wildcard list goes stale as metadata types are added. This always reflects exactly what's on disk right now.
           sf project generate manifest \
             --source-dir force-app \
             --output-dir delta-output/package \
             --name package
           echo "Generated a full manifest from force-app (no prior successful deploy recorded for this org)."
+
+          if grep -q "<types>" delta-output/package/package.xml 2>/dev/null; then
+            echo "Manifest contains metadata."
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "force-app has no metadata yet — nothing to deploy."
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Summarize Delta Outcome
         id: summarize
@@ -226,7 +243,7 @@ jobs:
 
           # if: always() — without it, this step is implicitly if: success() and gets silently skipped whenever an earlier step failed (e.g. the prod hard-stop above), leaving has_changes undefined instead of an explicit value.
           if [ "${{ steps.base.outputs.mode }}" = "full" ]; then
-            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+            echo "has_changes=${{ steps.build-full.outputs.has_changes }}" >> "$GITHUB_OUTPUT"
           elif [ "${{ steps.base.outputs.mode }}" = "delta" ]; then
             echo "has_changes=${{ steps.build-delta.outputs.has_changes }}" >> "$GITHUB_OUTPUT"
           else
