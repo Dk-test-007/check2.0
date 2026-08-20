@@ -1,0 +1,7 @@
+# CODEOWNERS for qa / uat
+# Every merge into this branch requires an approval from a member of
+# release-approvers, enforced via the "Require review from Code Owners"
+# rule on the branch ruleset covering qa/uat. Replace the team slug below
+# if it's named differently when the team is actually created in the org.
+
+* @Dk-test-007/release-approvers
