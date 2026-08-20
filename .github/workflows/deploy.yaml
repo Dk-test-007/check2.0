@@ -372,6 +372,8 @@ jobs:
             DESTRUCTIVE_FLAG="--post-destructive-changes delta-output/destructiveChanges/destructiveChanges.xml"
           fi
 
+          # set +e / capture-exit-code / set -e: the default GitHub Actions bash shell aborts a run: block at the first non-zero command, so without this the JSON result below (which has the actual Salesforce error — component/test failures, coverage numbers, etc.) would never get printed on a validation failure, leaving only the generic "Process completed with exit code 1" in the log.
+          set +e
           sf project deploy start \
             --manifest delta-output/package/package.xml \
             $DESTRUCTIVE_FLAG \
@@ -380,8 +382,15 @@ jobs:
             --dry-run \
             --wait 30 \
             --json > dry-run-result.json
+          DEPLOY_EXIT=$?
+          set -e
 
-          cat dry-run-result.json
+          cat dry-run-result.json 2>/dev/null || echo "No JSON result was captured — the sf command likely failed before producing output."
+
+          if [ $DEPLOY_EXIT -ne 0 ]; then
+            echo "::error::Dry-run validation failed — see the JSON result above for details (component failures, test failures, or insufficient code coverage)."
+            exit 1
+          fi
 
           JOB_ID=$(jq -r '.result.id' dry-run-result.json)
           echo "job_id=$JOB_ID" >> "$GITHUB_OUTPUT"
