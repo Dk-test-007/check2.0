@@ -3,7 +3,6 @@ name: Salesforce CI/CD Deployment
 on:
   push:
     branches:
-      - dev
       - qa
       - uat
       - main
@@ -15,7 +14,6 @@ on:
         required: true
         type: choice
         options:
-          - DEV
           - QA
           - UAT
           - PROD
@@ -52,7 +50,6 @@ jobs:
           echo "Ref: $BRANCH"
 
           case "$BRANCH" in
-            dev)  BRANCH_ENV_NAME="DEV" ;;
             qa)   BRANCH_ENV_NAME="QA" ;;
             uat)  BRANCH_ENV_NAME="UAT" ;;
             main) BRANCH_ENV_NAME="PROD" ;;
@@ -65,7 +62,7 @@ jobs:
             echo "Trigger: workflow_dispatch"
             echo "Requested Environment: $ENV_NAME"
 
-            # A manual run must be dispatched from the same branch that owns the requested environment — otherwise this would let someone deploy, say, dev's code to prod just by picking PROD from the dropdown while running from the dev branch.
+            # A manual run must be dispatched from the same branch that owns the requested environment — otherwise this would let someone deploy, say, qa's code to prod just by picking PROD from the dropdown while running from the qa branch.
             if [ "$ENV_NAME" != "$BRANCH_ENV_NAME" ]; then
               echo "::error::workflow_dispatch requested environment '$ENV_NAME' but was run from branch '$BRANCH' (which maps to '${BRANCH_ENV_NAME:-<none>}'). Re-run this workflow from the branch that owns '$ENV_NAME'."
               exit 1
@@ -85,7 +82,6 @@ jobs:
           fi
 
           case "$ENV_NAME" in
-            DEV)  ORG_ALIAS="dev" ;;
             QA)   ORG_ALIAS="qa" ;;
             UAT)  ORG_ALIAS="uat" ;;
             PROD) ORG_ALIAS="prod" ;;
@@ -150,7 +146,7 @@ jobs:
         shell: bash
         run: |
 
-          # The baseline is the commit recorded by the last successful deploy to this org (a git tag moved only on deploy success — see the "Record Successful Deployment" step in the deploy job), not "the previous commit on this branch". That's what makes this correct across merge-based promotion (dev -> qa -> uat -> prod), workflow_dispatch re-runs, and retries after a failed deploy: the tag doesn't move on failure, so the next attempt's delta still includes whatever didn't make it in, plus anything new since.
+          # The baseline is the commit recorded by the last successful deploy to this org (a git tag moved only on deploy success — see the "Record Successful Deployment" step in the deploy job), not "the previous commit on this branch". That's what makes this correct across merge-based promotion (qa -> uat -> prod), workflow_dispatch re-runs, and retries after a failed deploy: the tag doesn't move on failure, so the next attempt's delta still includes whatever didn't make it in, plus anything new since.
 
           ORG_ALIAS="${{ needs.validate.outputs.org_alias }}"
           TAG_NAME="deployed-$ORG_ALIAS"
@@ -307,7 +303,7 @@ jobs:
       group: deploy-${{ needs.validate.outputs.org_alias }}
       cancel-in-progress: false
 
-    # SFDX_AUTH_URL is a GitHub Environment secret — the same secret name exists in all 4 Environments (dev/qa/uat/prod) with a different value in each; because this job's environment: above resolves dynamically to the matching org alias, GitHub itself resolves secrets.SFDX_AUTH_URL below to that environment's value — no per-branch secret-name lookup needed.
+    # SFDX_AUTH_URL is a GitHub Environment secret — the same secret name exists in all 3 Environments (qa/uat/prod) with a different value in each; because this job's environment: above resolves dynamically to the matching org alias, GitHub itself resolves secrets.SFDX_AUTH_URL below to that environment's value — no per-branch secret-name lookup needed.
     env:
       SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
 
