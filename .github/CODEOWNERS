@@ -1,0 +1,8 @@
+# CODEOWNERS for main (PROD)
+# Deliberately narrower than qa/uat's CODEOWNERS: only prod-access team
+# members can approve a merge into this branch, enforced via the
+# "Require review from Code Owners" rule on the branch ruleset scoped
+# to main. Replace the team slug below if it's named differently when
+# the team is actually created in the org.
+
+* @Dk-test-007/prod-access
