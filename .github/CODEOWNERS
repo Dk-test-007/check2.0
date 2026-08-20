@@ -1,8 +1,10 @@
 # CODEOWNERS for main (PROD)
-# Deliberately narrower than qa/uat's CODEOWNERS: only prod-access team
-# members can approve a merge into this branch, enforced via the
-# "Require review from Code Owners" rule on the branch ruleset scoped
-# to main. Replace the team slug below if it's named differently when
-# the team is actually created in the org.
+# Temporarily aligned with qa/uat: release-approvers governs every branch
+# for now, including main. The stricter prod-access-only requirement was
+# reverted (2026-08-20) - re-introduce a narrower team here later if a
+# distinct, smaller prod approval circle is wanted again. Note: keeping
+# this identical to qa/uat's CODEOWNERS also removes the recurring merge
+# conflict that a genuinely different main-only file was causing on every
+# uat -> main promotion.
 
-* @Dk-test-007/prod-access
+* @Dk-test-007/release-approvers
