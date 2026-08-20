@@ -1,0 +1,65 @@
+:host {
+    display: block;
+    margin-top: 1rem;
+}
+
+/* =========================================
+   Footer Layout
+========================================= */
+
+.footer-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid #d8dde6;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* =========================================
+   NFU Button
+========================================= */
+
+/* =========================================
+   Modal
+========================================= */
+
+.slds-modal__container {
+    max-width: 40rem;
+    width: 90%;
+}
+
+/* =========================================
+   Mobile
+========================================= */
+
+@media (max-width: 768px) {
+
+    .footer-nav {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .footer-left,
+    .footer-right {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+.add-left-margin {
+    margin-left: 12px;
+}
