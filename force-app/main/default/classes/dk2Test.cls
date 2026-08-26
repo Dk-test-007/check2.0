@@ -1,5 +1,5 @@
 @isTest
-private class dkTest2 {
+private class dk2Test {
   @isTest
   static void testConstructor() {
     dk2 instance = new dk2();

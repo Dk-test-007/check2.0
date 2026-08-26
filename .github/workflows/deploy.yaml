@@ -340,10 +340,28 @@ jobs:
             exit 1
           fi
 
+          # set +e / capture-exit-code / set -e: the same pattern used in the dry-run step below. --json redirects the CLI's normal output to a file so it can be inspected before deciding pass/fail; without disabling errexit first, a login failure would abort the script at this line before the file is ever read, leaving only "Process completed with exit code 1" in the log instead of the actual reason (confirmed locally: a bad auth URL returns a JSON body with a genuinely useful message, e.g. "expired access/refresh token").
+          # IMPORTANT: on success this JSON contains a live access token and refresh
+          # token in plain text (confirmed locally) — it must only ever be printed on
+          # the failure path below, never unconditionally, or every successful run
+          # would leak working Salesforce credentials into the CI log.
+          set +e
           echo "$SFDX_AUTH_URL" | sf org login sfdx-url \
             --alias "$ORG_ALIAS" \
             --set-default \
-            --sfdx-url-stdin
+            --sfdx-url-stdin \
+            --json > auth-result.json
+          AUTH_EXIT=$?
+          set -e
+
+          if [ $AUTH_EXIT -ne 0 ]; then
+            cat auth-result.json 2>/dev/null || echo "No JSON result was captured — the sf command likely failed before producing output."
+            AUTH_ERROR=$(jq -r '.message // "unknown error"' auth-result.json 2>/dev/null)
+            echo "::error::Authentication to Salesforce org '$ORG_ALIAS' failed: $AUTH_ERROR"
+            exit 1
+          fi
+
+          echo "Authenticated to $ORG_ALIAS successfully."
 
       - name: Verify Salesforce Authentication
         run: |
