@@ -1,0 +1,466 @@
+<template>
+
+    <template lwc:if={isLoading}>
+        <lightning-spinner
+            alternative-text="Loading"
+            size="medium">
+        </lightning-spinner>
+    </template>
+
+    <div class="workspaceSection">
+
+        <div class="workspaceHeader">
+
+            Enquiry Documents
+
+        </div>
+
+        <div class="workspaceBody">
+
+            <c-opportunity-upload-table-flow
+                opportunity-id={opportunityId}>
+            </c-opportunity-upload-table-flow>
+
+        </div>
+
+    </div>
+
+    <template lwc:if={hasItems}>
+
+        <div class="itemsWrapper">
+
+            <template
+                for:each={items}
+                for:item="item">
+
+                <div
+                    key={item.Id}
+                    class="itemCard">
+
+                    <!-- Header -->
+
+                    <div
+                        class="itemHeader"
+                        data-id={item.Id}
+                        onclick={toggleItemSection}>
+
+                        <div class="headerContent">
+
+                            <span class="itemNumber">
+                                {item.displayNumber}.
+                            </span>
+
+                            <span class="itemTitle">
+                                {item.Name}
+                            </span>
+
+                            <span class="separator">
+                                •
+                            </span>
+
+                            <span class="itemCategory">
+                                {item.RecordType.DeveloperName}
+                            </span>
+
+                        </div>
+
+                        <div class="headerActions">
+                            
+                            <template lwc:if={item.NFU_Status__c}>
+                                <lightning-button
+                                    label="NFU Closed"
+                                    variant="destructive"
+                                    disabled>
+                                </lightning-button>
+                            </template>
+
+                            <template lwc:else>
+                                <lightning-button
+                                    label="Mark Item as NFU Closed"
+                                    variant="brand"
+                                    data-id={item.Id}
+                                    onclick={handleItemNFU}>
+                                </lightning-button>
+                            </template>
+
+                            <lightning-icon
+                                icon-name={item.iconName}
+                                size="small">
+                            </lightning-icon>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Expanded Content -->
+
+                    <template lwc:if={item.isOpen}>
+
+                        <div class="itemWorkspace">
+
+                            <!-- Loan Details -->
+
+                            <template lwc:if={item.showLoanDetails}>
+                                <div class="workspaceSection">
+
+                                    <div class="workspaceHeader">
+                                        Loan Details
+                                    </div>
+
+                                    <div class="workspaceBody">
+
+                                        <div class="slds-grid slds-wrap slds-gutters slds-grid_vertical-align-center">
+
+                                            <div
+                                                class="slds-col
+                                                    slds-size_1-of-1
+                                                    slds-large-size_5-of-12">
+
+                                                <lightning-input
+                                                    type="number"
+                                                    label="Offered Loan"
+                                                    value={item.OfferedLoan__c}
+                                                    data-id={item.Id}
+                                                    data-field="OfferedLoan__c"
+                                                    onchange={handleFieldChange}>
+                                                </lightning-input>
+
+                                            </div>
+
+                                            <div
+                                                class="slds-col
+                                                    slds-size_1-of-1
+                                                    slds-large-size_5-of-12">
+
+                                                <lightning-input
+                                                    type="number"
+                                                    label="Buy In"
+                                                    value={item.BuyIn__c}
+                                                    data-id={item.Id}
+                                                    data-field="BuyIn__c"
+                                                    onchange={handleFieldChange}>
+                                                </lightning-input>
+
+                                            </div>
+
+                                            <div
+                                                class="slds-col
+                                                    slds-size_1-of-1
+                                                    slds-large-size_2-of-12
+                                                    purchaseReceiptColumn">
+
+                                                <lightning-input
+                                                    class="checkbox123"
+                                                    type="checkbox"
+                                                    label="Purchase Receipt"
+                                                    checked={item.PurchaseReceipt__c}
+                                                    data-id={item.Id}
+                                                    data-field="PurchaseReceipt__c"
+                                                    onchange={handleCheckboxFieldChange}>
+                                                </lightning-input>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </template>
+
+                            <!-- Documentation Requirements -->
+
+                            <div class="workspaceSection">
+
+                                <div class="workspaceHeader">
+                                    Documentation Requirements
+                                </div>
+
+                                <div class="workspaceBody">
+
+                                    <div class="slds-grid slds-wrap slds-gutters_small">
+
+                                        <template lwc:if={item.showImagesOfGoods}>
+
+                                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+
+                                                <lightning-input
+                                                    type="checkbox"
+                                                    label="Images Of Goods"
+                                                    data-id={item.Id}
+                                                    data-field="imagesOfGoods"
+                                                    checked={item.imagesOfGoods}
+                                                    onchange={handleCheckboxChange}>
+                                                </lightning-input>
+
+                                            </div>
+
+                                        </template>
+
+                                        <template lwc:if={item.showPhotoId}>
+
+                                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+
+                                                <lightning-input
+                                                    type="checkbox"
+                                                    label="Photo ID"
+                                                    data-id={item.Id}
+                                                    data-field="photoId"
+                                                    checked={item.photoId}
+                                                    onchange={handleCheckboxChange}>
+                                                </lightning-input>
+
+                                            </div>
+
+                                        </template>
+
+                                        <template lwc:if={item.showProofOfAddress}>
+
+                                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+
+                                                <lightning-input
+                                                    type="checkbox"
+                                                    label="Proof Of Address"
+                                                    data-id={item.Id}
+                                                    data-field="proofOfAddress"
+                                                    checked={item.proofOfAddress}
+                                                    onchange={handleCheckboxChange}>
+                                                </lightning-input>
+
+                                            </div>
+
+                                        </template>
+
+                                        <template lwc:if={item.showProofOfOwnership}>
+
+                                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+
+                                                <lightning-input
+                                                    type="checkbox"
+                                                    label="Proof Of Ownership Receipt"
+                                                    data-id={item.Id}
+                                                    data-field="proofOfOwnershipReceiptBox"
+                                                    checked={item.proofOfOwnershipReceiptBox}
+                                                    onchange={handleCheckboxChange}>
+                                                </lightning-input>
+
+                                            </div>
+
+                                        </template>
+
+                                        <template lwc:if={item.showAuthenticationProof}>
+
+                                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+
+                                                <lightning-input
+                                                    type="checkbox"
+                                                    label="Authentication Proof"
+                                                    data-id={item.Id}
+                                                    data-field="authenticatedBox"
+                                                    checked={item.authenticatedBox}
+                                                    onchange={handleCheckboxChange}>
+                                                </lightning-input>
+
+                                            </div>
+
+                                        </template>
+
+                                        <template lwc:if={item.showCertificateDocumentation}>
+
+                                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+
+                                                <lightning-input
+                                                    type="checkbox"
+                                                    label="Certificate Documentation"
+                                                    data-id={item.Id}
+                                                    data-field="certificateDocumentation"
+                                                    checked={item.certificateDocumentation}
+                                                    onchange={handleCheckboxChange}>
+                                                </lightning-input>
+
+                                            </div>
+
+                                        </template>
+
+                                        <template lwc:if={item.showProvenancePaperwork}>
+
+                                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+
+                                                <lightning-input
+                                                    type="checkbox"
+                                                    label="Provenance Paperwork"
+                                                    data-id={item.Id}
+                                                    data-field="provenancePaperwork"
+                                                    checked={item.provenancePaperwork}
+                                                    onchange={handleCheckboxChange}>
+                                                </lightning-input>
+
+                                            </div>
+
+                                        </template>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Documents -->
+
+                            <div class="workspaceSection">
+
+                                <div class="workspaceHeader">
+                                    Documents
+                                </div>
+
+                                <div class="workspaceBody">
+
+                                    <c-document-upload-table-flow
+                                        record-id={item.Id}
+                                        opportunity-id={opportunityId}
+                                        category={item.RecordType.DeveloperName}
+                                        certificate-documentation={item.certificateDocumentation}
+                                        proof-of-ownership-receipt-box={item.proofOfOwnershipReceiptBox}
+                                        provenance-paperwork={item.provenancePaperwork}
+                                        authenticated-box={item.authenticatedBox}
+                                        images-of-goods={item.imagesOfGoods}
+                                        photo-id={item.photoId}
+                                        proof-of-address={item.proofOfAddress}>
+                                    </c-document-upload-table-flow>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </template>
+
+                </div>
+
+            </template>
+
+        </div>
+
+    </template>
+
+    <template lwc:if={noItems}>
+
+        <div class="emptyState">
+
+            <lightning-icon
+                icon-name="utility:file"
+                size="large">
+            </lightning-icon>
+
+            <p>
+                No items found for this opportunity.
+            </p>
+
+        </div>
+
+    </template>
+
+    <!-- Item NFU Confirmation Modal -->
+
+    <template lwc:if={showItemNFUConfirmModal}>
+
+        <section
+            role="dialog"
+            tabindex="-1"
+            class="slds-modal slds-fade-in-open">
+
+            <div class="slds-modal__container">
+
+                <header class="slds-modal__header">
+
+                    <h2 class="slds-text-heading_medium">
+                        Mark Item as NFU
+                    </h2>
+
+                </header>
+
+                <div class="slds-modal__content slds-p-around_large">
+
+                    Are you sure you want to mark this item as NFU?
+
+                </div>
+
+                <footer class="slds-modal__footer">
+
+                    <lightning-button
+                        label="Cancel"
+                        onclick={closeItemNFUModal}>
+                    </lightning-button>
+
+                    <lightning-button
+                        variant="brand"
+                        label="Yes"
+                        onclick={openItemCommentsModal}
+                        class="add-left-margin">
+                    </lightning-button>
+
+                </footer>
+
+            </div>
+
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+    </template>
+
+    <!-- Item NFU Comments Modal -->
+
+    <template lwc:if={showItemCommentsModal}>
+
+        <section
+            role="dialog"
+            tabindex="-1"
+            class="slds-modal slds-fade-in-open">
+
+            <div class="slds-modal__container">
+
+                <header class="slds-modal__header">
+
+                    <h2 class="slds-text-heading_medium">
+                        Item NFU Closing Comments
+                    </h2>
+
+                </header>
+
+                <div class="slds-modal__content slds-p-around_large">
+
+                    <lightning-textarea
+                        label="Closing Comments"
+                        value={closingComments}
+                        onchange={handleClosingComments}>
+                    </lightning-textarea>
+
+                </div>
+
+                <footer class="slds-modal__footer">
+
+                    <lightning-button
+                        label="Cancel"
+                        onclick={closeItemCommentsModal}>
+                    </lightning-button>
+
+                    <lightning-button
+                        variant="brand"
+                        label="Save"
+                        onclick={saveItemNFU}
+                        class="add-left-margin">
+                    </lightning-button>
+
+                </footer>
+
+            </div>
+
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+    </template>
+
+</template>

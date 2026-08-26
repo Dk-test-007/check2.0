@@ -1,0 +1,418 @@
+:host {
+
+    display: block;
+
+    --border-color: #d8dde6;
+    --title-color: #16325c;
+    --text-muted: #706e6b;
+}
+
+/* =========================================
+   Items
+========================================= */
+
+.itemsWrapper {
+
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.itemCard {
+
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+/* =========================================
+   Item Header
+========================================= */
+
+.itemHeader {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 58px;
+
+    padding: 0 18px;
+
+    background: #fafaf9;
+
+    cursor: pointer;
+
+    transition: background .15s ease;
+}
+
+.itemHeader:hover {
+
+    background: #fafaf9;
+}
+
+.headerContent {
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.itemNumber {
+
+    font-size: 15px;
+    font-weight: 700;
+    color: #16325c;
+    line-height: 1;
+}
+
+.itemTitle {
+
+    font-size: 18px;
+    font-weight: 700;
+    color: #16325c;
+    line-height: 1;
+}
+
+.separator {
+
+    color: #c9c7c5;
+    font-weight: 600;
+}
+
+.itemCategory {
+
+    display: inline-flex;
+    align-items: center;
+
+    padding: 4px 12px;
+
+    border-radius: 999px;
+
+    background: #f3f3f3;
+
+    border: 1px solid #d8dde6;
+
+    color: #44546f;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    line-height: 1;
+}
+
+/* =========================================
+   Workspace
+========================================= */
+
+.itemWorkspace {
+
+    background: #ffffff;
+}
+
+/* =========================================
+   Sections
+========================================= */
+
+.workspaceSection {
+
+    margin-bottom: 4px;
+}
+
+.workspaceSection:last-child {
+
+    margin-bottom: 0;
+}
+
+/* =========================================
+   Section Headers
+========================================= */
+
+.workspaceHeader {
+
+    display: flex;
+    align-items: center;
+
+    min-height: 38px;
+
+    width: calc(100% - 24px);
+
+    margin: 12px auto 8px auto;
+
+    padding: 0 18px;
+
+    border-radius: 14px;
+
+    background: #f3f3f3;
+
+    color: #16325c;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+/* =========================================
+   Section Body
+========================================= */
+
+.workspaceBody {
+
+    width: calc(100% - 24px);
+
+    margin: 0 auto;
+
+    padding-bottom: 8px;
+}
+
+/* =========================================
+   Documentation Checkboxes
+========================================= */
+
+.documentationGrid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: .75rem 1.5rem;
+}
+
+.documentationGrid lightning-input {
+
+    margin: 0;
+}
+
+/* =========================================
+   Loan Details
+========================================= */
+
+.loanSection {
+
+    margin-top: 4px;
+}
+
+.purchaseReceiptColumn {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+/* =========================================
+   Document Upload Section
+========================================= */
+
+.documentSection {
+
+    margin-top: 4px;
+}
+
+.documentSection c-document-upload-table-flow {
+
+    display: block;
+
+    width: 100%;
+}
+
+/* =========================================
+   Inputs
+========================================= */
+
+lightning-input,
+lightning-textarea {
+
+    --slds-c-input-radius-border: 8px;
+}
+
+/* =========================================
+   Utility
+========================================= */
+
+.slds-grid {
+
+    margin-top: 0;
+}
+
+.finalNotesField {
+
+    margin-bottom: 12px;
+}
+
+/* =========================================
+   Footer
+========================================= */
+
+.footerButtons {
+
+    bottom: 0;
+
+    z-index: 20;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    min-height: 70px;
+
+    padding: 0.5rem 1rem;
+
+    margin-top: 0;
+
+    background: #f3f3f3;
+
+    border-top: 1px solid var(--border-color);
+
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.footerButtons {
+    background: transparent;
+    border-top: none;
+    box-shadow: none;
+}
+
+.leftButtons {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .5rem;
+}
+
+/* =========================================
+   Empty State
+========================================= */
+
+.emptyState {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 2rem;
+
+    color: var(--text-muted);
+
+    text-align: center;
+}
+
+/* =========================================
+   Icons
+========================================= */
+
+.itemHeader lightning-icon {
+
+    flex-shrink: 0;
+}
+
+/* =========================================
+   Mobile
+========================================= */
+
+@media only screen and (max-width: 768px) {
+
+    .itemHeader {
+
+        padding: 0 12px;
+
+        min-height: 52px;
+    }
+
+    .workspaceHeader {
+
+        width: calc(100% - 16px);
+
+        margin: 8px auto;
+    }
+
+    .workspaceBody {
+
+        width: calc(100% - 16px);
+
+        margin: 0 auto;
+
+        padding-bottom: 12px;
+    }
+
+    .documentationGrid {
+
+        grid-template-columns: 1fr;
+
+        gap: .5rem;
+    }
+
+    .purchaseReceiptColumn {
+
+        padding-bottom: 0;
+    }
+
+    .itemTitle {
+
+        font-size: 14px;
+    }
+
+    .itemNumber {
+
+        font-size: 14px;
+    }
+
+    .itemCategory {
+
+        font-size: 10px;
+    }
+
+    .footerButtons {
+
+        padding: .5rem 0;
+    }
+}
+
+.checkbox123 {
+    padding-top : 13px;
+}
+
+.workspaceHeader {
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 38px;
+
+    width: calc(100% - 24px);
+
+    margin: 12px auto 8px auto;
+
+    padding: 0 18px;
+
+    border-radius: 14px;
+
+    background: #f3f3f3;
+
+    color: #16325c;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+.workspaceBody {
+
+    width: calc(100% - 24px);
+
+    margin: 0 auto;
+
+    padding-bottom: 8px;
+}
+
+.add-left-margin {
+    margin-left: 12px;
+}

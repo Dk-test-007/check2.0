@@ -1,0 +1,44 @@
+<template>
+
+    <template if:true={isLoading}>
+        <lightning-spinner
+            alternative-text="Generating Documents"
+            size="medium">
+        </lightning-spinner>
+    </template>
+
+    <template if:false={isLoading}>
+
+        <div class="slds-p-around_medium">
+
+            <lightning-input
+                type="number"
+                label="Amount deducted for fees or cash already received"
+                step="0.01"
+                required
+                value={deductions}
+                onchange={handleChange}>
+            </lightning-input>
+
+            <div class="slds-m-top_large slds-text-align_right">
+
+                <lightning-button
+                    label="Cancel"
+                    onclick={handleCancel}>
+                </lightning-button>
+
+                <lightning-button
+                    class="slds-m-left_small"
+                    variant="brand"
+                    label="Generate Documents"
+                    onclick={handleGenerate}
+                    disabled={isLoading}>
+                </lightning-button>
+
+            </div>
+
+        </div>
+
+    </template>
+
+</template>
