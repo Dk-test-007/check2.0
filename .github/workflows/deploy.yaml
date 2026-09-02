@@ -367,7 +367,7 @@ jobs:
         run: |
           sf org display --target-org "${{ needs.validate.outputs.org_alias }}" --verbose
 
-      # VALIDATE THEN DEPLOY — dry-run validates + runs Apex tests once without touching the org; on success, quick-deploy commits that exact validated result without re-running tests
+      # VALIDATE THEN DEPLOY — dry-run validates metadata (compile-checks only; Apex test execution and code coverage are disabled, see NoTestRun note below) without touching the org; on success, quick-deploy commits that exact validated result
 
       - name: Validate Deployment (Dry Run)
         id: dry-run
@@ -390,13 +390,22 @@ jobs:
             DESTRUCTIVE_FLAG="--post-destructive-changes delta-output/destructiveChanges/destructiveChanges.xml"
           fi
 
+          # Apex test execution / code coverage enforcement intentionally disabled: --test-level NoTestRun
+          # skips running any Apex tests, so the org-wide 75% coverage floor never applies here.
+          # IMPORTANT — this only works because none of dev/qa/uat/prod in THIS project are true
+          # Salesforce Production-type orgs (confirmed empirically: NoTestRun succeeded against the
+          # uat Developer Edition org, runTestsEnabled=false). Salesforce hard-rejects NoTestRun
+          # ("testLevel of NoTestRun cannot be used in production organizations") against a genuine
+          # Production org. If this pipeline is ever pointed at a real client's actual Production org,
+          # this line must go back to RunLocalTests (or RunSpecifiedTests) for that environment, or
+          # every prod deploy containing Apex will fail outright at this step.
           # set +e / capture-exit-code / set -e: the default GitHub Actions bash shell aborts a run: block at the first non-zero command, so without this the JSON result below (which has the actual Salesforce error — component/test failures, coverage numbers, etc.) would never get printed on a validation failure, leaving only the generic "Process completed with exit code 1" in the log.
           set +e
           sf project deploy start \
             --manifest delta-output/package/package.xml \
             $DESTRUCTIVE_FLAG \
             --target-org "$ORG_ALIAS" \
-            --test-level RunLocalTests \
+            --test-level NoTestRun \
             --dry-run \
             --wait 30 \
             --json > dry-run-result.json
@@ -406,7 +415,7 @@ jobs:
           cat dry-run-result.json 2>/dev/null || echo "No JSON result was captured — the sf command likely failed before producing output."
 
           if [ $DEPLOY_EXIT -ne 0 ]; then
-            echo "::error::Dry-run validation failed — see the JSON result above for details (component failures, test failures, or insufficient code coverage)."
+            echo "::error::Dry-run validation failed — see the JSON result above for details (component/compile failures — Apex test execution and code coverage checks are disabled in this pipeline)."
             exit 1
           fi
 
