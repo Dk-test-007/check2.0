@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <layouts>
+        <layout>Order Product Layout</layout>
+        <sections>
+            <label><!-- Business Central Information --></label>
+            <section>Business Central Information</section>
+        </sections>
+        <sections>
+            <label><!-- Customer PO --></label>
+            <section>Customer PO</section>
+        </sections>
+        <sections>
+            <label><!-- Delivery &amp; Fulfilment --></label>
+            <section>Delivery &amp; Fulfilment</section>
+        </sections>
+        <sections>
+            <label><!-- Margin (Internal) --></label>
+            <section>Margin (Internal)</section>
+        </sections>
+        <sections>
+            <label><!-- Quantity &amp; Pricing --></label>
+            <section>Quantity &amp; Pricing</section>
+        </sections>
+    </layouts>
+    <validationRules>
+        <errorMessage><!-- Unit Price cannot be changed. --></errorMessage>
+        <name>Prevent_UnitPrice_Update_CC</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Enter Location Code on the Order before adding Order Products. --></errorMessage>
+        <name>Require_Order_Location_Code_CC</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Enter Shipment Date on the Order before adding Order Products. --></errorMessage>
+        <name>Require_Shipment_Date_CC</name>
+    </validationRules>
+</CustomObjectTranslation>

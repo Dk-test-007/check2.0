@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Quote_Editable</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(ISNEW()),
+    NOT(ISCHANGED(Latest_Quote__c)),
+    OR(
+        AND(
+            ISCHANGED(Status),
+            OR(
+                ISPICKVAL(PRIORVALUE(Status), &quot;Accepted&quot;),
+                ISPICKVAL(PRIORVALUE(Status), &quot;Cancelled&quot;),
+                ISPICKVAL(PRIORVALUE(Status), &quot;Expired&quot;)
+            )
+        ),
+        AND(
+            NOT(ISCHANGED(Status)),
+            OR(
+                ISPICKVAL(Status, &quot;Accepted&quot;),
+                ISPICKVAL(Status, &quot;Cancelled&quot;),
+                ISPICKVAL(Status, &quot;Expired&quot;)
+            )
+        ),
+        Opportunity.IsClosed
+    ),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Quote.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorMessage>Quote is no longer editable</errorMessage>
+</ValidationRule>

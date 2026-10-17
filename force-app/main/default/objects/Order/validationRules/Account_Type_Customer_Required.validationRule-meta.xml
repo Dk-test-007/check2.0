@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Type_Customer_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+    AND(
+        NOT(ISBLANK(AccountId)),
+        NOT(ISPICKVAL(Account.Type, &quot;Customer&quot;)),
+								NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Order.Bypass_Validation_CC__c),
+        $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+    ),
+    AND(
+        NOT(ISBLANK(ContractId)),
+        NOT(ISPICKVAL(Contract.Account.Type, &quot;Customer&quot;)),
+								NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Order.Bypass_Validation_CC__c),
+        $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+    )
+)</errorConditionFormula>
+    <errorMessage>Order can only be created for an Account whose Account Type is Customer.</errorMessage>
+</ValidationRule>

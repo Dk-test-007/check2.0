@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Account_Must_Be_Site_CC</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(ISBLANK(Entity_Associated_CC__c)),
+    Entity_Associated_CC__r.RecordType.DeveloperName &lt;&gt; &quot;Entity&quot;,
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Lead.Bypass_Validation_CC__c)
+)</errorConditionFormula>
+    <errorDisplayField>Entity_Associated_CC__c</errorDisplayField>
+    <errorMessage>Account does not belong to Entity Record Type.</errorMessage>
+</ValidationRule>

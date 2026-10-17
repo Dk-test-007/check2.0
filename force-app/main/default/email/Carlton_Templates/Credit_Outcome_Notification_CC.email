@@ -1,0 +1,21 @@
+Hi {!Account.OwnerFirstName},<br><br>
+
+The customer credit assessment has been completed.<br><br>
+
+<b>Key Details:</b><br>
+
+<ul>
+<li><b>Account:</b> {!Account.Name}</li>
+<li><b>Credit Status:</b> {!Account.Credit_Risk_Status_CC__c}</li>
+<li><b>Credit Limit:</b> {!Account.Credit_Limit_CC__c}</li>
+<li><b>Credit Assesment Status: </b> {!Account.Financial_Check_CC__c}</li>
+<li><b>Assessed By:</b> Finance</li>
+</ul>
+
+Please review the Account in Salesforce and continue with the next appropriate business activity.<br>
+
+<a href="https://carlton-packaging--qa.sandbox.my.salesforce-setup.com/{!Account.Id}">View Account in Salesforce</a>
+
+<br><br>
+
+Thank you,<br> <b>Carlton Packaging CRM</b>

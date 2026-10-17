@@ -1,0 +1,28 @@
+<p>Hi {!Opportunity.OwnerFirstName},</p>
+
+<p>
+An Opportunity assigned to you has remained in the same sales stage longer than the agreed business threshold.
+</p>
+
+<p><strong>Key Details:</strong></p>
+
+<ul>
+    <li><strong>Opportunity:</strong> {!Opportunity.Name}</li>
+    <li><strong>Customer:</strong> {!Opportunity.Account}</li>
+    <li><strong>Current Stage:</strong> {!Opportunity.StageName}</li>
+    <li><strong>Days in Current Stage:</strong> {!Opportunity.Days_In_Current_Stage_CC__c}</li>
+    <li><strong>Opportunity Value:</strong> {!Opportunity.Amount}</li>
+</ul>
+
+<p>
+Please review the Opportunity in Salesforce and either progress it to the next stage or update it with the current status.
+</p>
+
+<p>
+<a href="{!Opportunity.Link}">View Opportunity in Salesforce</a>
+</p>
+
+<p>
+Thank you,<br>
+Carlton Packaging CRM
+</p>

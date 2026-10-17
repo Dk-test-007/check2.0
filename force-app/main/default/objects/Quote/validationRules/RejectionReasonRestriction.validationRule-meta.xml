@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RejectionReasonRestriction</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(ISPICKVAL(Status, &apos;Rejected&apos;)),
+    ISCHANGED(Rejection_Reason__c),
+    NOT(ISCHANGED(Latest_Quote__c)),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Quote.Bypass_Validation_CC__c)
+)</errorConditionFormula>
+    <errorDisplayField>Rejection_Reason__c</errorDisplayField>
+    <errorMessage>Rejection Reason can only be selected when the Quote is in Rejected Status</errorMessage>
+</ValidationRule>

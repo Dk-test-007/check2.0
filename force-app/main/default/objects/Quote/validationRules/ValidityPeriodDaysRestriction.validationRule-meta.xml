@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidityPeriodDaysRestriction</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (
+    ISCHANGED(Validity_Period_Days__c),
+    OR(
+        Validity_Period_Days__c &lt; 1,
+        Validity_Period_Days__c &gt; 30
+    ),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Quote.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Validity_Period_Days__c</errorDisplayField>
+    <errorMessage>Validity Period should be between 1 to 30 days</errorMessage>
+</ValidationRule>

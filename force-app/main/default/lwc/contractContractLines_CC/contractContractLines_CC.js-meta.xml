@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Contract Line Availability</masterLabel>
+    <description>Contract view of Sales Contract Lines: MOQ Required, Minimum Order Quantity and Remaining SKU.</description>
+
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__RecordAction</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Contract</object>
+            </objects>
+        </targetConfig>
+
+        <targetConfig targets="lightning__RecordAction">
+            <actionType>ScreenAction</actionType>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

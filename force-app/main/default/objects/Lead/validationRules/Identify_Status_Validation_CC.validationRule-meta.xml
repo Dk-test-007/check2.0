@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Identify_Status_Validation_CC</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(ISPICKVAL(Status, &quot;Identify&quot;)),
+    ISNEW(),
+    $Profile.Name = &quot;Carlton Marketing User&quot;,
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Lead.Bypass_Validation_CC__c)
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>New Leads must be created with a Status of &apos;Identify&apos;. Please update the Status field before saving.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Order_Activation_Address</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISPICKVAL(Status, &quot;Activated&quot;),
+    ISCHANGED(Status),
+				NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Order.Bypass_Validation_CC__c),
+    OR(
+        ISBLANK(BillingStreet),
+        ISBLANK(BillingCity),
+        ISBLANK(BillingState),
+        ISBLANK(BillingPostalCode),
+        ISBLANK(BillingCountry),
+        ISBLANK(ShippingStreet),
+        ISBLANK(ShippingCity),
+        ISBLANK(ShippingState),
+        ISBLANK(ShippingPostalCode),
+        ISBLANK(ShippingCountry)
+								
+    )
+)</errorConditionFormula>
+    <errorMessage>Order cannot be activated until the complete Billing Address and Shipping Address are populated.</errorMessage>
+</ValidationRule>

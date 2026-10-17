@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>CA</fullName>
+        <default>false</default>
+        <label>Mainfreight Inc - Moreno Valley</label>
+    </customValue>
+    <customValue>
+        <fullName>CAN-ON</fullName>
+        <default>false</default>
+        <label>Mainfreight Canada - Ontario</label>
+    </customValue>
+    <customValue>
+        <fullName>CARL-MA</fullName>
+        <default>false</default>
+        <label>Carlton Packaging - Massachusetts Office</label>
+    </customValue>
+    <customValue>
+        <fullName>CARL-NJ</fullName>
+        <default>false</default>
+        <label>Carlton Packaging - New Jersey Office</label>
+    </customValue>
+    <customValue>
+        <fullName>DROP</fullName>
+        <default>false</default>
+        <label>Drop Shipments</label>
+    </customValue>
+    <customValue>
+        <fullName>GA-AT</fullName>
+        <default>false</default>
+        <label>Mainfreight Inc - Atlanta</label>
+    </customValue>
+    <customValue>
+        <fullName>NY</fullName>
+        <default>false</default>
+        <label>Carlton Packaging Inc</label>
+    </customValue>
+    <customValue>
+        <fullName>PA</fullName>
+        <default>false</default>
+        <label>Mainfreight Inc - Wind Gap</label>
+    </customValue>
+    <customValue>
+        <fullName>QUARANTINE</fullName>
+        <default>false</default>
+        <label>QUARANTINE</label>
+    </customValue>
+    <customValue>
+        <fullName>TX-HO</fullName>
+        <default>false</default>
+        <label>Mainfreight Inc - Houston</label>
+    </customValue>
+    <customValue>
+        <fullName>TX-NL</fullName>
+        <default>false</default>
+        <label>Mainfreight Inc - Northlake</label>
+    </customValue>
+    <customValue>
+        <fullName>XIG-HO</fullName>
+        <default>false</default>
+        <label>Xigon Houston (CPC)</label>
+    </customValue>
+    <masterLabel>Location Code</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

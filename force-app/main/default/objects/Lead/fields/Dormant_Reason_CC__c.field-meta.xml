@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dormant_Reason_CC__c</fullName>
+    <label>Dormant Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Timing / Future Requirement</fullName>
+                <default>false</default>
+                <label>Timing / Future Requirement</label>
+            </value>
+            <value>
+                <fullName>Existing Contract / Cannot Buy Yet</fullName>
+                <default>false</default>
+                <label>Existing Contract / Cannot Buy Yet</label>
+            </value>
+            <value>
+                <fullName>Budget Deferred</fullName>
+                <default>false</default>
+                <label>Budget Deferred</label>
+            </value>
+            <value>
+                <fullName>Project Delayed</fullName>
+                <default>false</default>
+                <label>Project Delayed</label>
+            </value>
+            <value>
+                <fullName>Seasonal / Later Period</fullName>
+                <default>false</default>
+                <label>Seasonal / Later Period</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

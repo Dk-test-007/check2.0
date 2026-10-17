@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IssuedDateRequiredForValidityPeriod</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISBLANK( StartDate ),
+    ISCHANGED(Validity_Period_Days__c),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Quote.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Validity_Period_Days__c</errorDisplayField>
+    <errorMessage>Validity Period can only be updated once the Quote has been moved to Presented status</errorMessage>
+</ValidationRule>

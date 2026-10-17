@@ -1,0 +1,34 @@
+<html>
+  <body style="font-family: Arial, sans-serif; color: #333333;">
+
+    <p>Hi {!Receiving_User.FirstName},</p>
+
+    <p>
+      One of your customer Quotes has expired.
+    </p>
+
+    <p><strong>Key Details:</strong></p>
+
+    <ul>
+      <li><strong>Quote Number:</strong> {!Quote.QuoteNumber}</li>
+      <li><strong>Customer:</strong> {!Quote.Account}</li>
+      <li><strong>Quote Value:</strong> {!Quote.TotalPrice}</li>
+      <li><strong>Expiry Date:</strong> {!Quote.ExpirationDate}</li>
+    </ul>
+
+    <p>
+      Please review the expired Quote in Salesforce and contact the customer
+      if a revised Quote is required.
+    </p>
+
+    <p>
+      <a href="{!Quote.Link}">{!Quote.QuoteNumber}</a>
+    </p>
+
+    <p>
+      Thank you,<br>
+      Carlton Packaging CRM
+    </p>
+
+  </body>
+</html>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Shipment_Date_CC</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISNEW(),
+    ISBLANK(TEXT(Order.Shipment_Date_CC__c)),
+    ISBLANK(Order.QuoteId),
+    ISBLANK(Order.ContractId),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.OrderItem.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorMessage>Enter Shipment Date on the Order before adding Order Products.</errorMessage>
+</ValidationRule>

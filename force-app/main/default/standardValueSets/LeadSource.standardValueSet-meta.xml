@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Creditsafe</fullName>
+        <default>false</default>
+        <label>Creditsafe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Existing Customer Enquiry</fullName>
+        <default>false</default>
+        <label>Existing Customer Enquiry</label>
+    </standardValue>
+    <standardValue>
+        <fullName>LinkedIn Sales Navigator</fullName>
+        <default>false</default>
+        <label>LinkedIn Sales Navigator</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Manual</fullName>
+        <default>false</default>
+        <label>Manual</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Referral</fullName>
+        <default>false</default>
+        <label>Referral</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sales Generated / Prospecting</fullName>
+        <default>false</default>
+        <label>Sales Generated / Prospecting</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Trade Show / Expo</fullName>
+        <default>false</default>
+        <label>Trade Show / Expo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Web Search</fullName>
+        <default>false</default>
+        <label>Web Search</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Website Enquiry</fullName>
+        <default>false</default>
+        <label>Website Enquiry</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ZoomInfo</fullName>
+        <default>false</default>
+        <label>ZoomInfo</label>
+    </standardValue>
+</StandardValueSet>

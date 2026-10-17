@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Status_Backtracking_Validation_CC</fullName>
+    <active>true</active>
+    <description>Prevents lead status to backtrack</description>
+    <errorConditionFormula>AND(
+    ISCHANGED(Status),
+				NOT(ISPICKVAL(PRIORVALUE(Status), &quot;Disqualified&quot;)),
+    NOT($Profile.Name = &quot;System Administrator&quot; ),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Lead.Bypass_Validation_CC__c),
+    NOT(ISPICKVAL(PRIORVALUE(Status), &quot;Re-Nurture&quot;)),
+    CASE(
+        TEXT(Status),
+        &quot;Identify&quot;, 1,
+        &quot;Qualify&quot;, 2,
+        &quot;Engage&quot;, 3,
+        &quot;Qualified&quot;, 4,
+        &quot;Disqualified&quot;, 5,
+        &quot;Re-Nurture&quot;, 6,
+        0
+    )
+    &lt;
+    CASE(
+        TEXT(PRIORVALUE(Status)),
+        &quot;Identify&quot;, 1,
+        &quot;Qualify&quot;, 2,
+        &quot;Engage&quot;, 3,
+        &quot;Qualified&quot;, 4,
+        &quot;Disqualified&quot;, 5,
+        &quot;Re-Nurture&quot;, 6,
+        0
+    )
+)</errorConditionFormula>
+    <errorMessage>Lead Status cannot be moved backwards. Please move the Lead forward through the qualification process.</errorMessage>
+</ValidationRule>

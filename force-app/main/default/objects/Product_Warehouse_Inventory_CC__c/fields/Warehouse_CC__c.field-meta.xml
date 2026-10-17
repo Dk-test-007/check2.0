@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Warehouse_CC__c</fullName>
+    <description>CP-83: Master-Detail to Warehouse object</description>
+    <label>Warehouse</label>
+    <referenceTo>Warehouse_CC__c</referenceTo>
+    <relationshipLabel>Product - Warehouse Inventories</relationshipLabel>
+    <relationshipName>Product_Warehouse_Inventories</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

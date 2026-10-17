@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Treat_Bodies_As_Template_CC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Resolves Salesforce merge fields inside the subject and body text you supply, without using a stored template.</description>
+    <label>Treat Bodies As Template</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

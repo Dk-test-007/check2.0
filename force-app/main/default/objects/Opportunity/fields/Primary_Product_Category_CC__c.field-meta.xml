@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Product_Category_CC__c</fullName>
+    <label>Primary Product Category</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Tape</fullName>
+                <default>false</default>
+                <label>Tape</label>
+            </value>
+            <value>
+                <fullName>Pallet Wrap</fullName>
+                <default>false</default>
+                <label>Pallet Wrap</label>
+            </value>
+            <value>
+                <fullName>Strapping</fullName>
+                <default>false</default>
+                <label>Strapping</label>
+            </value>
+            <value>
+                <fullName>Cardboard</fullName>
+                <default>false</default>
+                <label>Cardboard</label>
+            </value>
+            <value>
+                <fullName>Void Fill</fullName>
+                <default>false</default>
+                <label>Void Fill</label>
+            </value>
+            <value>
+                <fullName>Protective Packaging</fullName>
+                <default>false</default>
+                <label>Protective Packaging</label>
+            </value>
+            <value>
+                <fullName>Bags &amp; Envelopes</fullName>
+                <default>false</default>
+                <label>Bags &amp; Envelopes</label>
+            </value>
+            <value>
+                <fullName>Labelling</fullName>
+                <default>false</default>
+                <label>Labelling</label>
+            </value>
+            <value>
+                <fullName>Facilities</fullName>
+                <default>false</default>
+                <label>Facilities</label>
+            </value>
+            <value>
+                <fullName>Delivery Bags</fullName>
+                <default>false</default>
+                <label>Delivery Bags</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

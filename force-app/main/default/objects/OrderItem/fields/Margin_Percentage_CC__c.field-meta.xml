@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Margin_Percentage_CC__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+    OR(
+        ISBLANK(UnitCost),
+        UnitCost = 0,
+        ISBLANK(ListPrice),
+        ListPrice = 0
+    ),
+    &quot;Margin is not available&quot;,
+    TEXT(
+        ROUND(
+            ((UnitCost - ListPrice) / UnitCost) * 100,
+            2
+        )
+    ) &amp; &quot;%&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Margin % = (Unit Price - Unit Cost) / Unit Price.</inlineHelpText>
+    <label>Margin Percentage</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

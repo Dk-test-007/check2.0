@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Progression_Validation_CC</fullName>
+    <active>true</active>
+    <description>Validation to ensure only admins and sales users can update a Lead status from Engage to Qualified or Disqualified.</description>
+    <errorConditionFormula>AND(
+    ISCHANGED(Status),
+    OR(
+        ISPICKVAL(Status, &quot;Qualified&quot;),
+        ISPICKVAL(Status, &quot;Disqualified&quot;),
+								ISPICKVAL(Status, &quot;Re-Nurture&quot;)
+    ),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+				NOT($Permission.Sales_User_Permission_CC),
+				NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Lead.Bypass_Validation_CC__c)
+)</errorConditionFormula>
+    <errorMessage>Only sales users and admins can move the status</errorMessage>
+</ValidationRule>

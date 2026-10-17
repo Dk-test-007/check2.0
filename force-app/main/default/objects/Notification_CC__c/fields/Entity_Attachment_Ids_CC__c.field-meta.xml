@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Entity_Attachment_Ids_CC__c</fullName>
+    <description>Semicolon separated ContentVersion Ids to attach. Use this when the files already exist in Salesforce Files.</description>
+    <label>Entity Attachment Ids</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

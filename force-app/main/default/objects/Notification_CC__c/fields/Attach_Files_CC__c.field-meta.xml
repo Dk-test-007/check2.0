@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Attach_Files_CC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Attaches every file linked to this Notification record. The record must be saved and the files attached before it is queued.</description>
+    <label>Attach Files</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

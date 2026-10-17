@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Quote - Expiration Reminder</name>
+    <style>none</style>
+    <subject>Quote Expiring Soon: {!Quote.QuoteNumber}</subject>
+    <textOnly>Hi {!Receiving_User.FirstName},
+
+One of your customer Quotes is approaching its expiry date.
+
+Key Details:
+
+Quote Number: {!Quote.QuoteNumber}
+Customer: {!Quote.AccountName}
+Quote Value: {!Quote.GrandTotal}
+Expiry Date: {!Quote.ExpirationDate}
+
+Please review the Quote in Salesforce and contact the customer before the Quote expires.
+
+{!Quote.QuoteNumber}
+
+Thank you,
+Carlton Packaging CRM</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

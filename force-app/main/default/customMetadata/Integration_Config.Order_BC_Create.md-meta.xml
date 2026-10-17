@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Order BC Create</label>
+    <protected>false</protected>
+    <values>
+        <field>Active__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Endpoint__c</field>
+        <value xsi:type="xsd:string">callout:Anypoint_MQ_CC/destinations/carlton-events-fifo-queue/messages</value>
+    </values>
+    <values>
+        <field>Operation__c</field>
+        <value xsi:type="xsd:string">Create</value>
+    </values>
+    <values>
+        <field>Payload_Template_CC__c</field>
+        <value xsi:type="xsd:string">{
+&quot;headers&quot;: {
+&quot;messageId&quot;: &quot;{{eventId}}&quot;
+},
+&quot;body&quot;: &quot;{\&quot;schemaVersion\&quot;:\&quot;1.0\&quot;,\&quot;eventId\&quot;:\&quot;{{eventId}}\&quot;,\&quot;timestamp\&quot;:\&quot;{{timestamp}}\&quot;,\&quot;sourceSystem\&quot;:\&quot;Salesforce\&quot;,\&quot;targetSystem\&quot;:\&quot;Business Central\&quot;,\&quot;objectName\&quot;:\&quot;{{objectName}}\&quot;,\&quot;records\&quot;:{{records}}}&quot;
+}</value>
+    </values>
+    <values>
+        <field>Request_Mapping__c</field>
+        <value xsi:type="xsd:string">[&quot;OrderNumber&quot;,&quot;Sell_to_Customer_No_CC__r.Business_Central_Customer_ID_CC__c&quot;,&quot;Bill_to_Customer_No_CC__r.Business_Central_Customer_ID_CC__c&quot;,&quot;Ship_to_Customer_No_CC__r.Site_Code_CC__c&quot;,&quot;EffectiveDate&quot;,&quot;Shipment_Date_CC__c&quot;,&quot;Shipment_Method_Code_CC__c&quot;,&quot;Location_Code_CC__c&quot;,&quot;Customer_Price_Group_CC__c&quot;,&quot;External_Document_No_CC__c&quot;,&quot;BillingAddress&quot;,&quot;BillingCity&quot;,&quot;BillingCountry&quot;,&quot;BillingPostalCode&quot;,&quot;BillingState&quot;,&quot;BillingStreet&quot;,&quot;ShippingAddress&quot;,&quot;ShippingCity&quot;,&quot;ShippingPostalCode&quot;,&quot;ShippingState&quot;,&quot;ShippingStreet&quot;]</value>
+    </values>
+    <values>
+        <field>Request_Type__c</field>
+        <value xsi:type="xsd:string">BULK</value>
+    </values>
+    <values>
+        <field>Retry_Enabled__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>SObject_API_Name__c</field>
+        <value xsi:type="xsd:string">Order</value>
+    </values>
+</CustomMetadata>

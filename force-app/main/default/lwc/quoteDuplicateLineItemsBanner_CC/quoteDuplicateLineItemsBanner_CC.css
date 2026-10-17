@@ -1,0 +1,23 @@
+.banner-container {
+    position: relative;
+}
+
+.refresh-button {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.refresh-icon-button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    --slds-c-icon-color-foreground-default: #8C4B02;
+}
+
+.refresh-icon-button lightning-icon {
+    --slds-c-icon-color-foreground-default: #8C4B02;
+}

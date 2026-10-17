@@ -1,0 +1,28 @@
+<template>
+    <lightning-quick-action-panel header="Clone Quote">
+        <div class="slds-p-around_medium">
+            Are you sure you want to clone this Quote and its Quote Line Items?
+        </div>
+
+        <div slot="footer">
+            <lightning-button
+                label="Cancel"
+                onclick={handleCancel}
+                class="slds-m-right_small">
+            </lightning-button>
+
+            <lightning-button
+                variant="brand"
+                label="Clone Quote"
+                onclick={handleClone}
+                disabled={isLoading}>
+            </lightning-button>
+        </div>
+
+        <template lwc:if={isLoading}>
+            <lightning-spinner
+                alternative-text="Cloning Quote">
+            </lightning-spinner>
+        </template>
+    </lightning-quick-action-panel>
+</template>

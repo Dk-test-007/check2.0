@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>In_Reply_To_CC__c</fullName>
+    <description>RFC 822 Message-Id of the message being replied to. Used for email threading.</description>
+    <externalId>false</externalId>
+    <label>In Reply To</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

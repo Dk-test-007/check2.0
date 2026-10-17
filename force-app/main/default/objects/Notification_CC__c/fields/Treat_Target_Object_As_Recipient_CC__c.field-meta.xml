@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Treat_Target_Object_As_Recipient_CC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>When ticked, the target object receives the email. When unticked, the target is used only to resolve merge fields and To Addresses must be populated.</description>
+    <label>Treat Target Object As Recipient</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

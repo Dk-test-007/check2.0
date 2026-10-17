@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Marketing_User_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    $Profile.Name = &apos;Carlton Marketing User&apos;,
+    ISCHANGED(Status),
+    TEXT(PRIORVALUE(Status)) = &apos;Identify&apos;,
+    TEXT(Status) &lt;&gt; &apos;Qualify&apos;
+)</errorConditionFormula>
+    <errorMessage>Marketing team members cannot skip Qualify Stage</errorMessage>
+</ValidationRule>

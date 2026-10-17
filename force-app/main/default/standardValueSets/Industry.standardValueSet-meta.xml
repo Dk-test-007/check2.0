@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Apparel</fullName>
+        <default>false</default>
+        <label>Apparel</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ambient Food</fullName>
+        <default>false</default>
+        <label>Ambient Food</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Automative</fullName>
+        <default>false</default>
+        <label>Automative</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Beverage</fullName>
+        <default>false</default>
+        <label>Beverage</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Building &amp; Construction</fullName>
+        <default>false</default>
+        <label>Building &amp; Construction</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cold Storage</fullName>
+        <default>false</default>
+        <label>Cold Storage</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Electronics</fullName>
+        <default>false</default>
+        <label>Electronics</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Health &amp; Beauty</fullName>
+        <default>false</default>
+        <label>Health &amp; Beauty</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Homeware</fullName>
+        <default>false</default>
+        <label>Homeware</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pet Care</fullName>
+        <default>false</default>
+        <label>Pet Care</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pharmaceutical</fullName>
+        <default>false</default>
+        <label>Pharmaceutical</label>
+    </standardValue>
+</StandardValueSet>

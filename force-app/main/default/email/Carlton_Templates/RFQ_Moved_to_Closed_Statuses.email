@@ -1,0 +1,28 @@
+<html>
+  <body style="font-family: Arial, sans-serif; color: #333333;">
+
+    <p>Hi {!Receiving_User.FirstName},</p>
+
+    <p>Your RFQ has been closed with a final outcome.</p>
+
+    <p>Key Details:</p>
+    <ul>
+      <li><strong>RFQ Number:</strong> {!Case.CaseNumber}</li>
+      <li><strong>Opportunity:</strong> {!Case.Opportunity__c}</li>
+      <li><strong>Customer:</strong> {!Case.Account}</li>
+      <li><strong>Requested Product:</strong> {!Case.Description}</li>
+      <li><strong>Final Outcome:</strong> {!Case.RFQ_Outcome__c}</li>
+      <li><strong>Closed By:</strong> {!Case.OwnerFullName}</li>
+    </ul>
+
+    <p>Please review the RFQ in Salesforce and take the appropriate next action.</p>
+
+    <p>
+      <a href="{!Case.Link}">{!Case.CaseNumber}</a>
+    </p>
+
+    <p>Thank you,<br>
+    Carlton Packaging CRM</p>
+
+  </body>
+</html>

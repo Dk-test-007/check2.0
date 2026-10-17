@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Opportunity_Stage_Reminder_Days_CC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Stage Reminder Days</shortDescription>
+        <value>2</value>
+    </labels>
+    <labels>
+        <fullName>Accepted_OrderItem_Allowed_Fields_CC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Accepted_OrderItem_Allowed_Fields_CC</shortDescription>
+        <value>Description</value>
+    </labels>
+    <labels>
+        <fullName>Accepted_Order_Allowed_Fields_CC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Accepted Order Allowed Fields</shortDescription>
+        <value>BillingAddress, BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, ShippingAddress, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet</value>
+    </labels>
+</CustomLabels>

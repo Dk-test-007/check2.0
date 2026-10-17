@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Qualified_Lead_Opportunity_Value_Require</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISPICKVAL(Status, &quot;Qualified&quot;),
+    ISBLANK(Opportunity_Value_CC__c),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Lead.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Opportunity_Value_CC__c</errorDisplayField>
+    <errorMessage>This is required to save the record</errorMessage>
+</ValidationRule>

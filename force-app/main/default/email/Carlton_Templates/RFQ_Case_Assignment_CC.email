@@ -1,0 +1,27 @@
+<html>
+  <body style="font-family: Arial, sans-serif; color: #333333;">
+
+    <p>Hi Team,</p>
+
+    <p>A new RFQ / New Product Request has been assigned to the CPT team.</p>
+
+     Key Details:
+    <ul>
+      <li><strong>RFQ Number:</strong> {!Case.CaseNumber}</li>
+      <li><strong>Opportunity:</strong> {!Case.Opportunity__c}</li>
+      <li><strong>Customer:</strong> {!Case.Account}</li>
+      <li><strong>Requested Product:</strong> {!Case.Description}</li>
+      <li><strong>Submitted By:</strong> {!Case.CreatedBy}</li>
+    </ul>
+
+    <p>Please review the RFQ in Salesforce and claim ownership for starting the investigation process.</p>
+
+    <p>
+      <a href="{!Case.Link}">{!Case.CaseNumber}</a>
+    </p>
+
+    <p>Thank you,<br>
+    Carlton Packaging CRM</p>
+
+  </body>
+</html>

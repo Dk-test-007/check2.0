@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opt_Out_Policy_CC__c</fullName>
+    <description>How to handle recipients who have opted out of email. FILTER skips them, REJECT fails the whole send, SEND ignores the opt-out.</description>
+    <label>Opt_Out_Policy</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>FILTER</fullName>
+                <default>true</default>
+                <label>FILTER</label>
+            </value>
+            <value>
+                <fullName>REJECT</fullName>
+                <default>false</default>
+                <label>REJECT</label>
+            </value>
+            <value>
+                <fullName>SEND</fullName>
+                <default>false</default>
+                <label>SEND</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

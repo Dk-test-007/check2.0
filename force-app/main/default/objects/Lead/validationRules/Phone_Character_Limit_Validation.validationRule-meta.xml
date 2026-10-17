@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Phone_Character_Limit_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+				LEN(Phone) &gt; 15,
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Lead.Bypass_Validation_CC__c)
+)</errorConditionFormula>
+    <errorDisplayField>Phone</errorDisplayField>
+    <errorMessage>Phone Number cannot be greater than 15 Characters</errorMessage>
+</ValidationRule>

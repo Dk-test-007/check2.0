@@ -1,0 +1,65 @@
+<template>
+
+    <div class="banner-container">
+
+        <template lwc:if={hasNegativeMargin}>
+            <div
+                class="slds-notify slds-notify_alert slds-alert_warning"
+                role="alert"
+            >
+                <lightning-icon
+                    icon-name="utility:warning"
+                    alternative-text="Warning"
+                    size="x-small"
+                    class="slds-m-right_x-small"
+                >
+                </lightning-icon>
+
+                <span>
+                    <strong>
+                        Some of the Quote Line Item(s) have a negative margin.
+                    </strong>
+                </span>
+            </div>
+        </template>
+
+        <template lwc:if={hasDuplicates}>
+            <div
+                class="slds-notify slds-notify_alert slds-alert_warning"
+                role="alert"
+            >
+                <lightning-icon
+                    icon-name="utility:warning"
+                    alternative-text="Warning"
+                    size="x-small"
+                    class="slds-m-right_x-small"
+                >
+                </lightning-icon>
+
+                <span>
+                    <strong>
+                        Duplicate Quote Line Items exist for the following product(s):&nbsp;
+                    </strong>
+                    {duplicateProductNames}
+                </span>
+            </div>
+        </template>
+
+        <div class="refresh-button">
+            <button
+                class="refresh-icon-button"
+                title="Refresh"
+                onclick={handleRefresh}
+            >
+                <lightning-icon
+                    icon-name="utility:refresh"
+                    alternative-text="Refresh"
+                    size="x-small"
+                >
+                </lightning-icon>
+            </button>
+        </div>
+
+    </div>
+
+</template>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Contract_Start_End_Date_CC</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(ISBLANK(StartDate)),
+    NOT(ISBLANK(EndDate)),
+    EndDate &lt; StartDate,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Contract.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorMessage>Contract End Date must be greater than or equal to Contract Start Date.</errorMessage>
+</ValidationRule>

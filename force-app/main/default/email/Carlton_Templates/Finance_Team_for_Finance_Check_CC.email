@@ -1,0 +1,16 @@
+<p>Hi Finance Team,</p>
+
+<p>The Client Onboarding has been completed.</p>
+
+<p>Key Details:</p>
+<ul>
+    <li>Account: {!Account.Name}</li>
+    <li>Client Onboarding Status : {!Account.Client_Onboarding_Status_CC__c}</li>
+    <li>Assessed By: Sales</li>
+</ul>
+
+<p>Please review the Account in Salesforce and continue with the Finance Check.<br>
+<a href="https://velocity-page-4339--dev1.sandbox.my.salesforce-setup.com/{!Account.Id}">View Account Record</a>
+
+<p>Thank you,<br>
+Carlton Packaging CRM"</p>

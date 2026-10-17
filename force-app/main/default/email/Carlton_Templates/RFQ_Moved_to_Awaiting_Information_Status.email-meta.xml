@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>RFQ - Moved to Awaiting Information Status</name>
+    <style>none</style>
+    <subject>Action Required: Additional Information Needed - RFQ {!Case.CaseNumber}</subject>
+    <textOnly>Hi {!Receiving_User.FirstName},
+
+The Commercial Product Team requires additional information to continue investigating your RFQ.
+
+Key Details:
+
+RFQ Number: {!Case.CaseNumber}
+Opportunity: {!Case.Opportunity__c}
+Customer: {!Case.Account}
+Information Requested: {!Case.Information_Requested__c}
+Requested By: {!Case.OwnerFullName}
+
+Please review the RFQ in Salesforce and provide the requested information at the earliest.
+
+{!Case.CaseNumber}
+
+Thank you,
+Carlton Packaging CRM</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

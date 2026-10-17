@@ -1,0 +1,154 @@
+<template>
+    <lightning-card
+        title="Contract Line Availability"
+        icon-name="standard:product">
+
+        <template lwc:if={showEditButton}>
+            <lightning-button
+                slot="actions"
+                label="Edit MOQ"
+                icon-name="utility:edit"
+                disabled={isBusy}
+                onclick={handleEdit}>
+            </lightning-button>
+        </template>
+
+        <div class="slds-is-relative">
+
+            <template lwc:if={isBusy}>
+                <lightning-spinner
+                    alternative-text="Loading Contract Lines"
+                    size="small">
+                </lightning-spinner>
+            </template>
+
+            <template lwc:if={errorMessage}>
+                <div class="slds-p-horizontal_medium slds-p-bottom_small">
+                    <div class="slds-notify slds-notify_alert slds-theme_error" role="alert">
+                        {errorMessage}
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={hasLines}>
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <div class="slds-scrollable_x">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Product">Product</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Contract Quantity">Contract Quantity</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="MOQ Required">MOQ Required</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Minimum Order Quantity">Minimum Order Quantity</div>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <template for:each={rows} for:item="row">
+                                    <tr key={row.contractLineId} class={row.rowClass}>
+                                        <td>
+                                            <div class="slds-truncate" title={row.productName}>
+                                                {row.productName}
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <lightning-formatted-number value={row.quantity}>
+                                            </lightning-formatted-number>
+                                        </td>
+
+                                        <!-- MOQ Required: toggle in edit mode, badge otherwise -->
+                                        <td>
+                                            <template lwc:if={isEditing}>
+                                                <lightning-input
+                                                    type="toggle"
+                                                    label="MOQ Required"
+                                                    variant="label-hidden"
+                                                    message-toggle-active="Yes"
+                                                    message-toggle-inactive="No"
+                                                    checked={row.moqRequired}
+                                                    data-id={row.contractLineId}
+                                                    disabled={isSaving}
+                                                    onchange={handleMoqChange}>
+                                                </lightning-input>
+                                            </template>
+                                            <template lwc:else>
+                                                <lightning-badge
+                                                    label={row.moqRequiredLabel}
+                                                    class={row.moqBadgeClass}>
+                                                </lightning-badge>
+                                            </template>
+                                        </td>
+
+                                        <!-- Minimum Order Quantity: input when MOQ Required = Yes (edit mode), otherwise the value (0 by default) -->
+                                        <td>
+                                            <template lwc:if={row.showMinimumInput}>
+                                                <lightning-input
+                                                    type="number"
+                                                    label="Minimum Order Quantity"
+                                                    variant="label-hidden"
+                                                    class="minimum-input"
+                                                    required
+                                                    min="1"
+                                                    max={row.quantity}
+                                                    value={row.minimumOrderQuantity}
+                                                    data-id={row.contractLineId}
+                                                    disabled={isSaving}
+                                                    message-when-value-missing="Enter the Minimum Order Quantity."
+                                                    message-when-range-underflow="Must be at least 1."
+                                                    message-when-range-overflow="Cannot exceed the Contract Quantity."
+                                                    onchange={handleMinimumChange}>
+                                                </lightning-input>
+                                            </template>
+                                            <template lwc:elseif={row.minimumMissing}>
+                                                <span class="slds-text-color_error" title="MOQ is required but no Minimum Order Quantity is set. Orders for this product cannot be saved.">
+                                                    Not defined
+                                                </span>
+                                            </template>
+                                            <template lwc:else>
+                                                <lightning-formatted-number value={row.displayMinimum}>
+                                                </lightning-formatted-number>
+                                            </template>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={showEmptyState}>
+                <div class="slds-p-around_medium slds-text-align_center">
+                    No Contract Lines are available.
+                </div>
+            </template>
+
+        </div>
+
+        <template lwc:if={isEditing}>
+            <div slot="footer" class="slds-text-align_right">
+                <lightning-button
+                    label="Cancel"
+                    disabled={isSaving}
+                    onclick={handleCancel}>
+                </lightning-button>
+                <lightning-button
+                    class="slds-m-left_x-small"
+                    variant="brand"
+                    label="Save"
+                    disabled={isSaving}
+                    onclick={handleSave}>
+                </lightning-button>
+            </div>
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RFQ</fullName>
+    <description>Support Processes for RFQ Cases</description>
+    <isActive>true</isActive>
+    <values>
+        <fullName>Assigned</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Awaiting Information</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Cancelled</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Completed</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>In Progress</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Rejected</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Submitted</fullName>
+        <default>true</default>
+    </values>
+</BusinessProcess>

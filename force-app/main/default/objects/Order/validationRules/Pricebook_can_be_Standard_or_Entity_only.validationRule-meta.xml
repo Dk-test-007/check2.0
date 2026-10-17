@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pricebook_can_be_Standard_or_Entity_only</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(ISBLANK(Pricebook2Id)),
+    NOT(
+        OR(
+            Pricebook2.Name = &quot;Standard Price Book&quot;,
+            Pricebook2.Entity__c = AccountId
+        )
+    ),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Order.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorMessage>Opportunity can only be related to either Standard Pricebook or Entity Pricebook</errorMessage>
+</ValidationRule>

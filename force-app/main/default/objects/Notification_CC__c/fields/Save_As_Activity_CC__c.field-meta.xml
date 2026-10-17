@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Save_As_Activity_CC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Logs the email as an activity on the target record. Only has an effect when the target is a Contact or Lead.</description>
+    <label>Save As Activity</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

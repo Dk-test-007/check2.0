@@ -1,0 +1,220 @@
+:host {
+    display: block;
+    min-width: 0;
+}
+
+.availability-container {
+    width: 100%;
+    min-width: 0;
+}
+
+.search-area {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    overflow: visible;
+    z-index: 10;
+}
+
+.search-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    column-gap: 1rem;
+    width: 100%;
+}
+
+.search-column {
+    min-width: 0;
+}
+
+.button-column {
+    min-width: 0;
+    justify-self: end;
+    margin-left: auto;
+    padding-bottom: 0.125rem;
+    white-space: nowrap;
+}
+
+.product-dropdown {
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    left: 0;
+    width: calc((100% - 1rem) * 0.625);
+    max-height: 16rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #ffffff;
+    border: 1px solid #c9c9c9;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
+    z-index: 9999;
+}
+
+.dropdown-status {
+    padding: 0.75rem;
+    color: #706e6b;
+}
+
+.product-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    border: 0;
+    background: #ffffff;
+    color: #181818;
+    text-align: left;
+    cursor: pointer;
+}
+
+.product-option:hover,
+.product-option:focus {
+    background: #f3f3f3;
+    outline: none;
+}
+
+.product-name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.product-code {
+    flex-shrink: 0;
+    color: #706e6b;
+}
+
+.selected-products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 0.75rem;
+}
+
+.inventory-results {
+    margin-top: 1.5rem;
+}
+
+.product-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.product-heading-name {
+    display: flex;
+    align-items: flex-start;
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow-wrap: anywhere;
+}
+
+.product-heading-name lightning-icon {
+    flex-shrink: 0;
+}
+
+.product-heading-name a {
+    overflow-wrap: anywhere;
+}
+
+.product-last-synced {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 0.35rem;
+    flex: 0 0 auto;
+    max-width: 40%;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.last-synced-label {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.no-inventory-message {
+    margin-top: 0.5rem;
+}
+
+.inventory-table-container {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.inventory-table-container table {
+    min-width: 1700px;
+    width: 100%;
+}
+
+.inventory-table-container th,
+.inventory-table-container td {
+    padding: 0.65rem;
+    vertical-align: middle;
+}
+
+/* Center-align every column header. */
+.inventory-table-container th {
+    text-align: center !important;
+}
+
+/* Warehouse names wrap; values remain left-aligned. */
+.inventory-table-container .warehouse-column {
+    width: 220px;
+    min-width: 220px;
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+.inventory-table-container .warehouse-column a {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+/* Center-align Last Synced header and values. */
+.inventory-table-container .last-synced-column {
+    width: 180px;
+    min-width: 180px;
+    text-align: center !important;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+/* Center-align numeric headers and values. */
+.inventory-table-container .numeric-cell {
+    text-align: center !important;
+    white-space: normal;
+}
+
+@media (max-width: 600px) {
+    .search-row {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 0.75rem;
+    }
+
+    .button-column {
+        justify-self: start;
+        margin-left: 0;
+        padding-bottom: 0;
+    }
+
+    .product-dropdown {
+        width: 100%;
+    }
+
+    .product-heading {
+        flex-direction: column;
+    }
+
+    .product-last-synced {
+        justify-content: flex-start;
+        max-width: 100%;
+        text-align: left;
+    }
+}

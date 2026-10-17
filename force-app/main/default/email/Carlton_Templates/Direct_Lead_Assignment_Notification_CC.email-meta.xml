@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>A new Lead matches an existing Account with a known owner and is routed directly to that owner</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Direct Lead Assignment Notification CC</name>
+    <style>none</style>
+    <subject>New Lead Assigned: {!Lead.Company}</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

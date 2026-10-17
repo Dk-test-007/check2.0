@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Order_Line_Quantity_CC</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    Quantity &lt;= 0,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.OrderItem.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorMessage>Order Line Quantity must be greater than zero.</errorMessage>
+</ValidationRule>

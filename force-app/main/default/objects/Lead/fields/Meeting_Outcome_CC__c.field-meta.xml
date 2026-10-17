@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Meeting_Outcome_CC__c</fullName>
+    <label>Meeting Outcome</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Qualified - Progress</fullName>
+                <default>false</default>
+                <label>Qualified - Progress</label>
+            </value>
+            <value>
+                <fullName>Further Nurture Required</fullName>
+                <default>false</default>
+                <label>Further Nurture Required</label>
+            </value>
+            <value>
+                <fullName>Rebook Meeting</fullName>
+                <default>false</default>
+                <label>Rebook Meeting</label>
+            </value>
+            <value>
+                <fullName>Incorrect Decision Maker</fullName>
+                <default>false</default>
+                <label>Incorrect Decision Maker</label>
+            </value>
+            <value>
+                <fullName>No Contact / Lost Contact</fullName>
+                <default>false</default>
+                <label>No Contact / Lost Contact</label>
+            </value>
+            <value>
+                <fullName>Dormant / No Foreseeable Opportunity</fullName>
+                <default>false</default>
+                <label>Dormant / No Foreseeable Opportunity</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

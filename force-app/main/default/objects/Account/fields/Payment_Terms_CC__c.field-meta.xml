@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Terms_CC__c</fullName>
+    <label>Payment Terms</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>0NET</fullName>
+                <default>false</default>
+                <label>0 Days Net</label>
+            </value>
+            <value>
+                <fullName>1%10N30</fullName>
+                <default>false</default>
+                <label>1% /10 net 30</label>
+            </value>
+            <value>
+                <fullName>100%</fullName>
+                <default>false</default>
+                <label>Full payment before loading</label>
+            </value>
+            <value>
+                <fullName>100%B</fullName>
+                <default>false</default>
+                <label>100% BOL</label>
+            </value>
+            <value>
+                <fullName>120NET</fullName>
+                <default>false</default>
+                <label>120 Days Net</label>
+            </value>
+            <value>
+                <fullName>14NET</fullName>
+                <default>false</default>
+                <label>14 Days Net</label>
+            </value>
+            <value>
+                <fullName>20BOL</fullName>
+                <default>false</default>
+                <label>20 Days BOL</label>
+            </value>
+            <value>
+                <fullName>21EOM</fullName>
+                <default>false</default>
+                <label>21 Days EOM</label>
+            </value>
+            <value>
+                <fullName>30%P70%B</fullName>
+                <default>false</default>
+                <label>30% Proforma 70% BOL</label>
+            </value>
+            <value>
+                <fullName>30BOL</fullName>
+                <default>false</default>
+                <label>30 Days BOL</label>
+            </value>
+            <value>
+                <fullName>30EOM</fullName>
+                <default>false</default>
+                <label>30 Days EOM</label>
+            </value>
+            <value>
+                <fullName>30NET</fullName>
+                <default>false</default>
+                <label>30 Days Net</label>
+            </value>
+            <value>
+                <fullName>45BOL</fullName>
+                <default>false</default>
+                <label>45 Days BOL</label>
+            </value>
+            <value>
+                <fullName>45EOM</fullName>
+                <default>false</default>
+                <label>45 Days EOM</label>
+            </value>
+            <value>
+                <fullName>50%P50%B</fullName>
+                <default>false</default>
+                <label>50% Proforma 50% 30 Days BOL</label>
+            </value>
+            <value>
+                <fullName>60BOL</fullName>
+                <default>false</default>
+                <label>60 Days BOL</label>
+            </value>
+            <value>
+                <fullName>60EOM</fullName>
+                <default>false</default>
+                <label>60 Days EOM</label>
+            </value>
+            <value>
+                <fullName>60NET</fullName>
+                <default>false</default>
+                <label>60 Days Net</label>
+            </value>
+            <value>
+                <fullName>90BOL</fullName>
+                <default>false</default>
+                <label>90 Days BOL</label>
+            </value>
+            <value>
+                <fullName>90NET</fullName>
+                <default>false</default>
+                <label>90 Days Net</label>
+            </value>
+            <value>
+                <fullName>COD</fullName>
+                <default>false</default>
+                <label>Cash on Delivery</label>
+            </value>
+            <value>
+                <fullName>CURRENT</fullName>
+                <default>false</default>
+                <label>Current Month End</label>
+            </value>
+            <value>
+                <fullName>NO TERMS</fullName>
+                <default>false</default>
+                <label>No Terms</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

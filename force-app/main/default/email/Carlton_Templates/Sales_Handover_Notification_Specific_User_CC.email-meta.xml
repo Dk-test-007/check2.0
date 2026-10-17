@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>To inform Sales that a qualified Lead has been assigned and is ready for customer engagement.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Sales Handover Notification (Specific User) CC</name>
+    <style>none</style>
+    <subject>Lead Ready for Sales Engagement: {!Lead.Company}</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

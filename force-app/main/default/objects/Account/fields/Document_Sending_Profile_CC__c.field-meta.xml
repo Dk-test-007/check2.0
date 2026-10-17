@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Document_Sending_Profile_CC__c</fullName>
+    <label>Document Sending Profile</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>DEFAULT</fullName>
+                <default>true</default>
+                <label>DEFAULT</label>
+            </value>
+            <value>
+                <fullName>EMAIL</fullName>
+                <default>false</default>
+                <label>EMAIL</label>
+            </value>
+            <value>
+                <fullName>PORTAL</fullName>
+                <default>false</default>
+                <label>PORTAL</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

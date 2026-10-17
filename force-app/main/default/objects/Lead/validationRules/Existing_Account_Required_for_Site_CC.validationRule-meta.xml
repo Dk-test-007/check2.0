@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Existing_Account_Required_for_Site_CC</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Lead.Bypass_Validation_CC__c),
+    ISPICKVAL(Status, &quot;Qualified&quot;),
+    ISPICKVAL(Lead_Type_CC__c, &quot;Site&quot;),
+    ISBLANK(Entity_Associated_CC__c)
+)</errorConditionFormula>
+    <errorDisplayField>Entity_Associated_CC__c</errorDisplayField>
+    <errorMessage>Please specify an existing account while marking site lead as Qualified</errorMessage>
+</ValidationRule>

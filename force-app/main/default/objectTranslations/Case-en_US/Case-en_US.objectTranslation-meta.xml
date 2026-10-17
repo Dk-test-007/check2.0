@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <recordTypes>
+        <description><!-- Request for Quote --></description>
+        <label><!-- RFQ --></label>
+        <name>RFQ</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Opportunity is required for a RFQ --></errorMessage>
+        <name>Make_Opportunity_Required_for_RFQ</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- RFQ Outcome is required when the RFQ status is Completed, Rejected, or Cancelled. --></errorMessage>
+        <name>Make_RFQ_Outcome_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Only administrative users are allowed to update a closed RFQ. --></errorMessage>
+        <name>Restrict_Closed_RFQ_Updates_to_Admins</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Opportunity cannot be changed once assigned to an RFQ Case. --></errorMessage>
+        <name>Restrict_Opportunity_Update_on_a_RFQ</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Invalid RFQ status transition. Only CPT Users can make the permitted status transitions. --></errorMessage>
+        <name>Status_Progression_Restrictions</name>
+    </validationRules>
+</CustomObjectTranslation>

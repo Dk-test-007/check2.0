@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CancelledStatusRestrictions</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(ISPICKVAL(Status, &apos;Cancelled&apos;)),
+    OR (
+        ISCHANGED(Cancelled_Reason__c),
+        ISCHANGED(Cancelled_Reason_Detail__c)
+    ),
+    NOT(ISCHANGED(Latest_Quote__c)),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Quote.Bypass_Validation_CC__c)
+)</errorConditionFormula>
+    <errorDisplayField>Cancelled_Reason__c</errorDisplayField>
+    <errorMessage>Cancelled Reason can only be selected when the Quote is in Cancelled Status</errorMessage>
+</ValidationRule>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quote_Opportunity_Products_Required</fullName>
+    <active>true</active>
+    <description>Prevents Quote creation when the related Opportunity does not have any Opportunity Products.</description>
+    <errorConditionFormula>AND(
+				NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Quote.Bypass_Validation_CC__c),
+    ISNEW(),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+    Opportunity.Opportunity_Product_Count_CC__c = 0,
+				Opportunity.RecordType.DeveloperName &lt;&gt; &quot;BAU&quot;
+)</errorConditionFormula>
+    <errorMessage>At least one Opportunity Product is required to create a Quote.</errorMessage>
+</ValidationRule>

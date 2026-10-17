@@ -1,0 +1,12 @@
+<aura:component
+    implements="force:lightningQuickActionWithoutHeader"
+    access="global">
+
+    <aura:handler name="init"
+                  value="{!this}"
+                  action="{!c.doInit}"/>
+
+    <c:productAvailabilityCC
+        oninventoryloaded="{!c.handleInventoryLoaded}" />
+
+</aura:component>

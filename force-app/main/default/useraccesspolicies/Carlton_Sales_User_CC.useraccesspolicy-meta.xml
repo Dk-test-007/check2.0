@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UserAccessPolicy xmlns="http://soap.sforce.com/2006/04/metadata">
+    <booleanFilter>1</booleanFilter>
+    <description>Assigns mandatory Permission Set to Carlton Sales User</description>
+    <masterLabel>Carlton Sales User</masterLabel>
+    <order>1</order>
+    <status>Active</status>
+    <triggerType>CreateAndUpdate</triggerType>
+    <userAccessPolicyActions>
+        <action>Grant</action>
+        <target>PS_Carlton_Sales_User_CC</target>
+        <type>PermissionSet</type>
+    </userAccessPolicyActions>
+    <userAccessPolicyActions>
+        <action>Grant</action>
+        <target>force__CLMAdminUser</target>
+        <type>PermissionSet</type>
+    </userAccessPolicyActions>
+    <userAccessPolicyActions>
+        <action>Grant</action>
+        <target>force__CLMRuntimeUser</target>
+        <type>PermissionSet</type>
+    </userAccessPolicyActions>
+    <userAccessPolicyActions>
+        <action>Grant</action>
+        <target>Named_Credentials_Perm_Set_CC</target>
+        <type>PermissionSet</type>
+    </userAccessPolicyActions>
+    <userAccessPolicyFilters>
+        <operation>equals</operation>
+        <sortOrder>1</sortOrder>
+        <target>carlton sales user</target>
+        <type>Profile</type>
+    </userAccessPolicyFilters>
+</UserAccessPolicy>

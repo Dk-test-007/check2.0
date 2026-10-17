@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Sell-to Customer No. --></label>
+    <name>Sell_to_Customer_No_CC__c</name>
+    <relationshipLabel><!-- Orders (Sell-to Customer No.) --></relationshipLabel>
+</CustomFieldTranslation>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Category_CC__c</fullName>
+    <label>Product Category</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Bags and Envelopes</fullName>
+                <default>false</default>
+                <label>Bags and Envelopes</label>
+            </value>
+            <value>
+                <fullName>Cardboard</fullName>
+                <default>false</default>
+                <label>Cardboard</label>
+            </value>
+            <value>
+                <fullName>Delivery Bags</fullName>
+                <default>false</default>
+                <label>Delivery Bags</label>
+            </value>
+            <value>
+                <fullName>Facilities</fullName>
+                <default>false</default>
+                <label>Facilities</label>
+            </value>
+            <value>
+                <fullName>Fastenings</fullName>
+                <default>false</default>
+                <label>Fastenings</label>
+            </value>
+            <value>
+                <fullName>Labelling</fullName>
+                <default>false</default>
+                <label>Labelling</label>
+            </value>
+            <value>
+                <fullName>Palletwrap</fullName>
+                <default>false</default>
+                <label>Palletwrap</label>
+            </value>
+            <value>
+                <fullName>Protective</fullName>
+                <default>false</default>
+                <label>Protective</label>
+            </value>
+            <value>
+                <fullName>Strapping</fullName>
+                <default>false</default>
+                <label>Strapping</label>
+            </value>
+            <value>
+                <fullName>Tape</fullName>
+                <default>false</default>
+                <label>Tape</label>
+            </value>
+            <value>
+                <fullName>Voidfill</fullName>
+                <default>false</default>
+                <label>Voidfill</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>
