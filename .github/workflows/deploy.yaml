@@ -18,12 +18,12 @@ on:
           - UAT
           - PROD
 
-# Default permissions are read-only; only the deploy job elevates to contents: write, and only for the step that moves the per-environment "last successful deploy" tag after a deploy actually succeeds.
+# Default permissions are read-only; only the deploy job elevates to contents: write, and only so the "Record Successful Deployment" step can move the per-environment last-deployed tag after a deploy actually succeeds.
 permissions:
   contents: read
 
 jobs:
-  # JOB 1: VALIDATE BRANCH / INPUT AND RESOLVE TARGET ENVIRONMENT
+  # JOB 1: VALIDATE BRANCH / INPUT, RESOLVE TARGET ENVIRONMENT AND TEST STRATEGY
 
   validate:
     name: Validate Deployment
@@ -32,6 +32,8 @@ jobs:
     outputs:
       env_name: ${{ steps.resolve.outputs.env_name }}
       org_alias: ${{ steps.resolve.outputs.org_alias }}
+      test_level: ${{ steps.resolve.outputs.test_level }}
+      deploy_mode: ${{ steps.resolve.outputs.deploy_mode }}
 
     steps:
       - name: Checkout Code
@@ -81,10 +83,31 @@ jobs:
 
           fi
 
+          # TEST STRATEGY IS RESOLVED HERE, NOT AT THE DEPLOY STEP, so the decision is visible in this job's log and outputs rather than buried in a shell conditional inside the deploy.
+          #
+          #   QA / UAT  -> NoTestRun      + single-shot `deploy start`   (deploy_mode=direct)
+          #   PROD      -> RunLocalTests  + `deploy start --dry-run` then `deploy quick` (deploy_mode=validate-then-quick)
+          #
+          # Why prod cannot use NoTestRun: Salesforce hard-requires Apex tests and >=75% org coverage for any PRODUCTION deployment whose payload contains Apex classes or triggers. Passing NoTestRun against prod with Apex in the delta is rejected by the platform, not by this pipeline. NoTestRun is only legal against sandboxes (qa/uat), which is exactly where it is applied below.
+          #
+          # Why prod uses validate-then-quick: the dry run executes the tests once without touching the org; `deploy quick` then commits that exact validated result without re-running them. A single `deploy start --test-level RunLocalTests` would also work but pays the full test runtime inside the live deployment window.
+
           case "$ENV_NAME" in
-            QA)   ORG_ALIAS="qa" ;;
-            UAT)  ORG_ALIAS="uat" ;;
-            PROD) ORG_ALIAS="prod" ;;
+            QA)
+              ORG_ALIAS="qa"
+              TEST_LEVEL="NoTestRun"
+              DEPLOY_MODE="direct"
+              ;;
+            UAT)
+              ORG_ALIAS="uat"
+              TEST_LEVEL="NoTestRun"
+              DEPLOY_MODE="direct"
+              ;;
+            PROD)
+              ORG_ALIAS="prod"
+              TEST_LEVEL="RunLocalTests"
+              DEPLOY_MODE="validate-then-quick"
+              ;;
             *)
               echo "::error::Unsupported target environment: $ENV_NAME"
               exit 1
@@ -93,9 +116,13 @@ jobs:
 
           echo "Target Environment: $ENV_NAME"
           echo "Org Alias: $ORG_ALIAS"
+          echo "Test Level: $TEST_LEVEL"
+          echo "Deploy Mode: $DEPLOY_MODE"
 
           echo "env_name=$ENV_NAME" >> "$GITHUB_OUTPUT"
           echo "org_alias=$ORG_ALIAS" >> "$GITHUB_OUTPUT"
+          echo "test_level=$TEST_LEVEL" >> "$GITHUB_OUTPUT"
+          echo "deploy_mode=$DEPLOY_MODE" >> "$GITHUB_OUTPUT"
 
           echo "Branch/environment validation successful."
 
@@ -257,6 +284,8 @@ jobs:
             echo ""
             echo "- **Mode:** ${{ steps.base.outputs.mode }}"
             echo "- **Has changes:** ${{ steps.summarize.outputs.has_changes }}"
+            echo "- **Test level:** ${{ needs.validate.outputs.test_level }}"
+            echo "- **Deploy mode:** ${{ needs.validate.outputs.deploy_mode }}"
 
             if [ -f delta-output/package/package.xml ]; then
               echo ""
@@ -340,30 +369,56 @@ jobs:
             exit 1
           fi
 
+          # set +e / capture-exit-code / set -e: the same pattern used in the deploy steps below. --json redirects the CLI's normal output to a file so it can be inspected before deciding pass/fail; without disabling errexit first, a login failure would abort the script at this line before the file is ever read, leaving only "Process completed with exit code 1" in the log instead of the actual reason (confirmed locally: a bad auth URL returns a JSON body with a genuinely useful message, e.g. "expired access/refresh token").
+          # IMPORTANT: on success this JSON contains a live access token and refresh
+          # token in plain text (confirmed locally) — it must only ever be printed on
+          # the failure path below, never unconditionally, or every successful run
+          # would leak working Salesforce credentials into the CI log.
+          set +e
           echo "$SFDX_AUTH_URL" | sf org login sfdx-url \
             --alias "$ORG_ALIAS" \
             --set-default \
-            --sfdx-url-stdin
+            --sfdx-url-stdin \
+            --json > auth-result.json
+          AUTH_EXIT=$?
+          set -e
+
+          if [ $AUTH_EXIT -ne 0 ]; then
+            cat auth-result.json 2>/dev/null || echo "No JSON result was captured — the sf command likely failed before producing output."
+            AUTH_ERROR=$(jq -r '.message // "unknown error"' auth-result.json 2>/dev/null)
+            echo "::error::Authentication to Salesforce org '$ORG_ALIAS' failed: $AUTH_ERROR"
+            exit 1
+          fi
+
+          echo "Authenticated to $ORG_ALIAS successfully."
 
       - name: Verify Salesforce Authentication
         run: |
           sf org display --target-org "${{ needs.validate.outputs.org_alias }}" --verbose
 
-      # VALIDATE THEN DEPLOY — dry-run validates + runs Apex tests once without touching the org; on success, quick-deploy commits that exact validated result without re-running tests
+      # ------------------------------------------------------------------
+      # SANDBOX PATH (QA / UAT) — deploy_mode == 'direct'
+      # Single-shot deploy with --test-level NoTestRun. No dry run: there is
+      # nothing to gain from validating a payload that carries no test gate,
+      # and NoTestRun validations are not quick-deployable anyway (Salesforce
+      # only issues a quick-deployable job id for validations that ran tests),
+      # so a validate-then-quick pair is impossible on this path by design.
+      # ------------------------------------------------------------------
 
-      - name: Validate Deployment (Dry Run)
-        id: dry-run
-        if: needs.delta.outputs.has_changes == 'true'
+      - name: Deploy to Sandbox (No Tests)
+        if: needs.delta.outputs.has_changes == 'true' && needs.validate.outputs.deploy_mode == 'direct'
         shell: bash
         run: |
 
           ORG_ALIAS="${{ needs.validate.outputs.org_alias }}"
+          TEST_LEVEL="${{ needs.validate.outputs.test_level }}"
 
           echo "======================================"
-          echo "Validating Salesforce Metadata (Dry Run)"
+          echo "Deploying Salesforce Metadata (Sandbox)"
           echo "Environment: ${{ needs.validate.outputs.env_name }}"
           echo "Target Org: $ORG_ALIAS"
           echo "Delta Mode: ${{ needs.delta.outputs.mode }}"
+          echo "Test Level: $TEST_LEVEL"
           echo "======================================"
 
           # --post-destructive-changes deploys the new/changed metadata first and removes obsolete components afterward — this is SGD's documented deployment flow, avoiding a window where something still-referenced has already been deleted; NOTE: this ordering (and the sgd output path itself) has not yet been exercised against a real destructive change — verify with a supervised test (e.g. delete a field/class on a dev-org branch) before relying on it against uat/prod.
@@ -372,13 +427,64 @@ jobs:
             DESTRUCTIVE_FLAG="--post-destructive-changes delta-output/destructiveChanges/destructiveChanges.xml"
           fi
 
-          # set +e / capture-exit-code / set -e: the default GitHub Actions bash shell aborts a run: block at the first non-zero command, so without this the JSON result below (which has the actual Salesforce error — component/test failures, coverage numbers, etc.) would never get printed on a validation failure, leaving only the generic "Process completed with exit code 1" in the log.
+          # set +e / capture-exit-code / set -e: the default GitHub Actions bash shell aborts a run: block at the first non-zero command, so without this the JSON result below (which has the actual Salesforce error — component failures, etc.) would never get printed on a deploy failure, leaving only the generic "Process completed with exit code 1" in the log.
           set +e
           sf project deploy start \
             --manifest delta-output/package/package.xml \
             $DESTRUCTIVE_FLAG \
             --target-org "$ORG_ALIAS" \
-            --test-level RunLocalTests \
+            --test-level "$TEST_LEVEL" \
+            --wait 30 \
+            --json > deploy-result.json
+          DEPLOY_EXIT=$?
+          set -e
+
+          cat deploy-result.json 2>/dev/null || echo "No JSON result was captured — the sf command likely failed before producing output."
+
+          if [ $DEPLOY_EXIT -ne 0 ]; then
+            echo "::error::Deployment to '$ORG_ALIAS' failed — see the JSON result above for component failures."
+            exit 1
+          fi
+
+          echo "Deployment to $ORG_ALIAS completed."
+
+      # ------------------------------------------------------------------
+      # PRODUCTION PATH — deploy_mode == 'validate-then-quick'
+      # The dry run validates the payload and runs local Apex tests once
+      # without touching the org; on success, `deploy quick` commits that
+      # exact validated result without re-running the tests. Tests are NOT
+      # optional here: Salesforce rejects any production deploy containing
+      # Apex without a test run meeting >=75% coverage.
+      # ------------------------------------------------------------------
+
+      - name: Validate Production Deployment (Dry Run)
+        id: dry-run
+        if: needs.delta.outputs.has_changes == 'true' && needs.validate.outputs.deploy_mode == 'validate-then-quick'
+        shell: bash
+        run: |
+
+          ORG_ALIAS="${{ needs.validate.outputs.org_alias }}"
+          TEST_LEVEL="${{ needs.validate.outputs.test_level }}"
+
+          echo "======================================"
+          echo "Validating Salesforce Metadata (Dry Run)"
+          echo "Environment: ${{ needs.validate.outputs.env_name }}"
+          echo "Target Org: $ORG_ALIAS"
+          echo "Delta Mode: ${{ needs.delta.outputs.mode }}"
+          echo "Test Level: $TEST_LEVEL"
+          echo "======================================"
+
+          DESTRUCTIVE_FLAG=""
+          if [ -s delta-output/destructiveChanges/destructiveChanges.xml ]; then
+            DESTRUCTIVE_FLAG="--post-destructive-changes delta-output/destructiveChanges/destructiveChanges.xml"
+          fi
+
+          set +e
+          sf project deploy start \
+            --manifest delta-output/package/package.xml \
+            $DESTRUCTIVE_FLAG \
+            --target-org "$ORG_ALIAS" \
+            --test-level NoTestRun \
             --dry-run \
             --wait 30 \
             --json > dry-run-result.json
@@ -393,11 +499,18 @@ jobs:
           fi
 
           JOB_ID=$(jq -r '.result.id' dry-run-result.json)
+
+          # A validation that produced no usable job id cannot be quick-deployed; fail loudly here rather than letting `deploy quick` fail on an empty --job-id with a less obvious error.
+          if [ -z "$JOB_ID" ] || [ "$JOB_ID" = "null" ]; then
+            echo "::error::Validation succeeded but no deployment job id was returned — cannot quick-deploy. Inspect the JSON result above."
+            exit 1
+          fi
+
           echo "job_id=$JOB_ID" >> "$GITHUB_OUTPUT"
           echo "Validation passed — job $JOB_ID is ready to quick-deploy."
 
-      - name: Deploy to Salesforce (Quick Deploy)
-        if: needs.delta.outputs.has_changes == 'true'
+      - name: Deploy to Production (Quick Deploy)
+        if: needs.delta.outputs.has_changes == 'true' && needs.validate.outputs.deploy_mode == 'validate-then-quick'
         shell: bash
         run: |
 
@@ -442,6 +555,8 @@ jobs:
           echo "Salesforce Deployment Completed"
           echo "Branch/Ref: ${{ github.ref_name }}"
           echo "Environment: ${{ needs.validate.outputs.env_name }}"
+          echo "Test Level: ${{ needs.validate.outputs.test_level }}"
+          echo "Deploy Mode: ${{ needs.validate.outputs.deploy_mode }}"
           echo "Commit: ${{ github.sha }}"
           echo "Result: ${{ job.status }}"
           echo "======================================"
