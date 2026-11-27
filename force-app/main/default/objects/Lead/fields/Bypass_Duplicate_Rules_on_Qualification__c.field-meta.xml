@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bypass_Duplicate_Rules_on_Qualification__c</fullName>
+    <defaultValue>false</defaultValue>
+    <inlineHelpText>Tick only after reviewing the possible duplicates and confirming this Lead is not one of them. Lets the Lead move to Qualified despite a duplicate match.</inlineHelpText>
+    <label>Bypass Duplicate Rules</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

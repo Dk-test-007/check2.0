@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BC_Sync_Status_CC__c</fullName>
+    <label>BC Sync Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Not Synced</fullName>
+                <default>false</default>
+                <label>Not Synced</label>
+            </value>
+            <value>
+                <fullName>Waiting for BC</fullName>
+                <default>false</default>
+                <label>Waiting for BC</label>
+            </value>
+            <value>
+                <fullName>Successfully Synced</fullName>
+                <default>false</default>
+                <label>Successfully Synced</label>
+            </value>
+            <value>
+                <fullName>Callout Failed</fullName>
+                <default>false</default>
+                <label>Callout Failed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

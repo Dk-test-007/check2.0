@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Lead - Disqualified - Sales - Section 2</label>
+    <protected>false</protected>
+    <values>
+        <field>Active_CC__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Context_Value_CC__c</field>
+        <value xsi:type="xsd:string">Disqualified</value>
+    </values>
+    <values>
+        <field>Display_Action_CC__c</field>
+        <value xsi:type="xsd:string">SHOW</value>
+    </values>
+    <values>
+        <field>Display_Field_API_Names_CC__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Object_Config_Developer_Name_CC__c</field>
+        <value xsi:type="xsd:string">LEAD_DEFAULT</value>
+    </values>
+    <values>
+        <field>Persona_Type_CC__c</field>
+        <value xsi:type="xsd:string">PROFILE</value>
+    </values>
+    <values>
+        <field>Persona_Value_CC__c</field>
+        <value xsi:type="xsd:string">Carlton Sales User</value>
+    </values>
+    <values>
+        <field>Section_Heading_CC__c</field>
+        <value xsi:type="xsd:string">What happens now</value>
+    </values>
+    <values>
+        <field>Section_Key_CC__c</field>
+        <value xsi:type="xsd:string">SALES_WHAT_NOW</value>
+    </values>
+    <values>
+        <field>Section_Order_CC__c</field>
+        <value xsi:type="xsd:double">2.0</value>
+    </values>
+    <values>
+        <field>Section_Text_CC__c</field>
+        <value xsi:type="xsd:string">&lt;p&gt;No action is needed. The reason is kept for reporting.&lt;/p&gt;</value>
+    </values>
+</CustomMetadata>

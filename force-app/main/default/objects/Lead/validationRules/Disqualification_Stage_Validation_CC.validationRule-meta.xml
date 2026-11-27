@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disqualification_Stage_Validation_CC</fullName>
+    <active>false</active>
+    <description>Disqualified only from Qualify or Engage, from Identify while the contact is the placeholder, or (Lead UI pilot) from Identify through the pilot Disqualify action (marker field set in the same save, Lead_UI_Rework_Access_CC users only).</description>
+    <errorConditionFormula>AND(
+				ISCHANGED(Status),
+    ISPICKVAL(Status, &quot;Disqualified&quot;),
+    NOT(ISPICKVAL(PRIORVALUE(Status), &quot;Engage&quot;)),
+    NOT(ISPICKVAL(PRIORVALUE(Status), &quot;Qualify&quot;)),
+    NOT(AND(ISPICKVAL(PRIORVALUE(Status), &quot;Identify&quot;), Contact_Name_Unknown_CC__c)),
+    NOT(AND(ISPICKVAL(PRIORVALUE(Status), &quot;Identify&quot;), Disqualified_By_Pilot_Action_CC__c,
+        ISCHANGED(Disqualified_By_Pilot_Action_CC__c), $Permission.Lead_UI_Rework_Access_CC)),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Lead.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Lead can only be moved to Disqualified from Qualify or Engage status, or from Identify while the contact is still unidentified.</errorMessage>
+</ValidationRule>

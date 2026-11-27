@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssignmentRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignmentRule>
+        <fullName>Case_Assignment_CC</fullName>
+        <active>true</active>
+        <ruleEntry>
+            <assignedTo>CPT_Pool</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Email,Opportunity</value>
+            </criteriaItems>
+            <template>Carlton_Templates/RFQ_Case_Assignment_CC</template>
+        </ruleEntry>
+    </assignmentRule>
+</AssignmentRules>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Address_2_CC__c</fullName>
+    <description>CP27: second address line (unit, suite, building). Mapped to Account.Address_2_CC__c at conversion, which the Business Central Account and Site integrations send as Address 2.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Second address line, such as unit, suite or building. Copied to the Account&apos;s Address 2 when the Lead is converted.</inlineHelpText>
+    <label>Address 2</label>
+    <length>50</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

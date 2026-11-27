@@ -1,0 +1,13 @@
+<template>
+    <lightning-input
+        type="number"
+        variant="label-hidden"
+        value={editedValue}
+        min={typeAttributes.min}
+        max={typeAttributes.max}
+        step={typeAttributes.step}
+        label={columnLabel}
+        required={required}
+        data-inputable="true">
+    </lightning-input>
+</template>

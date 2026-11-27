@@ -1,0 +1,118 @@
+<template>
+    <lightning-quick-action-panel header={panelHeader}>
+
+        <div class="slds-is-relative" style="min-height: 6rem;">
+
+            <template lwc:if={isBusy}>
+                <lightning-spinner alternative-text={spinnerText} size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Blocking issue (no permission, parent not synced, etc.). Continue stays disabled. -->
+            <template lwc:if={blockingMessage}>
+                <div class="slds-scoped-notification slds-media slds-media_center slds-theme_error" role="status">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="utility:error" size="small" variant="inverse" alternative-text="Error"></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <p>{blockingMessage}</p>
+                        <template lwc:if={showParentLink}>
+                            <p class="slds-m-top_xx-small">
+                                Select Go to Entity to open <strong>{parentRecordName}</strong> and sync it first,
+                                then return to this Site.
+                            </p>
+                        </template>
+                    </div>
+                </div>
+            </template>
+
+            <!-- CP-446: check-details message shown before anything is sent -->
+            <template lwc:if={showConfirmation}>
+                <p class="slds-m-bottom_small">
+                    You are about to send <strong>{context.recordName}</strong> to Business Central.
+                </p>
+                <p class="slds-m-bottom_medium">
+                    Please check that all details on this {recordLabel} are correct before you continue.
+                </p>
+
+                <!-- Fields sent to Business Central (from the Integration Config Request Mapping) -->
+                <template lwc:if={hasReviewFields}>
+                    <div class="slds-m-bottom_medium" style="max-height: 18rem; overflow-y: auto;">
+                        <table class="slds-table slds-table_bordered slds-table_fixed-layout">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col">Field</th>
+                                    <th scope="col">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={reviewFields} for:item="field">
+                                    <tr key={field.label}>
+                                        <td class="slds-cell-wrap">{field.label}</td>
+                                        <td class="slds-cell-wrap">{field.value}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+
+                <template lwc:if={showLockWarning}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-theme_warning" role="status">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:warning" size="small" alternative-text="Warning"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p><strong>Some details cannot be changed after the sync.</strong></p>
+                            <p>
+                                If anything is incorrect, select Cancel and update the {recordLabel} first.
+                                Nothing is sent to Business Central until you select Continue.
+                            </p>
+                        </div>
+                    </div>
+                </template>
+
+                <template lwc:if={showResyncNote}>
+                    <div class="slds-scoped-notification slds-scoped-notification_light slds-media slds-media_center" role="status">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:info" size="small" alternative-text="Information"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p>
+                                This {recordLabel} has already been synced to Business Central.
+                                Continuing will send the current details as an update.
+                            </p>
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+        </div>
+
+        <div slot="footer">
+            <lightning-button
+                variant="neutral"
+                label="Cancel"
+                onclick={handleCancel}
+                disabled={isSyncing}
+                class="slds-m-right_x-small">
+            </lightning-button>
+            <!-- Parent Entity not synced: offer to open it instead of a disabled Continue -->
+            <template lwc:if={showParentLink}>
+                <lightning-button
+                    variant="brand"
+                    label="Go to Entity"
+                    onclick={handleGoToParent}>
+                </lightning-button>
+            </template>
+            <template lwc:else>
+                <lightning-button
+                    variant="brand"
+                    label={continueLabel}
+                    onclick={handleContinue}
+                    disabled={isContinueDisabled}>
+                </lightning-button>
+            </template>
+        </div>
+
+    </lightning-quick-action-panel>
+</template>

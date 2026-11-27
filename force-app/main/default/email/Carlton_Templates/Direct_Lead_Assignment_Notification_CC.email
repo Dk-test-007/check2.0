@@ -1,0 +1,21 @@
+Hi [Recipient First Name],<br><br>
+
+A new Lead has been assigned to you based on an existing customer relationship.<br><br>
+
+<b>Key Details:</b>
+
+<ul>
+<li><b>Company:</b> {!Lead.Company}</li>
+<li><b>Lead Source:</b> {!Lead.LeadSource}</li>
+<li><b>Product Category:</b> {!Lead.Product_Category_Text_CC__c}</li>
+<li><b>Assigned To:</b> {!Lead.OwnerFullName}</li>
+</ul>
+
+Please review the Lead in Salesforce and begin the qualification process or update the Lead as appropriate.
+
+<a href="{!Lead.Link}">View Lead in Salesforce</a>
+
+<br><br>
+
+Thank you,<br>
+<b>Carlton Packaging CRM</b>

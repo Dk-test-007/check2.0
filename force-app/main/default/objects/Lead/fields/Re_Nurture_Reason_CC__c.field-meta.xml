@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Re_Nurture_Reason_CC__c</fullName>
+    <label>Re-Nurture Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Lost to Competitor</fullName>
+                <default>false</default>
+                <label>Lost to Competitor</label>
+            </value>
+            <value>
+                <fullName>Contract Renewal Not Due</fullName>
+                <default>false</default>
+                <label>Contract Renewal Not Due</label>
+            </value>
+            <value>
+                <fullName>No Active Project</fullName>
+                <default>false</default>
+                <label>No Active Project</label>
+            </value>
+            <value>
+                <fullName>Budget Not Available</fullName>
+                <default>false</default>
+                <label>Budget Not Available</label>
+            </value>
+            <value>
+                <fullName>Not Ready to Buy</fullName>
+                <default>false</default>
+                <label>Not Ready to Buy</label>
+            </value>
+            <value>
+                <fullName>Authority Missing</fullName>
+                <default>false</default>
+                <label>Authority Missing</label>
+            </value>
+            <value>
+                <fullName>Product Gap</fullName>
+                <default>false</default>
+                <label>Product Gap</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

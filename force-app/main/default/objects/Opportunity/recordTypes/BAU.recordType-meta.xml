@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BAU</fullName>
+    <active>true</active>
+    <businessProcess>BAU</businessProcess>
+    <compactLayoutAssignment>Opportunity_Compact_Layout_CC</compactLayoutAssignment>
+    <label>Existing Business</label>
+    <picklistValues>
+        <picklist>Bespoke_Over_20_Percent_CC__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Core_Category_Min_Qty_CC__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Daily_Pallet_Volume_CC__c</picklist>
+        <values>
+            <fullName>1%2C000%2B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>300 - 999</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Under 300</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ForecastCategoryName</picklist>
+        <values>
+            <fullName>Best Case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Omitted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pipeline</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>LeadSource</picklist>
+        <values>
+            <fullName>Creditsafe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing Customer Enquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LinkedIn Sales Navigator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Generated %2F Prospecting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trade Show %2F Expo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web Search</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Website Enquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ZoomInfo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sales_Appointment_Booked_CC__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tender_Exclusive_Pricing_CC__c</picklist>
+        <values>
+            <fullName>Exclusive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tender</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Existing Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Business</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

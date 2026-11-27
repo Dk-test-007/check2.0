@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HTML_Body_CC__c</fullName>
+    <description>HTML body of the email. Must be Long Text Area, not Rich Text, because Rich Text rewrites the markup and strips attributes.</description>
+    <label>HTML Body</label>
+    <length>131072</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>25</visibleLines>
+</CustomField>

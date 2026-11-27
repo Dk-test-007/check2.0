@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Extended_Through_CC__c</fullName>
+    <description>Last day of the last planned month when the plan runs past the native term (EndDate). Set by the UI2 services (Extend term, or an Order dated past the plan); blank while the plan matches the native term. The native ScheduleCount and EndDate stay unchanged.</description>
+    <inlineHelpText>The plan covers months up to this date. The native End Date does not change once the agreement is activated.</inlineHelpText>
+    <label>Extended Through</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Date</type>
+</CustomField>

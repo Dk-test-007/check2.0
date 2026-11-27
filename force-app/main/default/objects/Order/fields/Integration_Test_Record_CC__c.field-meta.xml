@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Integration_Test_Record_CC__c</fullName>
+    <description>True when the Order&apos;s account is synthetic UI2 data (Account.Integration_Test_Record_CC__c). Read-only formula, so it cannot be set on an Order to avoid the Business Central integration.</description>
+    <formula>Account.Integration_Test_Record_CC__c</formula>
+    <label>Integration Test Record</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

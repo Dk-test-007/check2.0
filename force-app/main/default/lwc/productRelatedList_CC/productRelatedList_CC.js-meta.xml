@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Product Related List CC</masterLabel>
+    <description>Dynamic product related list for Opportunity, Quote and Order.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="showAddProducts" type="Boolean" label="Show Add Products Button" default="true" description="Controls the visibility of the Add Products button."/>
+            <property name="showEditProducts" type="Boolean" label="Show Edit Products Button" default="true" description="Controls the visibility of the Edit Products button."/>
+            <property name="showChoosePricebook" type="Boolean" label="Show Choose Pricebook Button" default="true" description="Controls the visibility of the Choose Pricebook button."/>
+            <objects>
+                <object>Opportunity</object>
+                <object>Quote</object>
+                <object>Order</object>
+            </objects>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

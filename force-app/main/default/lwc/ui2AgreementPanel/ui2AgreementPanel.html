@@ -1,0 +1,79 @@
+<template>
+    <lightning-card title="Agreement terms and forecast tools" icon-name="standard:sales_agreement">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template lwc:if={error}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_small" role="alert">{error}</div>
+            </template>
+            <template lwc:if={view}>
+                <p class="slds-text-body_regular">
+                    This record tracks the customer agreement and its term. Expected monthly demand is managed on the
+                    &nbsp;<a data-id={view.accountId} onclick={handleOpen}>Account forecast</a>. Orders are entered separately for this phase.
+                </p>
+                <p class="slds-text-body_small slds-m-top_small">
+                    <span class="slds-m-right_xx-small">Agreement term:</span>
+                    <lightning-formatted-date-time value={view.nativeStartDate} year="numeric" month="short" day="2-digit" time-zone="UTC"></lightning-formatted-date-time>
+                    <span class="slds-m-horizontal_xx-small">–</span>
+                    <lightning-formatted-date-time value={view.nativeEndDate} year="numeric" month="short" day="2-digit" time-zone="UTC"></lightning-formatted-date-time>.
+                </p>
+                <template lwc:if={view.sourceOpportunityId}>
+                    <p class="slds-text-body_small slds-m-top_xx-small">Source Opportunity: <a data-id={view.sourceOpportunityId} onclick={handleOpen}>{view.sourceOpportunityName}</a>.</p>
+                </template>
+                <template lwc:if={canRevisePlan}>
+                    <div class="slds-m-top_medium">
+                        <lightning-button label="Revise agreement forecast" onclick={toggleRevise} disabled={busy}></lightning-button>
+                        <lightning-button label="Extend forecast term" onclick={toggleExtend} disabled={extendDisabled} class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <p class="slds-text-body_small slds-text-color_weak slds-m-top_small">
+                        This header-only agreement has no committed product schedules. Edit its header to change contract dates or terms; revise the live forecast on the Account.
+                    </p>
+                </template>
+                <template lwc:if={showRevise}>
+                    <div class="slds-box slds-m-top_medium">
+                        <h3 class="slds-text-heading_small">Revise forecast</h3>
+                        <p class="slds-text-body_small">The original plan remains unchanged. Enter revised expected amounts and a reason.</p>
+                        <div class="slds-scrollable_x slds-m-vertical_small">
+                            <table class="slds-table slds-table_bordered slds-table_cell-buffer" aria-label="Monthly forecast revision">
+                                <thead><tr><th scope="col">Month</th><th scope="col">Original plan</th><th scope="col">Current forecast</th></tr></thead>
+                                <tbody>
+                                    <template for:each={rows} for:item="row">
+                                        <tr key={row.rowKey}>
+                                            <td>{row.label}</td>
+                                            <td><lightning-formatted-number value={row.originalPlan} minimum-fraction-digits="2"></lightning-formatted-number></td>
+                                            <td>
+                                                <template lwc:if={row.canEdit}>
+                                                    <lightning-input type="number" variant="label-hidden" label="Revised forecast" data-id={row.monthPlanId} value={row.editValue} min="0" step="0.01" onchange={handleEdit}></lightning-input>
+                                                </template>
+                                                <template lwc:else><lightning-formatted-number value={row.currentForecast} minimum-fraction-digits="2"></lightning-formatted-number></template>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                        <lightning-textarea label="Reason for the change" value={reason} onchange={handleReason} required max-length="255"></lightning-textarea>
+                        <lightning-button variant="brand" label="Save forecast revision" onclick={handleSaveRevision} disabled={busy}></lightning-button>
+                    </div>
+                </template>
+                <template lwc:if={showExtend}>
+                    <div class="slds-box slds-m-top_medium">
+                        <h3 class="slds-text-heading_small">Extend forecast term</h3>
+                        <p class="slds-text-body_small">Adds forecast months after {extendRange}. This does not change contractual quantities.</p>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4"><lightning-input type="number" label="Months to add" value={extendCount} min="1" step="1" onchange={handleExtendCount}></lightning-input></div>
+                            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4"><lightning-input type="number" label="Set every month to" min="0" step={extendStep} onchange={handleExtendFill}></lightning-input></div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-gutters slds-m-top_x-small">
+                            <template for:each={extendAmounts} for:item="amount">
+                                <div key={amount.key} class="slds-col slds-size_1-of-2 slds-medium-size_1-of-6"><lightning-input type="number" label={amount.label} data-key={amount.key} value={amount.value} min="0" step={extendStep} onchange={handleExtendAmount}></lightning-input></div>
+                            </template>
+                        </div>
+                        <lightning-textarea label="Reason for the extension" value={extendReason} onchange={handleExtendReason} required max-length="255"></lightning-textarea>
+                        <lightning-button variant="brand" label="Save extension" onclick={handleSaveExtension} disabled={busy}></lightning-button>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

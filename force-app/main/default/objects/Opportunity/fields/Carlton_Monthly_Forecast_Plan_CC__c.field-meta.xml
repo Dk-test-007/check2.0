@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Carlton_Monthly_Forecast_Plan_CC__c</fullName>
+    <description>Immutable first monthly forecast entered when a Carlton opportunity is won. JSON retains source product, month, quantity/value mode and agreement decision; account edits change forecast facts only.</description>
+    <label>Carlton initial monthly forecast plan</label>
+    <length>131072</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

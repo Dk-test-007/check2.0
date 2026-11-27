@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Source_Opportunity_CC__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>The won new-business Opportunity this agreement was created from (UI2 traceability; there is no standard Opportunity lookup on Sales Agreement).</description>
+    <label>Source Opportunity</label>
+    <referenceTo>Opportunity</referenceTo>
+    <relationshipLabel>Sales Agreements (UI2)</relationshipLabel>
+    <relationshipName>Sales_Agreements_UI2</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

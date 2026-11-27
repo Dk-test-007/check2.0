@@ -1,0 +1,28 @@
+<template>
+    <lightning-quick-action-panel title="Sync to Business Central">
+        
+        <div class="slds-m-vertical_medium">
+            <p>Are you sure you want to push this Contact to Business Central?</p>
+        </div>
+
+        <div slot="footer">
+            <lightning-button 
+                variant="neutral" 
+                label="Cancel" 
+                onclick={handleCancel} 
+                class="slds-m-right_small">
+            </lightning-button>
+            <lightning-button 
+                variant="brand" 
+                label="Sync Contact" 
+                onclick={handleSync} 
+                disabled={isLoading}>
+            </lightning-button>
+        </div>
+
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        
+    </lightning-quick-action-panel>
+</template>

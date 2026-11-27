@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Value_CC__c</fullName>
+    <description>Ten-question qualification Q1. Mapped from Lead.Opportunity_Value_CC__c on conversion. Distinct from Amount and from Account.Estimated_Annual_Spend_CC__c.</description>
+    <inlineHelpText>Value of this opportunity, as answered in qualification (question 1). Not the customer&apos;s total spend, and not Amount.</inlineHelpText>
+    <label>Opportunity Value</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

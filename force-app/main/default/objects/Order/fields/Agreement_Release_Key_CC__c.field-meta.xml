@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Agreement_Release_Key_CC__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>Sales Agreement Id | customer PO | release number, set when a release Order is entered from a Sales Agreement. Unique, so the same PO release cannot be entered twice; a PO split across agreements uses separate releases that share the PO number.</description>
+    <externalId>true</externalId>
+    <label>Agreement Release Key</label>
+    <length>120</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

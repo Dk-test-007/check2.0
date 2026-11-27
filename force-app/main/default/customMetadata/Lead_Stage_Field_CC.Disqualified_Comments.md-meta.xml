@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Disqualified Comments</label>
+    <protected>false</protected>
+    <values>
+        <field>Active_CC__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Condition_Field_CC__c</field>
+        <value xsi:type="xsd:string">Disqualified_Reason_CC__c</value>
+    </values>
+    <values>
+        <field>Condition_Value_CC__c</field>
+        <value xsi:type="xsd:string">Other</value>
+    </values>
+    <values>
+        <field>Error_Message_CC__c</field>
+        <value xsi:type="xsd:string">Please select a Disqualified Reason. If the reason is ‘Other’, please provide Disqualification Comments</value>
+    </values>
+    <values>
+        <field>Field_API_Names_CC__c</field>
+        <value xsi:type="xsd:string">Disqualification_Comments_CC__c</value>
+    </values>
+    <values>
+        <field>Lead_Stage_CC__c</field>
+        <value xsi:type="xsd:string">Disqualified</value>
+    </values>
+    <values>
+        <field>Minimum_Required_CC__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

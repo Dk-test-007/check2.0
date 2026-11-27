@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>LEAD_ADMIN_GUIDANCE_QUALIFIED</label>
+    <protected>false</protected>
+    <values>
+        <field>Active_CC__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Context_Value_CC__c</field>
+        <value xsi:type="xsd:string">Qualified</value>
+    </values>
+    <values>
+        <field>Display_Action_CC__c</field>
+        <value xsi:type="xsd:string">SHOW</value>
+    </values>
+    <values>
+        <field>Display_Field_API_Names_CC__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Object_Config_Developer_Name_CC__c</field>
+        <value xsi:type="xsd:string">LEAD_DEFAULT</value>
+    </values>
+    <values>
+        <field>Persona_Type_CC__c</field>
+        <value xsi:type="xsd:string">PROFILE</value>
+    </values>
+    <values>
+        <field>Persona_Value_CC__c</field>
+        <value xsi:type="xsd:string">System Administrator</value>
+    </values>
+    <values>
+        <field>Section_Heading_CC__c</field>
+        <value xsi:type="xsd:string">Guidance Visibility</value>
+    </values>
+    <values>
+        <field>Section_Key_CC__c</field>
+        <value xsi:type="xsd:string">LEAD_ADMIN_GUIDANCE_QUALIFIED</value>
+    </values>
+    <values>
+        <field>Section_Order_CC__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>Section_Text_CC__c</field>
+        <value xsi:type="xsd:string">&lt;p&gt;Guidance for this record is tailored to your role and the current business scenario. There is no specific guidance to display for your current role at this stage.&lt;/p&gt;</value>
+    </values>
+</CustomMetadata>

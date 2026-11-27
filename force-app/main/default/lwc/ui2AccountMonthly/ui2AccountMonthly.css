@@ -1,0 +1,27 @@
+:host {
+    display: block;
+    max-width: 100%;
+}
+
+/* Keep wide tables inside the card; scroll horizontally when they don't fit. */
+.table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.table-scroll table th,
+.table-scroll table td {
+    white-space: nowrap;
+}
+
+/* Year picker in the card header: label on one line, fixed-width combobox. */
+.year-label {
+    white-space: nowrap;
+    padding-top: 0;
+    margin-bottom: 0;
+}
+
+.year-picker {
+    width: 6.5rem;
+    min-width: 6.5rem;
+}

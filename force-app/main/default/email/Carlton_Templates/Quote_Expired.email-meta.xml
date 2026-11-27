@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Quote: Expired</name>
+    <style>none</style>
+    <subject>Quote Expired: {!Quote.QuoteNumber}</subject>
+    <textOnly>Hi {!Receiving_User.FirstName},
+
+One of your customer Quotes has expired.
+
+Key Details:
+
+Quote Number: {!Quote.QuoteNumber}
+Customer: {!Quote.Account}
+Quote Value: {!Quote.TotalPrice}
+Expiry Date: {!Quote.ExpirationDate}
+
+Please review the expired Quote in Salesforce and contact the customer if a revised Quote is required.
+
+{!Quote.QuoteNumber}
+
+Thank you,
+Carlton Packaging CRM</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

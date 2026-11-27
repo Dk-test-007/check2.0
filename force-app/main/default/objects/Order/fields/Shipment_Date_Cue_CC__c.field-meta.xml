@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Shipment_Date_Cue_CC__c</fullName>
+    <formula>ISBLANK(Shipment_Date_CC__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Shipment Date Cue</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

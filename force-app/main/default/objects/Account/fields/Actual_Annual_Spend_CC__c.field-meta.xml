@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Actual_Annual_Spend_CC__c</fullName>
+    <description>CP27 ten-question qualification Q2 (actual spend). Mapped from Lead.Actual_Annual_Spend_CC__c. Converting into an existing Account only fills it when blank.</description>
+    <inlineHelpText>The customer&apos;s actual annual spend, carried from the Lead at conversion. Not an opportunity value.</inlineHelpText>
+    <label>Actual Annual Spend</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

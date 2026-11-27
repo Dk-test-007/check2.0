@@ -1,0 +1,16 @@
+<template>
+    <lightning-quick-action-panel header="Order PDF Preview">
+        <iframe src={pdfUrl} width="100%" height="600px" style="border:none;"></iframe>
+
+        <template lwc:if={isSaving}>
+            <lightning-spinner alternative-text="Saving"></lightning-spinner>
+        </template>
+
+        <div slot="footer">
+            <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+            <lightning-button variant="brand" label="Save to Order"
+                              class="slds-m-left_x-small"
+                              onclick={handleSave} disabled={isSaving}></lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+</template>

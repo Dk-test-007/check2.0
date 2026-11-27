@@ -1,0 +1,93 @@
+<template>
+    <lightning-quick-action-panel header="Sync Sites to Business Central">
+
+        <div class="slds-is-relative panel-body">
+
+            <template lwc:if={isBusy}>
+                <lightning-spinner alternative-text={spinnerText} size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Blocking issue: Entity not synced, no field set, no Sites, no permission -->
+            <template lwc:if={blockingMessage}>
+                <div class="slds-scoped-notification slds-media slds-media_center slds-theme_error" role="status">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="utility:error" size="small" variant="inverse" alternative-text="Error"></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <p>{blockingMessage}</p>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={showSummary}>
+                <p class="slds-m-bottom_medium">{summaryText}</p>
+
+                <!-- Sites with missing mandatory fields, shown before anything is sent -->
+                <template lwc:if={hasExcludedSites}>
+                    <h3 class="slds-text-heading_small slds-m-bottom_x-small">{excludedHeading}</h3>
+                    <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_x-small">
+                        Select Cancel, complete these Sites, then run the sync again.
+                    </p>
+                    <div class="table-container slds-m-bottom_medium">
+                        <lightning-datatable
+                            key-field="id"
+                            data={excludedSites}
+                            columns={excludedColumns}
+                            hide-checkbox-column
+                            wrap-text-max-lines="3">
+                        </lightning-datatable>
+                    </div>
+                </template>
+
+                <!-- Sites that can be synced; the user picks which ones to send -->
+                <h3 class="slds-text-heading_small slds-m-bottom_x-small">{eligibleHeading}</h3>
+                <template lwc:if={hasEligibleSites}>
+                    <div class="table-container slds-m-bottom_medium">
+                        <lightning-datatable
+                            key-field="id"
+                            data={eligibleSites}
+                            columns={eligibleColumns}
+                            selected-rows={selectedIds}
+                            onrowselection={handleRowSelection}>
+                        </lightning-datatable>
+                    </div>
+
+                    <!-- CP-446: check-details message -->
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-theme_warning" role="status">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:warning" size="small" alternative-text="Warning"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p><strong>Please check the details of every selected Site before you continue.</strong></p>
+                            <p>
+                                Some details cannot be changed after a Site is synced. Only the selected Sites
+                                are sent, and nothing is sent until you select Sync.
+                            </p>
+                        </div>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <p class="slds-text-color_weak">No Sites are ready to sync.</p>
+                </template>
+            </template>
+
+        </div>
+
+        <div slot="footer">
+            <lightning-button
+                variant="neutral"
+                label="Cancel"
+                onclick={handleCancel}
+                disabled={isSyncing}
+                class="slds-m-right_x-small">
+            </lightning-button>
+            <lightning-button
+                variant="brand"
+                label={continueLabel}
+                onclick={handleContinue}
+                disabled={isContinueDisabled}>
+            </lightning-button>
+        </div>
+
+    </lightning-quick-action-panel>
+</template>

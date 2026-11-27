@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>RFQ Ownership Change Notification</name>
+    <style>none</style>
+    <subject>RFQ Ownership Changed: {!Case.CaseNumber}</subject>
+    <textOnly>Hi {!Receiving_User.FirstName},
+
+Ownership of an RFQ has changed.
+
+Key Details:
+
+RFQ Number: {!Case.CaseNumber}
+Opportunity: {!Case.Opportunity__c}
+Customer: {!Case.Account}
+Previous Owner: ##PREVIOUS_OWNER##
+New Owner: {!Case.OwnerFullName}
+Current Status: {!Case.Status}
+
+Please review the RFQ in Salesforce and continue the investigation.
+
+{!Case.CaseNumber}
+
+Thank you,
+Carlton Packaging CRM</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

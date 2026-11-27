@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <validationRules>
+        <errorMessage><!-- Quote is no longer editable --></errorMessage>
+        <name>Is_Quote_Editable</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Quantity should be greater than zero --></errorMessage>
+        <name>Quantity_should_be_greater_than_zero</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Sales Price cannot be less than zero. --></errorMessage>
+        <name>SalesPriceCannotBeNegative</name>
+    </validationRules>
+</CustomObjectTranslation>

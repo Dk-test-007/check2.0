@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Duplicate_Review_Required_CC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>No longer set (CP27): the duplicate check now runs on entry to Qualified and blocks the save instead of holding the Lead at Qualify. LeadStageTransitionService_CC clears it on every save. Not user-editable.</description>
+    <inlineHelpText>Ticked when this Lead was held at Qualify because it may duplicate an existing record.</inlineHelpText>
+    <label>Duplicate Review Required</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

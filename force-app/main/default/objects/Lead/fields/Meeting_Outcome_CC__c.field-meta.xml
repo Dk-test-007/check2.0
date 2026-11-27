@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Meeting_Outcome_CC__c</fullName>
+    <description>Outcome of the Engage meeting, recorded through the Record Meeting Outcome card (leadMeetingOutcome_CC): Qualified, Disqualified or Re-Nurture. The earlier outcome values are kept inactive so existing history still reads correctly.</description>
+    <inlineHelpText>Outcome of the sales meeting. Qualified moves the Lead to Qualified; Disqualified and Re-Nurture close it with a reason.</inlineHelpText>
+    <label>Meeting Outcome</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Qualified</fullName>
+                <default>false</default>
+                <label>Qualified</label>
+            </value>
+            <value>
+                <fullName>Disqualified</fullName>
+                <default>false</default>
+                <label>Disqualified</label>
+            </value>
+            <value>
+                <fullName>Re-Nurture</fullName>
+                <default>false</default>
+                <label>Re-Nurture</label>
+            </value>
+            <value>
+                <fullName>Dormant / No Foreseeable Opportunity</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Dormant / No Foreseeable Opportunity</label>
+            </value>
+            <value>
+                <fullName>Further Nurture Required</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Further Nurture Required</label>
+            </value>
+            <value>
+                <fullName>Incorrect Decision Maker</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Incorrect Decision Maker</label>
+            </value>
+            <value>
+                <fullName>No Contact / Lost Contact</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>No Contact / Lost Contact</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Qualified - Progress</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Qualified - Progress</label>
+            </value>
+            <value>
+                <fullName>Rebook Meeting</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Rebook Meeting</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

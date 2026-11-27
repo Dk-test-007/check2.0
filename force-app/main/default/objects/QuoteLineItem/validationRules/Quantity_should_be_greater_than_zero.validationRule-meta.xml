@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quantity_should_be_greater_than_zero</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (
+    Quantity &lt;= 0,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.QuoteLineItem.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Quantity</errorDisplayField>
+    <errorMessage>Quantity should be greater than zero</errorMessage>
+</ValidationRule>
