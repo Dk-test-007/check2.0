@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Order_Backtracking_Validation_CC</name>
+    </customPermissions>
+    <description>Elevated Order access. Allows users to move an Activated Order back to a previous status by bypassing the Prevent_Activated_Order_Backtracking_CC validation rule.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>PS Carlton Orders Elevated Access CC</label>
+</PermissionSet>

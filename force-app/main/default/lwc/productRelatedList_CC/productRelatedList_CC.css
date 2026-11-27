@@ -1,0 +1,549 @@
+/* Related List Card */
+.related-list-card {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #c9c9c9;
+    border-radius: 16px;
+    overflow: visible;
+    position: relative;
+}
+
+.related-list-header {
+    min-height: 64px;
+    padding: 12px 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+    border-radius: 16px 16px 0 0;
+}
+
+.related-list-title {
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #032d60;
+    margin: 0;
+}
+
+/* .related-list-icon {
+    --slds-c-icon-color-background: #ff5a3c;
+    --slds-c-icon-color-foreground: #ffffff;
+} */
+
+.related-list-body {
+    position: relative;
+    z-index: 3;
+}
+
+.related-list-footer {
+    min-height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid #c9c9c9;
+    position: relative;
+    z-index: 1;
+}
+
+lightning-datatable {
+    display: block;
+}
+
+
+/* Add Products infinite-scroll viewport */
+.product-table {
+    display: block;
+    height: 24rem;
+}
+
+/* Compact Modal */
+.compact-modal {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.compact-modal .compact-modal-container {
+    position: relative;
+    width: 80%;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: calc(100vh - 4rem);
+    margin: 0 auto !important;
+    padding: 0 !important;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start !important;
+
+    border-radius: 1.5rem;
+    background: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Choose Pricebook */
+.pricebook-modal-container {
+    max-width: 54rem;
+    min-width: 32rem;
+}
+
+/* Allow Price Book dropdown to extend beyond the modal */
+.compact-modal .pricebook-modal-container {
+    overflow: visible;
+}
+
+.pricebook-modal-container .slds-modal__header {
+    flex: 0 0 auto;
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid #c9c9c9;
+}
+
+.pricebook-modal-content {
+    position: relative;
+    flex: 0 1 auto;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+    padding: 1.5rem 2rem;
+    border: none;
+}
+
+.pricebook-instructions {
+    color: #032d60;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+}
+
+.pricebook-modal-container .slds-modal__footer {
+    flex: 0 0 auto;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #c9c9c9;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* Confirmation Message */
+.confirmation-content {
+    position: relative;
+    flex: 0 0 auto;
+    min-height: 7rem;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.confirmation-message {
+    text-align: center;
+    color: #444444;
+    font-size: 1rem;
+}
+
+/* Delete Modal */
+.delete-modal-container {
+    max-width: 60rem;
+    min-width: 30rem;
+}
+
+.delete-modal-container .slds-modal__header {
+    flex: 0 0 auto;
+    padding: 1.5rem 1rem;
+    border-bottom: 3px solid #c9c9c9;
+}
+
+.delete-modal-content {
+    position: relative;
+    flex: 0 0 auto;
+    min-height: 5rem;
+    padding: 1.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.delete-confirmation-message {
+    text-align: center;
+    font-size: 1rem;
+    color: #444444;
+}
+
+.delete-modal-container .slds-modal__footer {
+    flex: 0 0 auto;
+    padding: 1rem 1.5rem;
+    border-top: 3px solid #c9c9c9;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* Standard Large Modals */
+.standard-modal-container {
+    position: relative;
+}
+
+.modal-content {
+    position: relative;
+    min-height: 12rem;
+}
+
+/* Close Button */
+.modal-close {
+    position: absolute;
+    top: -1.5rem;
+    right: -1.5rem;
+    z-index: 30;
+    --slds-c-icon-color-foreground-default: #0176d3;
+}
+
+/* Spinner: Confined to Modal Content */
+.modal-loading-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: inherit;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .related-list-header {
+        flex-wrap: wrap;
+    }
+
+    .compact-modal .compact-modal-container {
+        width: 95%;
+        min-width: 0;
+    }
+
+    .pricebook-modal-content {
+        padding: 1rem;
+    }
+}
+
+/* FUTURE PHASE: Site/Warehouse allocation and nested Product Availability modal styles.
+
+.site-allocation-content {
+    max-height: calc(100vh - 13rem);
+    overflow: auto;
+}
+
+.site-allocation-screen {
+    width: 100%;
+}
+
+.site-allocation-intro {
+    color: #444444;
+    margin-bottom: 1rem;
+}
+
+.site-allocation-product {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #dddbda;
+}
+
+.site-allocation-product:last-child {
+    border-bottom: 0;
+}
+
+.site-allocation-product-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.site-allocation-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+    padding: 0.25rem 0;
+    border: 0;
+    background: transparent;
+    color: #032d60;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+}
+
+.site-allocation-toggle span {
+    overflow-wrap: anywhere;
+}
+
+.site-allocation-chevron {
+    flex: 0 0 auto;
+}
+
+.site-allocation-actions {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.site-allocation-table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.site-allocation-table {
+    width: 100%;
+    min-width: 760px;
+    table-layout: fixed;
+}
+
+.site-allocation-table th {
+    background: #f3f3f3;
+    color: #444444;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.site-allocation-table td,
+.site-allocation-table th {
+    vertical-align: middle;
+}
+
+.site-allocation-table td lightning-record-picker,
+.site-allocation-table td lightning-input {
+    display: block;
+    min-width: 8rem;
+}
+
+.site-allocation-table .allocation-row-number {
+    width: 2.5rem;
+    text-align: center;
+}
+
+.allocation-warning-row td {
+    padding: 0.25rem 0.75rem 0.65rem;
+    background: #fffaf0;
+}
+
+.allocation-availability-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.75rem;
+    color: #8c4b02;
+    background: #fff3cd;
+    border: 1px solid #f1c21b;
+    border-radius: 0.25rem;
+    font-size: 0.8125rem;
+}
+
+.allocation-availability-icon {
+    flex: 0 0 auto;
+}
+
+.allocation-row-warning {
+    margin-top: 0.25rem;
+}
+
+.no-site-allocation-message {
+    margin: 0.5rem 0 0.75rem;
+    text-align: center;
+    color: #706e6b;
+}
+
+
+.availability-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.58);
+}
+
+.availability-modal-dialog {
+    display: flex;
+    width: min(96vw, 90rem);
+    height: min(92vh, 60rem);
+    max-height: 92vh;
+    min-height: 20rem;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.availability-modal-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+}
+
+.availability-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 0 0 auto;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #dddbda;
+}
+
+.availability-modal-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    padding: 1.25rem 1.5rem;
+}
+
+@media (max-width: 700px) {
+    .site-allocation-product-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .site-allocation-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .availability-modal-overlay {
+        padding: 0.5rem;
+    }
+
+    .availability-modal-dialog {
+        width: 100%;
+        height: 96vh;
+        max-height: 96vh;
+        border-radius: 0.5rem;
+    }
+
+    .availability-modal-body {
+        padding: 1rem;
+    }
+}
+*/
+
+
+/* Keep the host constrained to the modal. lightning-datatable owns the
+   horizontal scrollbar when the configured column widths exceed this viewport. */
+.edit-product-table-container {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.edit-product-table {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.edit-table-sizing-placeholder {
+    position: relative;
+    min-height: 8rem;
+}
+
+
+/* Edit Products availability action */
+.edit-product-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+/*
+ * Nested Product Availability layer. JavaScript measures the visible modal
+ * panel and sets its exact top, left, width and height relative to its actual
+ * CSS positioning parent. The parent Edit Products dimensions are unchanged.
+ */
+.availability-modal-overlay {
+    position: absolute;
+    inset: 0; /* Fallback until renderedCallback applies measured panel bounds. */
+    z-index: 1000;
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    background: #ffffff;
+    border-radius: inherit;
+    overflow: hidden;
+}
+
+.availability-modal-dialog {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    background: #ffffff;
+    box-shadow: none;
+}
+
+.availability-modal-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    background: #ffffff;
+}
+
+.availability-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 0 0 auto;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #dddbda;
+    background: #ffffff;
+}
+
+.availability-modal-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    padding: 1.25rem 1.5rem;
+    background: #ffffff;
+}
+
+@media (max-width: 700px) {
+    .availability-modal-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .availability-modal-body {
+        padding: 1rem;
+    }
+}

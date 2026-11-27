@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Field_Source_Type_CC__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Field Source Type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>PRODUCT</fullName>
+                <default>true</default>
+                <label>PRODUCT</label>
+            </value>
+            <value>
+                <fullName>PRICEBOOK_ENTRY</fullName>
+                <default>false</default>
+                <label>PRICEBOOK_ENTRY</label>
+            </value>
+            <value>
+                <fullName>LINE_ITEM</fullName>
+                <default>false</default>
+                <label>LINE_ITEM</label>
+            </value>
+            <value>
+                <fullName>CALCULATED</fullName>
+                <default>false</default>
+                <label>CALCULATED</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

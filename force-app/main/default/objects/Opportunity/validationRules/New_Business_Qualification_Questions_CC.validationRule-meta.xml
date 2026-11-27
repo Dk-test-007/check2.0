@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Business_Qualification_Questions_CC</fullName>
+    <active>true</active>
+    <description>CP27 (10 Nov): Opportunity questions Q1, Q3, Q4, Q5, Q8 and Q10 are required to move a New Business Opportunity out of Discover (not to create it). Pilot users only (Lead_UI_Rework_Access_CC).</description>
+    <errorConditionFormula>AND(
+    RecordType.DeveloperName = &quot;New_Business&quot;,
+    ISCHANGED(StageName),
+    ISPICKVAL(PRIORVALUE(StageName), &quot;Discover&quot;),
+    NOT(ISPICKVAL(StageName, &quot;Closed Lost&quot;)),
+    OR(
+        ISBLANK(Opportunity_Value_CC__c),
+        ISBLANK(TEXT(Bespoke_Over_20_Percent_CC__c)),
+        ISBLANK(TEXT(Core_Category_Min_Qty_CC__c)),
+        ISBLANK(TEXT(Daily_Pallet_Volume_CC__c)),
+        ISBLANK(TEXT(Sales_Appointment_Booked_CC__c)),
+        ISBLANK(TEXT(Tender_Exclusive_Pricing_CC__c))
+    ),
+    $Permission.Lead_UI_Rework_Access_CC,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Opportunity.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorMessage>Answer the qualification questions before moving on from Discover: Opportunity Value, Bespoke over 20 percent, Core Category and Min Qty, Daily Pallet Volume, Sales Appointment Booked, and Tender or Exclusive Pricing.</errorMessage>
+</ValidationRule>

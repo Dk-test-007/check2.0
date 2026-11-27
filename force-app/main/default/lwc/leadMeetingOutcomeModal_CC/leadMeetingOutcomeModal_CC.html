@@ -1,0 +1,102 @@
+<template>
+    <lightning-modal-header label={title}></lightning-modal-header>
+    <lightning-modal-body>
+        <template lwc:if={loading}>
+            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+        </template>
+        <template lwc:if={saving}>
+            <lightning-spinner alternative-text="Saving" size="small"></lightning-spinner>
+        </template>
+        <template lwc:if={error}>
+            <div class="slds-notify slds-notify_alert slds-alert_error slds-var-m-bottom_small" role="alert">
+                <h2>{error}</h2>
+            </div>
+        </template>
+
+        <template lwc:if={hasOutcome}>
+            <div class="slds-box slds-box_x-small slds-theme_shade slds-var-m-bottom_small">
+                <dl class="slds-list_horizontal slds-wrap">
+                    <dt class="slds-item_label slds-text-color_weak" title="Meeting Outcome">Meeting Outcome</dt>
+                    <dd class="slds-item_detail" data-id="outcome">{meetingOutcome}</dd>
+                    <template lwc:if={subReason}>
+                        <dt class="slds-item_label slds-text-color_weak" title="Sub Reason">Sub Reason</dt>
+                        <dd class="slds-item_detail slds-text-longform" data-id="sub-reason">{subReason}</dd>
+                    </template>
+                </dl>
+            </div>
+        </template>
+
+        <template lwc:if={ready}>
+            <p class="slds-var-m-bottom_small">{intro}</p>
+            <lightning-record-edit-form object-api-name="Lead" record-id={recordId}>
+                <template lwc:if={showDuplicatePanel}>
+                    <div class={duplicatePanelClass} data-id="duplicates" role="status">
+                        <div class="slds-media slds-media_center slds-var-m-bottom_x-small">
+                            <div class="slds-media__figure">
+                                <lightning-icon icon-name="utility:warning" size="x-small"
+                                    alternative-text="Warning"></lightning-icon>
+                            </div>
+                            <div class="slds-media__body">
+                                <h3 class="slds-text-heading_small">{duplicateHeading}</h3>
+                            </div>
+                        </div>
+                        <p class="slds-var-m-bottom_x-small">{duplicateMessage}</p>
+                        <template lwc:if={hasDuplicateMatches}>
+                            <ul class="slds-list_dotted slds-var-m-bottom_x-small">
+                                <template for:each={duplicateMatches} for:item="match">
+                                    <li key={match.recordId}>
+                                        <a href={match.url} target="_blank" rel="noopener">{match.label}</a>
+                                    </li>
+                                </template>
+                            </ul>
+                            <template lwc:if={moreDuplicateMatches}>
+                                <p class="slds-text-body_small slds-var-m-bottom_x-small">More matches exist than are listed here.</p>
+                            </template>
+                        </template>
+                        <template lwc:if={canBypassDuplicates}>
+                            <lightning-input-field field-name="Bypass_Duplicate_Rules_on_Qualification__c"
+                                onchange={handleChange}></lightning-input-field>
+                        </template>
+                    </div>
+                </template>
+                <template lwc:if={hasOwnSections}>
+                    <h3 class="slds-text-heading_small slds-var-m-bottom_x-small">{ownHeading}</h3>
+                    <template for:each={ownSections} for:item="section">
+                        <div key={section.key} class="slds-var-m-bottom_small" data-section={section.key}>
+                            <template lwc:if={section.isGroup}>
+                                <p class="slds-text-title slds-var-m-bottom_xx-small">{section.heading}</p>
+                            </template>
+                            <div class="slds-grid slds-wrap slds-gutters_small">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                    <template for:each={section.leftFields} for:item="field">
+                                        <lightning-input-field key={field.key} field-name={field.name}
+                                            required={field.required} variant="label-stacked"
+                                            onchange={handleChange}></lightning-input-field>
+                                    </template>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                    <template for:each={section.rightFields} for:item="field">
+                                        <lightning-input-field key={field.key} field-name={field.name}
+                                            required={field.required} variant="label-stacked"
+                                            onchange={handleChange}></lightning-input-field>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+
+                <template lwc:if={nothingToAsk}>
+                    <p class="slds-text-color_weak">No further fields are required.</p>
+                </template>
+            </lightning-record-edit-form>
+            <p class="slds-text-body_small slds-text-color_weak slds-var-m-top_small">{note}</p>
+        </template>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label="Cancel" onclick={handleCancel} disabled={saving}
+            class="slds-var-m-right_x-small"></lightning-button>
+        <lightning-button variant={saveVariant} label={saveLabel} onclick={handleSave}
+            disabled={saveDisabled}></lightning-button>
+    </lightning-modal-footer>
+</template>

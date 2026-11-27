@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>May mark or unmark an Account as synthetic UI2 data (Account.Integration_Test_Record_CC__c), which suppresses Business Central publication and notifications for that account and its Orders. Sandbox UI2 administrators only.</description>
+    <isLicensed>false</isLicensed>
+    <label>UI2 Isolation Admin</label>
+</CustomPermission>

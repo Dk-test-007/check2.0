@@ -1,0 +1,37 @@
+<template>
+    <div class="slds-var-p-horizontal_small slds-var-p-vertical_x-small">
+        <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-start">
+            <div>
+                <span class="slds-form-element__label">Address</span>
+                <template lwc:if={editing}></template>
+                <template lwc:elseif={hasAddress}>
+                    <lightning-formatted-address street={streetLines} city={city} province={province}
+                        postal-code={postalCode} country={country}></lightning-formatted-address>
+                </template>
+                <template lwc:else>
+                    <p class="slds-text-color_weak">No address yet.</p>
+                </template>
+            </div>
+            <template lwc:if={editing}></template>
+            <template lwc:else>
+                <lightning-button-icon icon-name="utility:edit" variant="bare" alternative-text="Edit address"
+                    title="Edit address" onclick={handleEdit}></lightning-button-icon>
+            </template>
+        </div>
+        <div class="slds-var-m-top_x-small" data-id="local-time">
+            <span class="slds-form-element__label">Local Time</span>
+            <p class={localTimeClass}>{localTime.text}</p>
+        </div>
+        <template lwc:if={editing}>
+            <lightning-record-edit-form record-id={recordId} object-api-name="Lead" onsuccess={handleSuccess}>
+                <lightning-messages></lightning-messages>
+                <lightning-input-field field-name="Address"></lightning-input-field>
+                <lightning-input-field field-name="Address_2_CC__c"></lightning-input-field>
+                <div class="slds-var-m-top_x-small">
+                    <lightning-button label="Cancel" onclick={handleCancel} class="slds-var-m-right_x-small"></lightning-button>
+                    <lightning-button variant="brand" type="submit" label="Save"></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </template>
+    </div>
+</template>

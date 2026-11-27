@@ -1,0 +1,161 @@
+<apex:page standardController="Quote" renderAs="pdf" applyBodyTag="false"
+           showHeader="false" sidebar="false" standardStylesheets="false"
+           cache="false" title="Sales Quote {!Quote.QuoteNumber}">
+<head>
+<style type="text/css">
+  @font-face{ font-family:'Poppins'; font-weight:400; src:url('{!URLFOR($Resource.PoppinsRegular)}'); }
+  @font-face{ font-family:'Poppins'; font-weight:500; src:url('{!URLFOR($Resource.PoppinsMedium)}'); }
+  @font-face{ font-family:'Poppins'; font-weight:600; src:url('{!URLFOR($Resource.PoppinsSemiBold)}'); }
+  @font-face{ font-family:'Poppins'; font-weight:700; src:url('{!URLFOR($Resource.PoppinsBold)}'); }
+
+  @page{
+    size:A4; margin:3.3cm 1.3cm 1.8cm 1.3cm;
+    @top-center { content:element(pageHeader); }
+    @bottom-right{ content:"Page " counter(page) " of " counter(pages);
+                   font-family:'Poppins',sans-serif; font-size:8px; color:#6b6b6b; }
+  }
+  body{ font-family:'Poppins',Helvetica,sans-serif; font-size:9px; color:#1f1f1f; }
+  table{ border-collapse:collapse; width:100%; } td{ vertical-align:top; }
+
+  #pageHeader{ position:running(pageHeader); }
+  .sq{ text-align:right; font-size:24px; font-weight:700; letter-spacing:.5px; color:#006248; }
+  .qmeta{ text-align:right; font-size:10px; padding-top:7px; line-height:1.6; }
+  .k{ font-weight:600; }
+  .hrule{ border-top:1.5px solid #133d31; margin-top:12px; }
+
+  .sech{ color:#133d31; font-weight:700; font-size:14px; margin-bottom:11px; letter-spacing:.2px; }
+  .cname{ color:#006248; font-weight:700; font-size:15px; margin:6px 0 5px; }
+  .blk{ margin-bottom:9px; font-size:11px; line-height:1.5; }
+
+  .items{ margin-top:24px; border:1px solid #dcdcdc; -fs-table-paginate:paginate; table-layout:fixed; }
+  .items td, .items th{ overflow:hidden; }
+  .items thead{ display:table-header-group; }
+  .items th{ background:#EEF4ED; color:#2E4E43; font-weight:600; font-size:7.5px; text-align:left;
+             padding:7px 6px; border-right:1px solid #dcdcdc; border-bottom:1px solid #dcdcdc; letter-spacing:.2px; }
+  .items td{ font-size:8px; padding:9px 6px; border-right:1px solid #dcdcdc; border-bottom:1px solid #dcdcdc;
+             vertical-align:middle; line-height:1.4; }
+  .items tr{ page-break-inside:auto; }
+  .r{ text-align:right; }
+  .pname{ font-weight:600; }
+  .muted{ color:#9a9a9a; }
+
+  .totwrap{ page-break-inside:avoid; margin-top:16px; }
+  .tot{ width:42%; margin-left:58%; border:1px solid #dcdcdc; }
+  .tot td{ padding:8px 13px; font-size:9px; border-bottom:1px solid #dcdcdc; }
+  .tot .tk{ color:#333; } .tot .tv{ text-align:right; font-weight:600; }
+  .tot tr.disc .tv{ color:#b3261e; }
+
+  .note{ text-align:right; font-style:italic; font-size:8px; color:#6b6b6b; margin-top:14px; line-height:1.5; }
+  .terms{ text-align:right; margin-top:26px; }
+  .terms a{ color:#0000ee; text-decoration:underline; font-size:10px; }
+  .footer{ margin-top:30px; padding-top:10px; border-top:1px solid #dcdcdc;
+           text-align:center; font-size:8px; color:#6b6b6b; line-height:1.6; }
+</style>
+</head>
+<body>
+
+  <!-- RUNNING MASTHEAD (repeats on every page) -->
+  <div id="pageHeader">
+    <table>
+      <tr>
+        <td style="width:50%; vertical-align:middle;">
+          <img src="{!URLFOR($Resource.CarltonLogo)}" style="width:250px; height:auto;"/>
+        </td>
+        <td style="width:50%; vertical-align:middle;">
+          <div class="sq">SALES QUOTE</div>
+          <div class="qmeta">
+            Quote Number: <span class="k">{!Quote.QuoteNumber}</span><br/>
+            Date: <span class="k"><apex:outputText value="{0,date,MMMM d, yyyy}"><apex:param value="{!Quote.CreatedDate}"/></apex:outputText></span>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div class="hrule"></div>
+  </div>
+
+  <!-- CUSTOMER DETAILS / QUOTE SUMMARY (blank fields are hidden) -->
+  <table>
+    <tr>
+      <td style="width:50%; padding-right:26px;">
+        <div class="sech">CUSTOMER DETAILS</div>
+        <div class="blk"><span class="k">Company Name</span>: {!Quote.Account.Name}</div>
+        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(Quote.ContactId))}">
+          <div class="cname">{!Quote.Contact.Name}</div>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(Quote.Phone))}">
+          <div class="blk"><span class="k">Phone No</span>: {!Quote.Phone}</div>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(Quote.Email))}">
+          <div class="blk"><span class="k">Email</span>: {!Quote.Email}</div>
+        </apex:outputPanel>
+        <div class="blk"><span class="k">Bill To Address</span>: {!Quote.BillingName}<br/>{!Quote.BillingStreet}<apex:outputText rendered="{!NOT(ISBLANK(Quote.BillingStreet))}"><br/></apex:outputText>{!Quote.BillingCity}<apex:outputText rendered="{!AND(NOT(ISBLANK(Quote.BillingCity)),NOT(ISBLANK(Quote.BillingState)))}">,&#160;</apex:outputText>{!Quote.BillingState}&#160;{!Quote.BillingPostalCode}<apex:outputText rendered="{!NOT(ISBLANK(Quote.BillingCountry))}"><br/></apex:outputText>{!Quote.BillingCountry}</div>
+      </td>
+      <td style="width:50%">
+        <div class="sech">QUOTE SUMMARY</div>
+        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(Quote.ExpirationDate))}">
+          <div class="blk"><span class="k">Valid Till:</span> <apex:outputText value="{0,date,dd MMMM yyyy}"><apex:param value="{!Quote.ExpirationDate}"/></apex:outputText></div>
+        </apex:outputPanel>
+        <div class="blk"><span class="k">Billing Enquiries Email:</span> ar.us@carltonpackaging.com</div>
+        <div class="blk"><span class="k">Sales Enquiries Email:</span> sales.na@carltonpackaging.com</div>
+        <div class="blk" style="margin-top:16px;"><span class="k">Ship To Address</span>: {!Quote.ShippingName}<br/>{!Quote.ShippingStreet}<apex:outputText rendered="{!NOT(ISBLANK(Quote.ShippingStreet))}"><br/></apex:outputText>{!Quote.ShippingCity}<apex:outputText rendered="{!AND(NOT(ISBLANK(Quote.ShippingCity)),NOT(ISBLANK(Quote.ShippingState)))}">,&#160;</apex:outputText>{!Quote.ShippingState}&#160;{!Quote.ShippingPostalCode}<apex:outputText rendered="{!NOT(ISBLANK(Quote.ShippingCountry))}"><br/></apex:outputText>{!Quote.ShippingCountry}</div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- LINE ITEMS -->
+  <table class="items">
+    <colgroup>
+      <col style="width:19%;"/><col style="width:25%;"/><col style="width:10%;"/>
+      <col style="width:8%;"/><col style="width:18%;"/><col style="width:20%;"/>
+    </colgroup>
+    <thead>
+      <tr>
+        <th style="width:19%;">Product</th><th style="width:25%;">Description</th><th class="r" style="width:10%;">Quantity</th>
+        <th style="width:8%;">UOM</th><th class="r" style="width:18%;">Sales Price</th><th class="r" style="width:20%;">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <apex:repeat value="{!Quote.QuoteLineItems}" var="li">
+        <tr>
+          <!-- Chunks let very long names without spaces wrap -->
+          <td class="pname"><span>{!MID(li.Product2.Name,1,12)}</span><span>{!MID(li.Product2.Name,13,12)}</span><span>{!MID(li.Product2.Name,25,12)}</span><span>{!MID(li.Product2.Name,37,12)}</span><span>{!MID(li.Product2.Name,49,12)}</span><span>{!MID(li.Product2.Name,61,12)}</span><span>{!MID(li.Product2.Name,73,12)}</span><span>{!MID(li.Product2.Name,85,12)}</span><span>{!MID(li.Product2.Name,97,12)}</span><span>{!MID(li.Product2.Name,109,12)}</span><span>{!MID(li.Product2.Name,121,12)}</span><span>{!MID(li.Product2.Name,133,12)}</span><span>{!MID(li.Product2.Name,145,12)}</span><span>{!MID(li.Product2.Name,157,12)}</span><span>{!MID(li.Product2.Name,169,12)}</span><span>{!MID(li.Product2.Name,181,12)}</span><span>{!MID(li.Product2.Name,193,12)}</span><span>{!MID(li.Product2.Name,205,12)}</span><span>{!MID(li.Product2.Name,217,12)}</span><span>{!MID(li.Product2.Name,229,12)}</span><span>{!MID(li.Product2.Name,241,15)}</span></td>
+
+          <!-- Full product description (up to 4,000 chars), split into 20-char chunks so long unbroken words wrap -->
+          <apex:variable var="d" value="{!li.Product2.Description}"/>
+          <td class="desc"><span>{!MID(d,1,20)}</span><span>{!MID(d,21,20)}</span><span>{!MID(d,41,20)}</span><span>{!MID(d,61,20)}</span><span>{!MID(d,81,20)}</span><span>{!MID(d,101,20)}</span><span>{!MID(d,121,20)}</span><span>{!MID(d,141,20)}</span><span>{!MID(d,161,20)}</span><span>{!MID(d,181,20)}</span><span>{!MID(d,201,20)}</span><span>{!MID(d,221,20)}</span><span>{!MID(d,241,20)}</span><span>{!MID(d,261,20)}</span><span>{!MID(d,281,20)}</span><span>{!MID(d,301,20)}</span><span>{!MID(d,321,20)}</span><span>{!MID(d,341,20)}</span><span>{!MID(d,361,20)}</span><span>{!MID(d,381,20)}</span><span>{!MID(d,401,20)}</span><span>{!MID(d,421,20)}</span><span>{!MID(d,441,20)}</span><span>{!MID(d,461,20)}</span><span>{!MID(d,481,20)}</span><span>{!MID(d,501,20)}</span><span>{!MID(d,521,20)}</span><span>{!MID(d,541,20)}</span><span>{!MID(d,561,20)}</span><span>{!MID(d,581,20)}</span><span>{!MID(d,601,20)}</span><span>{!MID(d,621,20)}</span><span>{!MID(d,641,20)}</span><span>{!MID(d,661,20)}</span><span>{!MID(d,681,20)}</span><span>{!MID(d,701,20)}</span><span>{!MID(d,721,20)}</span><span>{!MID(d,741,20)}</span><span>{!MID(d,761,20)}</span><span>{!MID(d,781,20)}</span><span>{!MID(d,801,20)}</span><span>{!MID(d,821,20)}</span><span>{!MID(d,841,20)}</span><span>{!MID(d,861,20)}</span><span>{!MID(d,881,20)}</span><span>{!MID(d,901,20)}</span><span>{!MID(d,921,20)}</span><span>{!MID(d,941,20)}</span><span>{!MID(d,961,20)}</span><span>{!MID(d,981,20)}</span><span>{!MID(d,1001,20)}</span><span>{!MID(d,1021,20)}</span><span>{!MID(d,1041,20)}</span><span>{!MID(d,1061,20)}</span><span>{!MID(d,1081,20)}</span><span>{!MID(d,1101,20)}</span><span>{!MID(d,1121,20)}</span><span>{!MID(d,1141,20)}</span><span>{!MID(d,1161,20)}</span><span>{!MID(d,1181,20)}</span><span>{!MID(d,1201,20)}</span><span>{!MID(d,1221,20)}</span><span>{!MID(d,1241,20)}</span><span>{!MID(d,1261,20)}</span><span>{!MID(d,1281,20)}</span><span>{!MID(d,1301,20)}</span><span>{!MID(d,1321,20)}</span><span>{!MID(d,1341,20)}</span><span>{!MID(d,1361,20)}</span><span>{!MID(d,1381,20)}</span><span>{!MID(d,1401,20)}</span><span>{!MID(d,1421,20)}</span><span>{!MID(d,1441,20)}</span><span>{!MID(d,1461,20)}</span><span>{!MID(d,1481,20)}</span><span>{!MID(d,1501,20)}</span><span>{!MID(d,1521,20)}</span><span>{!MID(d,1541,20)}</span><span>{!MID(d,1561,20)}</span><span>{!MID(d,1581,20)}</span><span>{!MID(d,1601,20)}</span><span>{!MID(d,1621,20)}</span><span>{!MID(d,1641,20)}</span><span>{!MID(d,1661,20)}</span><span>{!MID(d,1681,20)}</span><span>{!MID(d,1701,20)}</span><span>{!MID(d,1721,20)}</span><span>{!MID(d,1741,20)}</span><span>{!MID(d,1761,20)}</span><span>{!MID(d,1781,20)}</span><span>{!MID(d,1801,20)}</span><span>{!MID(d,1821,20)}</span><span>{!MID(d,1841,20)}</span><span>{!MID(d,1861,20)}</span><span>{!MID(d,1881,20)}</span><span>{!MID(d,1901,20)}</span><span>{!MID(d,1921,20)}</span><span>{!MID(d,1941,20)}</span><span>{!MID(d,1961,20)}</span><span>{!MID(d,1981,20)}</span><span>{!MID(d,2001,20)}</span><span>{!MID(d,2021,20)}</span><span>{!MID(d,2041,20)}</span><span>{!MID(d,2061,20)}</span><span>{!MID(d,2081,20)}</span><span>{!MID(d,2101,20)}</span><span>{!MID(d,2121,20)}</span><span>{!MID(d,2141,20)}</span><span>{!MID(d,2161,20)}</span><span>{!MID(d,2181,20)}</span><span>{!MID(d,2201,20)}</span><span>{!MID(d,2221,20)}</span><span>{!MID(d,2241,20)}</span><span>{!MID(d,2261,20)}</span><span>{!MID(d,2281,20)}</span><span>{!MID(d,2301,20)}</span><span>{!MID(d,2321,20)}</span><span>{!MID(d,2341,20)}</span><span>{!MID(d,2361,20)}</span><span>{!MID(d,2381,20)}</span><span>{!MID(d,2401,20)}</span><span>{!MID(d,2421,20)}</span><span>{!MID(d,2441,20)}</span><span>{!MID(d,2461,20)}</span><span>{!MID(d,2481,20)}</span><span>{!MID(d,2501,20)}</span><span>{!MID(d,2521,20)}</span><span>{!MID(d,2541,20)}</span><span>{!MID(d,2561,20)}</span><span>{!MID(d,2581,20)}</span><span>{!MID(d,2601,20)}</span><span>{!MID(d,2621,20)}</span><span>{!MID(d,2641,20)}</span><span>{!MID(d,2661,20)}</span><span>{!MID(d,2681,20)}</span><span>{!MID(d,2701,20)}</span><span>{!MID(d,2721,20)}</span><span>{!MID(d,2741,20)}</span><span>{!MID(d,2761,20)}</span><span>{!MID(d,2781,20)}</span><span>{!MID(d,2801,20)}</span><span>{!MID(d,2821,20)}</span><span>{!MID(d,2841,20)}</span><span>{!MID(d,2861,20)}</span><span>{!MID(d,2881,20)}</span><span>{!MID(d,2901,20)}</span><span>{!MID(d,2921,20)}</span><span>{!MID(d,2941,20)}</span><span>{!MID(d,2961,20)}</span><span>{!MID(d,2981,20)}</span><span>{!MID(d,3001,20)}</span><span>{!MID(d,3021,20)}</span><span>{!MID(d,3041,20)}</span><span>{!MID(d,3061,20)}</span><span>{!MID(d,3081,20)}</span><span>{!MID(d,3101,20)}</span><span>{!MID(d,3121,20)}</span><span>{!MID(d,3141,20)}</span><span>{!MID(d,3161,20)}</span><span>{!MID(d,3181,20)}</span><span>{!MID(d,3201,20)}</span><span>{!MID(d,3221,20)}</span><span>{!MID(d,3241,20)}</span><span>{!MID(d,3261,20)}</span><span>{!MID(d,3281,20)}</span><span>{!MID(d,3301,20)}</span><span>{!MID(d,3321,20)}</span><span>{!MID(d,3341,20)}</span><span>{!MID(d,3361,20)}</span><span>{!MID(d,3381,20)}</span><span>{!MID(d,3401,20)}</span><span>{!MID(d,3421,20)}</span><span>{!MID(d,3441,20)}</span><span>{!MID(d,3461,20)}</span><span>{!MID(d,3481,20)}</span><span>{!MID(d,3501,20)}</span><span>{!MID(d,3521,20)}</span><span>{!MID(d,3541,20)}</span><span>{!MID(d,3561,20)}</span><span>{!MID(d,3581,20)}</span><span>{!MID(d,3601,20)}</span><span>{!MID(d,3621,20)}</span><span>{!MID(d,3641,20)}</span><span>{!MID(d,3661,20)}</span><span>{!MID(d,3681,20)}</span><span>{!MID(d,3701,20)}</span><span>{!MID(d,3721,20)}</span><span>{!MID(d,3741,20)}</span><span>{!MID(d,3761,20)}</span><span>{!MID(d,3781,20)}</span><span>{!MID(d,3801,20)}</span><span>{!MID(d,3821,20)}</span><span>{!MID(d,3841,20)}</span><span>{!MID(d,3861,20)}</span><span>{!MID(d,3881,20)}</span><span>{!MID(d,3901,20)}</span><span>{!MID(d,3921,20)}</span><span>{!MID(d,3941,20)}</span><span>{!MID(d,3961,20)}</span><span>{!MID(d,3981,20)}</span></td>
+
+          <td class="r"><apex:outputText value="{0,number,#,##0.##}"><apex:param value="{!li.Quantity}"/></apex:outputText></td>
+          <td>
+            <apex:outputText rendered="{!NOT(ISBLANK(li.Product2.QuantityUnitOfMeasure))}" value="{!li.Product2.QuantityUnitOfMeasure}"/>
+            <apex:outputText rendered="{!ISBLANK(li.Product2.QuantityUnitOfMeasure)}" styleClass="muted" value="—"/>
+          </td>
+          <td class="r"><apex:outputText value="{!Quote.CurrencyIsoCode} {0,number,#,##0.00}"><apex:param value="{!li.UnitPrice}"/></apex:outputText></td>
+          <td class="r"><apex:outputText value="{!Quote.CurrencyIsoCode} {0,number,#,##0.00}"><apex:param value="{!li.UnitPrice * li.Quantity}"/></apex:outputText></td>
+        </tr>
+      </apex:repeat>
+    </tbody>
+  </table>
+
+  <!-- TOTALS + NOTE -->
+  <div class="totwrap">
+    <table class="tot">
+      <tr><td class="tk">SubTotal</td><td class="tv"><apex:outputText value="{!Quote.CurrencyIsoCode} {0,number,#,##0.00}"><apex:param value="{!Quote.Subtotal}"/></apex:outputText></td></tr>
+      <apex:outputPanel layout="none" rendered="{!Quote.Subtotal - Quote.TotalPrice > 0}">
+        <tr class="disc"><td class="tk">Discount</td><td class="tv"><apex:outputText value="- {!Quote.CurrencyIsoCode} {0,number,#,##0.00}"><apex:param value="{!Quote.Subtotal - Quote.TotalPrice}"/></apex:outputText></td></tr>
+      </apex:outputPanel>
+      <tr><td class="tk">Shipping and Handling</td><td class="tv"><apex:outputText value="{!Quote.CurrencyIsoCode} {0,number,#,##0.00}"><apex:param value="{!BLANKVALUE(Quote.ShippingHandling, 0)}"/></apex:outputText></td></tr>
+    </table>
+    <div class="note">All quotations exclude tax. Applicable state tax<br/>will be added based on the delivery address.</div>
+  </div>
+
+  <div class="terms"><a href="https://carltonpackaging.com/us/terms-conditions/
+">*View full Terms &amp; Conditions*</a></div>
+
+  <div class="footer">
+    <span class="k">Carlton Packaging Inc</span><br/>
+    315 University Ave 2nd Fl, 2nd Floor, Westwood, MA 02090-2315, USA<br/>
+    Phone: +1 888 514 2699
+  </div>
+
+</body>
+</apex:page>

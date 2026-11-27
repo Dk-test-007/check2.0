@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Object_Name_CC__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+    CONTAINS(LOWER(Integration_Name_CC__c), &quot;carlton-accounts-sync-papi&quot;),
+    &quot;Account&quot;,
+    IF(
+        CONTAINS(LOWER(Integration_Name_CC__c), &quot;carlton-contacts-sync-papi&quot;),
+        &quot;Contact&quot;,
+        IF(
+            CONTAINS(LOWER(Integration_Name_CC__c), &quot;carlton-orders-sync-papi&quot;),
+            &quot;Order&quot;,
+            IF(
+                CONTAINS(LOWER(Integration_Name_CC__c), &quot;carlton-items-sync-papi&quot;),
+                &quot;Product&quot;,
+                &quot;Unknown&quot;
+            )
+        )
+    )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Object Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage_Progress_Message_CC__c</fullName>
+    <description>Set by LeadStageTransitionService_CC on each save: what the Lead still needs for its next stage, or why it did not move. Not user-editable.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Updated automatically when the Lead is saved.</inlineHelpText>
+    <label>Next Step</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

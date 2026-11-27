@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Screen_Type_CC__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Screen</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>RELATED LIST</fullName>
+                <default>true</default>
+                <label>RELATED LIST</label>
+            </value>
+            <value>
+                <fullName>ADD PRODUCT</fullName>
+                <default>false</default>
+                <label>ADD PRODUCT</label>
+            </value>
+            <value>
+                <fullName>EDIT PRODUCTS</fullName>
+                <default>false</default>
+                <label>EDIT PRODUCTS</label>
+            </value>
+            <value>
+                <fullName>SITE ALLOCATION</fullName>
+                <default>false</default>
+                <label>SITE ALLOCATION</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

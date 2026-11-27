@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>New Lead Wizard</masterLabel>
+    <description>Guided creation of a new Lead with duplicate check. Launched from the Lead list view button New_Lead_Wizard (/lightning/cmp/c__newLeadWizard).</description>
+    <targets>
+        <!-- Makes the component reachable by URL, which is what a list view button opens. -->
+        <target>lightning__UrlAddressable</target>
+    </targets>
+</LightningComponentBundle>

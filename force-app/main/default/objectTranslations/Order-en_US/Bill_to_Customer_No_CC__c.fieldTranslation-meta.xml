@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Bill-to Customer No. --></label>
+    <name>Bill_to_Customer_No_CC__c</name>
+    <relationshipLabel><!-- Orders --></relationshipLabel>
+</CustomFieldTranslation>

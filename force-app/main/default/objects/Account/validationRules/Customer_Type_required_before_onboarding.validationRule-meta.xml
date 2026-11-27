@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Type_required_before_onboarding</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISPICKVAL(Client_Onboarding_Status_CC__c, &apos;Completed&apos;),
+    ISBLANK(TEXT(Customer_Type_CC__c)),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Account.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Customer_Type_CC__c</errorDisplayField>
+    <errorMessage>Customer Type is Required to be filled before Completing Client Onboarding</errorMessage>
+</ValidationRule>

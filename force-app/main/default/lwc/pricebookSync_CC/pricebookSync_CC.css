@@ -1,0 +1,253 @@
+.content-wrapper {
+    position: relative;
+    min-height: 23rem;
+    max-height: 65vh;
+    overflow-y: auto;
+    padding: 0.25rem 0.25rem 0.75rem;
+}
+
+.step-indicator {
+    max-width: 34rem;
+    margin: 0 auto 1.5rem;
+}
+
+.screen-heading {
+    margin: 0 0 1.25rem;
+}
+
+.screen-title {
+    color: #181818;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.screen-description {
+    color: #5c5c5c;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+}
+
+.summary-grid {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 1rem;
+}
+
+.summary-card {
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #dddbda;
+    border-radius: 0.375rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 5.5rem;
+    padding: 0.75rem 0.5rem;
+}
+
+.create-summary {
+    border-top: 3px solid #2e844a;
+}
+
+.update-summary {
+    border-top: 3px solid #fe9339;
+}
+
+.unchanged-summary {
+    border-top: 3px solid #939393;
+}
+
+.summary-count {
+    color: #181818;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.summary-label {
+    color: #5c5c5c;
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
+    text-align: center;
+}
+
+.summary-selected {
+    color: #0176d3;
+    font-size: 0.68rem;
+    font-weight: 600;
+    margin-top: 0.15rem;
+}
+
+.review-message {
+    align-items: flex-start;
+    background: #f3f9ff;
+    border: 1px solid #c9e5ff;
+    border-radius: 0.25rem;
+    color: #181818;
+    display: flex;
+    font-size: 0.75rem;
+    gap: 0.5rem;
+    line-height: 1.45;
+    margin: 0 0 1rem;
+    padding: 0.75rem;
+}
+
+.review-accordion {
+    border-top: 1px solid #dddbda;
+}
+
+.review-section {
+    padding: 0.25rem 0 0.5rem;
+}
+
+.section-description {
+    color: #5c5c5c;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+}
+
+.section-empty {
+    background: #fafaf9;
+    border: 1px dashed #dddbda;
+    border-radius: 0.25rem;
+    color: #706e6b;
+    font-size: 0.75rem;
+    padding: 0.875rem;
+    text-align: center;
+}
+
+.empty-state {
+    align-items: center;
+    background: #fafaf9;
+    border: 1px solid #edebe9;
+    border-radius: 0.5rem;
+    color: #5c5c5c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 15rem;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.empty-state h3 {
+    color: #181818;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0.75rem 0 0.25rem;
+}
+
+.empty-state p {
+    font-size: 0.8rem;
+    max-width: 28rem;
+}
+
+.error-state {
+    align-items: center;
+    background: #fef1ee;
+    border: 1px solid #ea001e;
+    border-radius: 0.25rem;
+    color: #8e030f;
+    display: flex;
+    font-size: 0.8125rem;
+    gap: 0.5rem;
+    padding: 0.875rem;
+}
+
+.loading-state {
+    color: #5c5c5c;
+    font-size: 0.8125rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.modal-footer {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.footer-button {
+    margin-left: 0.5rem;
+}
+
+.loading-overlay {
+    align-items: center;
+    background: rgb(255 255 255 / 65%);
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    position: absolute;
+    z-index: 20;
+}
+
+.create-pricebook-button {
+    margin-top: 1rem;
+}
+
+.create-modal-title {
+    align-items: center;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.create-modal-title h2 {
+    color: #181818;
+    font-weight: 700;
+}
+
+.create-modal-subtitle {
+    color: #5c5c5c;
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+}
+
+.create-pricebook-content {
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.layout-section {
+    margin-bottom: 1rem;
+}
+
+.layout-section-heading {
+    border-bottom: 1px solid #dddbda;
+    color: #444444;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+}
+
+.create-form-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+@media (max-width: 480px) {
+    .summary-grid {
+        gap: 0.375rem;
+    }
+
+    .summary-card {
+        padding: 0.5rem 0.25rem;
+    }
+
+    .summary-count {
+        font-size: 1.2rem;
+    }
+
+    .summary-label,
+    .summary-selected {
+        font-size: 0.65rem;
+    }
+}
+/* Create screen replaces the existing panel content; no nested overlay. */
+.create-screen-heading { margin-bottom: 1rem; }
+.create-pricebook-content { max-height: none; overflow: visible; }

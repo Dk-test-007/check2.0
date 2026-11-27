@@ -1,0 +1,34 @@
+<template>
+    <template lwc:if={show}>
+        <lightning-card title={title} icon-name={iconName}>
+            <div class="slds-var-p-horizontal_medium">
+                <template lwc:if={error}>
+                    <div class="slds-text-color_error slds-var-m-bottom_small" role="alert">{error}</div>
+                </template>
+
+                <!-- Qualify: disqualify only -->
+                <template lwc:if={isQualify}>
+                    <p class="slds-var-m-bottom_small">This Lead is at Qualify. Disqualify it if it will not go forward.
+                        The meeting outcome is recorded once the Lead reaches Engage.</p>
+                    <lightning-button variant="destructive-text" label="Disqualify" icon-name="utility:ban"
+                        onclick={handleDisqualify} disabled={opening}></lightning-button>
+                </template>
+
+                <!-- Engage: record the meeting outcome -->
+                <template lwc:if={isEngage}>
+                    <p class="slds-var-m-bottom_small">After the meeting, record its outcome. Continue opens the fields
+                        needed to move the Lead; nothing is saved until you confirm there.</p>
+                    <lightning-combobox name="outcome" label={outcomeLabel} placeholder="Choose an outcome"
+                        options={outcomeOptions} value={outcome} onchange={handleOutcome}
+                        required></lightning-combobox>
+                    <lightning-textarea name="subReason" label={subReasonLabel} value={subReason}
+                        max-length={subReasonMaxLength} onchange={handleSubReason}></lightning-textarea>
+                    <div class="slds-var-m-top_small">
+                        <lightning-button variant="brand" label="Continue" onclick={handleContinue}
+                            disabled={continueDisabled}></lightning-button>
+                    </div>
+                </template>
+            </div>
+        </lightning-card>
+    </template>
+</template>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disqualified_By_Pilot_Action_CC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Set only by LeadDisqualifyAction_CC (Lead UI pilot Disqualify action) in the save that disqualifies the Lead. Disqualification_Stage_Validation_CC uses it, with the Lead_UI_Rework_Access_CC permission, to allow Identify to Disqualified for a named contact through that action only. Not user-editable; not on any layout.</description>
+    <inlineHelpText>Ticked when the Lead was disqualified with the pilot Disqualify action.</inlineHelpText>
+    <label>Disqualified by Pilot Action</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

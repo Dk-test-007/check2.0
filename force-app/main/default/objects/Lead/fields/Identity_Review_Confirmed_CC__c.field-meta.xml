@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Identity_Review_Confirmed_CC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Lead UI pilot: a user confirmed at Identify that the company and contact details were reviewed for the current restarted cycle. Cleared by Restart at Identify. Only used when Lifecycle_Cycle_CC__c is above 1.</description>
+    <inlineHelpText>Confirmed at Identify, after the Lead was restarted, that the company and contact details are current.</inlineHelpText>
+    <label>Identity Reviewed This Cycle</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,21 @@
+Hi [Recipient First Name],<br><br>
+
+A qualified Lead has been assigned to you for Sales engagement.<br><br>
+
+<b>Key Details:</b>
+
+<ul>
+<li><b>Company:</b> {!Lead.Company}</li>
+<li><b>Product Category:</b> {!Lead.Product_Category_Text_CC__c}</li>
+<li><b>Qualified By:</b> [LastMarketingOwnerId]</li>
+<li><b>Qualification Date:</b> [Qualified_Date_CC__c]</li>
+</ul>
+
+Please review the Lead in Salesforce and continue the sales engagement process.
+
+<a href="{!Lead.Link}">View Lead in Salesforce</a>
+
+<br><br>
+
+Thank you,<br>
+<b>Carlton Packaging CRM</b>

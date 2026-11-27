@@ -1,0 +1,105 @@
+<template>
+    <lightning-card title="Sales agreement monthly actuals and forecasts" icon-name="standard:contract">
+        <div class="slds-p-horizontal_medium slds-p-bottom_small">
+            <p>Review the agreement schedules and order-derived actuals behind this account. Use the Account forecast above for quick or bulk forecast changes. Agreement changes are managed separately.</p>
+            <lightning-combobox class="slds-m-top_small" label="Sales agreement" value={selectedAgreementId}
+                options={agreementOptions} onchange={handleAgreementChange}></lightning-combobox>
+            <lightning-combobox class="slds-m-top_small" label="Month" value={selectedMonthKey}
+                options={monthOptions} onchange={handleMonthChange}></lightning-combobox>
+        </div>
+        <template lwc:if={error}>
+            <p class="slds-p-around_medium slds-text-color_error">{error}</p>
+        </template>
+        <template lwc:elseif={hasRows}>
+            <div class="slds-p-horizontal_medium slds-p-bottom_small">
+                <template for:each={currencyTotals} for:item="total">
+                    <p key={total.code} class="actual-total">
+                        <span>Selected agreements ({total.code})</span>
+                        <span class="slds-m-left_large">Salesforce actual:</span>
+                        <lightning-formatted-number class="slds-m-left_x-small" value={total.sourceActual} format-style="currency" currency-code={total.code}></lightning-formatted-number>
+                        <span class="slds-m-left_large">Actual amount:</span>
+                        <lightning-formatted-number class="slds-m-left_x-small" value={total.effectiveActual} format-style="currency" currency-code={total.code}></lightning-formatted-number>
+                        <span class="slds-m-left_large">Forecast quantity:</span>
+                        <lightning-formatted-number class="slds-m-left_x-small" value={total.forecastQuantity} maximum-fraction-digits="0"></lightning-formatted-number>
+                        <span class="slds-m-left_large">Forecast revenue basis:</span>
+                        <lightning-formatted-number class="slds-m-left_x-small" value={total.forecastRevenueBasis} format-style="currency" currency-code={total.code}></lightning-formatted-number>
+                    </p>
+                </template>
+            </div>
+            <div class="slds-scrollable_x">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sales agreement</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Month</th>
+                            <th scope="col">Source records</th>
+                            <th scope="col">Salesforce actual</th>
+                            <th scope="col">Actual amount</th>
+                            <th scope="col">Forecast qty</th>
+                            <th scope="col">Forecast revenue basis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={visibleRows} for:item="row">
+                            <tr key={row.id}>
+                                <td class="agreement-name"><a href={row.agreementUrl}>{row.agreementName}</a></td>
+                                <td class="product-name">{row.productName}</td>
+                                <td>{row.monthLabel}</td>
+                                <td class="action-cell">
+                                    <template lwc:if={row.opportunityUrl}>
+                                        <a href={row.opportunityUrl}>{row.opportunityName}</a>
+                                    </template>
+                                </td>
+                                <td><lightning-formatted-number value={row.sourceActual} format-style="currency" currency-code={row.currencyCode}></lightning-formatted-number></td>
+                                <td class={row.amountClass}><lightning-formatted-number value={row.effectiveActual} format-style="currency" currency-code={row.currencyCode}></lightning-formatted-number></td>
+                                <td><lightning-formatted-number value={row.forecastQuantity} maximum-fraction-digits="0"></lightning-formatted-number></td>
+                                <td><lightning-formatted-number value={row.forecastRevenueBasis} format-style="currency" currency-code={row.currencyCode}></lightning-formatted-number></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+        <template lwc:else>
+            <p class="slds-p-around_medium">No sales agreement products are available for this account.</p>
+        </template>
+    </lightning-card>
+
+    <template lwc:if={editing}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-label="Change monthly agreement value" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header"><h2 class="slds-text-heading_medium">Change monthly agreement value</h2></header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p><strong>{editRow.agreementName}</strong><br />{editRow.productName} · {editRow.monthLabel}</p>
+                    <template lwc:if={editingForecast}>
+                        <p class="slds-m-top_small">Current forecast: <lightning-formatted-number value={editRow.forecastQuantity} maximum-fraction-digits="0"></lightning-formatted-number> units; revenue basis <lightning-formatted-number value={editRow.forecastRevenueBasis} format-style="currency" currency-code={editRow.currencyCode}></lightning-formatted-number>.</p>
+                        <lightning-input class="slds-m-top_small" type="number" step="1" min="0"
+                            label="Forecast quantity for this month" value={draftAmount} onchange={handleAmountChange} required></lightning-input>
+                        <p class="slds-m-top_small">Revenue basis uses the agreement sales price of <lightning-formatted-number value={editRow.salesPrice} format-style="currency" currency-code={editRow.currencyCode}></lightning-formatted-number> per unit. Recalculate the account forecast to update GBP totals.</p>
+                    </template>
+                    <template lwc:else>
+                        <p class="slds-m-top_small">Salesforce schedule actual:
+                            <lightning-formatted-number value={editRow.sourceActual} format-style="currency" currency-code={editRow.currencyCode}></lightning-formatted-number>
+                        </p>
+                        <template lwc:if={restoring}>
+                            <p class="slds-m-top_small">The account view will use the Salesforce schedule actual again.</p>
+                        </template>
+                        <template lwc:else>
+                            <lightning-input class="slds-m-top_small" type="number" step="0.01" min="0"
+                                label="Actual revenue to show" value={draftAmount} onchange={handleAmountChange} required></lightning-input>
+                        </template>
+                    </template>
+                    <lightning-textarea class="slds-m-top_small" label="Source or reason" value={draftReason}
+                        onchange={handleReasonChange} required max-length="2000"></lightning-textarea>
+                    <template lwc:if={saveError}><p class="slds-text-color_error slds-m-top_small">{saveError}</p></template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+                    <lightning-button class="slds-m-left_small" label="Save change" variant="brand" onclick={handleSave} disabled={saving}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Daily_Pallet_Volume_CC__c</fullName>
+    <description>CP27 ten-question qualification Q5 (high-volume benchmark, 1,000+ pallets dispatched a day; an Opportunity question). Mapped from Lead.Pallet_Volume_Factor__c (Daily Pallet Volume). Unrestricted so a mapped Lead value always converts.</description>
+    <inlineHelpText>Pallets dispatched a day. Question 5: does this opportunity meet the 1,000+ pallets a day benchmark?</inlineHelpText>
+    <label>Daily Pallet Volume</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Under 300</fullName>
+                <default>false</default>
+                <label>Under 300</label>
+            </value>
+            <value>
+                <fullName>300 - 999</fullName>
+                <default>false</default>
+                <label>300 - 999</label>
+            </value>
+            <value>
+                <fullName>1,000+</fullName>
+                <default>false</default>
+                <label>1,000+</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

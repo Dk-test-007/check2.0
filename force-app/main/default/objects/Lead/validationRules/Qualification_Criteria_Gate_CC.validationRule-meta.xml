@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Qualification_Criteria_Gate_CC</fullName>
+    <active>false</active>
+    <description>Entity/Site counting gate (Qualification_Criteria_Met_CC__c). Replaces the per-field Annual Revenue, Spend, Industry, Sub-Sector and Pallet Volume rules. Blank Lead Type is handled by Lead_Type_Required_for_Qualified_Lead_CC.</description>
+    <errorConditionFormula>AND(
+    OR(
+        ISPICKVAL(Status, &quot;Engage&quot;),
+        ISPICKVAL(Status, &quot;Qualified&quot;)
+    ),
+    NOT(ISBLANK(TEXT(Lead_Type_CC__c))),
+    NOT(Qualification_Criteria_Met_CC__c),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Lead.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Lead_Type_CC__c</errorDisplayField>
+    <errorMessage>Complete the qualification questions for this Entity or Site. Entity: Industry, Industry Sub-Sector and any two of Annual Revenue, Estimated Annual Spend, Number of Locations and Daily Pallet Volume. Site: Estimated Annual Spend or Daily Pallet Volume.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,90 @@
+<template>
+    <template lwc:if={show}>
+        <lightning-card title={title} icon-name={iconName}>
+            <div class="slds-var-p-horizontal_medium">
+                <template lwc:if={saving}>
+                    <lightning-spinner alternative-text="Saving" size="small"></lightning-spinner>
+                </template>
+                <template lwc:if={error}>
+                    <div class="slds-text-color_error slds-var-m-bottom_small" role="alert">{error}</div>
+                </template>
+
+                <!-- Choose an outcome -->
+                <template lwc:if={isView}>
+                    <p class="slds-var-m-bottom_small">This Lead is at {status}. {viewHelp}</p>
+                    <lightning-button variant="destructive-text" label="Disqualify" icon-name="utility:ban"
+                        onclick={handleStartDisqualify} class="slds-var-m-right_x-small"></lightning-button>
+                    <template lwc:if={canReNurture}>
+                        <lightning-button variant="brand-outline" label="Re-Nurture" icon-name="utility:refresh"
+                            onclick={handleStartReNurture}></lightning-button>
+                    </template>
+                </template>
+
+                <!-- Disqualify form -->
+                <template lwc:if={isDisqualifyForm}>
+                    <lightning-combobox name="reason" label="Disqualified Reason" placeholder="Choose a reason"
+                        options={disqualifyReasonOptions} value={reason} onchange={handleReason}
+                        required></lightning-combobox>
+                    <lightning-textarea name="comments" label={disqualifyCommentsLabel} value={comments}
+                        max-length={disqualifyCommentsMaxLength} onchange={handleComments}
+                        required={commentsRequired}
+                        message-when-value-missing="Enter comments when the reason is Other."></lightning-textarea>
+                    <div class="slds-var-m-top_small">
+                        <lightning-button label="Cancel" onclick={handleCancel}
+                            class="slds-var-m-right_x-small"></lightning-button>
+                        <lightning-button variant="brand" label="Continue" onclick={handleReview}></lightning-button>
+                    </div>
+                </template>
+
+                <!-- Re-Nurture form -->
+                <template lwc:if={isReNurtureForm}>
+                    <lightning-combobox name="reason" label="Re-Nurture Reason" placeholder="Choose a reason"
+                        options={reNurtureReasonOptions} value={reason} onchange={handleReason}
+                        required></lightning-combobox>
+                    <lightning-input type="date" name="reengagementDate" label="Re-engagement Date"
+                        value={reengagementDate} min={today} onchange={handleDate} required
+                        message-when-range-underflow="Choose today or a later date."></lightning-input>
+                    <lightning-textarea name="comments" label={reNurtureCommentsLabel} value={comments}
+                        max-length={reNurtureCommentsMaxLength} onchange={handleComments}
+                        required={commentsRequired}
+                        message-when-value-missing="Enter comments when the reason is Other."></lightning-textarea>
+                    <div class="slds-var-m-top_small">
+                        <lightning-button label="Cancel" onclick={handleCancel}
+                            class="slds-var-m-right_x-small"></lightning-button>
+                        <lightning-button variant="brand" label="Continue" onclick={handleReview}></lightning-button>
+                    </div>
+                </template>
+
+                <!-- Confirmation -->
+                <template lwc:if={isConfirm}>
+                    <template lwc:if={isDisqualify}>
+                        <p class="slds-var-m-bottom_x-small"><strong>Disqualify {companyName}?</strong></p>
+                        <p class="slds-var-m-bottom_x-small">Status becomes Disqualified. Reason: {reasonLabel}.</p>
+                        <template lwc:if={hasComments}>
+                            <p class="slds-var-m-bottom_x-small slds-text-color_weak">Comments: {comments}</p>
+                        </template>
+                        <p class="slds-var-m-bottom_small slds-text-color_weak">After this the Lead is locked at
+                            Disqualified. Only an administrator can change its status.</p>
+                    </template>
+                    <template lwc:else>
+                        <p class="slds-var-m-bottom_x-small"><strong>Re-Nurture {companyName}?</strong></p>
+                        <p class="slds-var-m-bottom_x-small">Status becomes Re-Nurture. Reason: {reasonLabel}.
+                            Re-engagement Date: <lightning-formatted-date-time value={reengagementDate}
+                                time-zone="UTC"></lightning-formatted-date-time>.</p>
+                        <template lwc:if={hasComments}>
+                            <p class="slds-var-m-bottom_x-small slds-text-color_weak">Comments: {comments}</p>
+                        </template>
+                        <p class="slds-var-m-bottom_small slds-text-color_weak">Ownership is reassigned under the
+                            existing Re-Nurture assignment rules, which may take a few moments to appear.</p>
+                    </template>
+                    <lightning-button label="Cancel" onclick={handleCancel}
+                        class="slds-var-m-right_x-small"></lightning-button>
+                    <lightning-button label="Back" onclick={handleBack}
+                        class="slds-var-m-right_x-small"></lightning-button>
+                    <lightning-button variant={confirmVariant} label={confirmLabel} onclick={handleConfirm}
+                        disabled={saving}></lightning-button>
+                </template>
+            </div>
+        </lightning-card>
+    </template>
+</template>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Responsibility_Center_CC__c</fullName>
+    <label>Responsibility Center</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AMZ-GLO</fullName>
+                <default>false</default>
+                <label>Amazon Global</label>
+            </value>
+            <value>
+                <fullName>AMZ-REG</fullName>
+                <default>false</default>
+                <label>Amazon Regional</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

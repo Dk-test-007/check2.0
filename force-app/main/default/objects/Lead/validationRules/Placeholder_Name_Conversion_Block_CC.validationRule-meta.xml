@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Placeholder_Name_Conversion_Block_CC</fullName>
+    <active>false</active>
+    <description>New Lead Wizard guard: blocks conversion (UI, API, Apex) while Last Name holds the reserved &quot;Needs to Identify&quot; placeholder. Conversion-only. No admin exemption; ignores Bypass_Validation_CC__c by design.</description>
+    <errorConditionFormula>AND(
+    IsConverted,
+    Contact_Name_Unknown_CC__c
+)</errorConditionFormula>
+    <errorDisplayField>LastName</errorDisplayField>
+    <errorMessage>This Lead still has the placeholder contact name &quot;Needs to Identify&quot;. Enter the contact&apos;s real First and Last Name before converting.</errorMessage>
+</ValidationRule>

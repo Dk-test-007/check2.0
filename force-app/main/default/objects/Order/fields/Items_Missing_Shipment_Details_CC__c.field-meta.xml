@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Items_Missing_Shipment_Details_CC__c</fullName>
+    <description>Number of Order Products without a Location Code or Shipment Date. Used by Require_Item_Shipment_Details_CC.</description>
+    <label>Items Missing Shipment Details</label>
+    <summaryFilterItems>
+        <field>OrderItem.Shipment_Details_Missing_CC__c</field>
+        <operation>equals</operation>
+        <value>True</value>
+    </summaryFilterItems>
+    <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

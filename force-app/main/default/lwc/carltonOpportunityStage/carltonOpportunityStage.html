@@ -1,0 +1,39 @@
+<template>
+    <template lwc:if={hasStageOptions}>
+        <div class="slds-box slds-theme_default slds-m-bottom_small">
+            <lightning-combobox label="Stage" value={stageName} options={stageOptions}
+                onchange={handleStageChange} disabled={stageDisabled}></lightning-combobox>
+            <template lwc:if={isNewBusiness}>
+                <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                    Selecting Closed Won opens Sales agreements and forecast. The Stage changes when you save the win.
+                </p>
+            </template>
+            <template lwc:if={canResumeWin}>
+                <div class="slds-m-top_small">
+                    <lightning-button label="Open unfinished win forecast" variant="brand-outline"
+                        onclick={handleResumeForecast} disabled={busy}></lightning-button>
+                    <span class="slds-text-body_small slds-text-color_weak slds-m-left_small">
+                        Available until the initial forecast is saved.
+                    </span>
+                </div>
+            </template>
+        </div>
+    </template>
+    <template lwc:if={showWinDialog}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-label="Sales agreements and forecast"
+            class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close" title="Cancel win" onclick={closeWinDialog}>
+                        <lightning-icon icon-name="utility:close" alternative-text="Cancel win" size="small"></lightning-icon>
+                    </button>
+                    <h2 class="slds-text-heading_medium">Complete Closed Won</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <c-ui2-win-monthly-forecast record-id={recordId} onwinsaved={handleWinSaved}></c-ui2-win-monthly-forecast>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

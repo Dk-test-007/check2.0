@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Opportunity Stage Reminder</name>
+    <style>none</style>
+    <subject>Action Required: Opportunity Awaiting Progress - {!Opportunity.Name}</subject>
+    <textOnly>Hi {!Opportunity.OwnerFirstName},,
+
+An Opportunity assigned to you has remained in the same sales stage longer than the agreed business threshold.
+
+Key Details:
+
+Opportunity: {!Opportunity.Name}
+Customer: {!Opportunity.Account}
+Current Stage: {!Opportunity.StageName}
+Days in Current Stage: {!Opportunity.Days_In_Current_Stage_CC__c}
+Opportunity Value: {!Opportunity.Amount}
+
+Please review the Opportunity in Salesforce and either progress it to the next stage or update it with the current status.
+
+View Opportunity in Salesforce
+
+Thank you,
+Carlton Packaging CRM</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

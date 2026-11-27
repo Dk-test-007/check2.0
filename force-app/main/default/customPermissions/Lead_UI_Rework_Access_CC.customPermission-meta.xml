@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Lead UI rework: shows the guided Lead record components and enables automatic field-driven stage advancement for the user. Not a validation bypass; shared Lead rules apply to every user.</description>
+    <isLicensed>false</isLicensed>
+    <label>Lead UI Rework Access</label>
+</CustomPermission>

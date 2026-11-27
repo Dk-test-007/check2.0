@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_CC__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Billing Entity of the Sales Agreement (the agreement&apos;s AccountId), copied for account-level aggregation.</description>
+    <label>Entity</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Agreement Month Plans (Entity)</relationshipLabel>
+    <relationshipName>Agreement_Month_Plans_Entity</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

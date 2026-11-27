@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NewBusinessCanBeCreatedInDiscoverOnly</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISNEW(),
+    RecordType.DeveloperName = &apos;New_Business&apos;,
+    NOT(ISPICKVAL(StageName, &apos;Discover&apos;)),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Opportunity.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>New Business Opportunity can only be created in the Discover Stage</errorMessage>
+</ValidationRule>

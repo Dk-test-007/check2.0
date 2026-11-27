@@ -1,0 +1,124 @@
+<template>
+    <lightning-card title={title} icon-name="standard:account">
+        <div slot="actions" class="slds-grid slds-grid_vertical-align-center slds-nowrap">
+            <span class="year-label slds-form-element__label slds-m-right_x-small" aria-hidden="true">Year</span>
+            <lightning-combobox class="year-picker" label="Year" variant="label-hidden" options={yearOptions} value={yearValue} onchange={handleYear}></lightning-combobox>
+            <lightning-button-icon icon-name="utility:refresh" alternative-text="Refresh" onclick={handleRefresh} class="slds-m-left_x-small"></lightning-button-icon>
+        </div>
+        <div class="slds-p-horizontal_medium">
+            <template lwc:if={loading}><lightning-spinner size="small" alternative-text="Loading"></lightning-spinner></template>
+            <template lwc:if={error}><div class="slds-notify slds-notify_alert slds-alert_error" role="alert">{error}</div></template>
+            <template lwc:if={view}>
+                <p class="slds-text-body_small slds-text-color_weak">
+                    {view.basisNote} Native actuals as of (oldest agreement, platform date stamp):
+                    <template lwc:if={view.oldestActualsCalculation}><lightning-formatted-date-time value={view.oldestActualsCalculation} year="numeric" month="short" day="2-digit" time-zone="UTC"></lightning-formatted-date-time></template>
+                    <template lwc:else>not yet</template>. Use Recalculate actuals on an agreement to refresh it.
+                </p>
+                <template lwc:if={hasExceptions}>
+                    <div class="slds-box slds-theme_warning slds-m-vertical_small">
+                        <p class="slds-text-title_bold">Check</p>
+                        <ul class="slds-list_dotted"><template for:each={exceptions} for:item="ex"><li key={ex.key}>{ex.text}</li></template></ul>
+                    </div>
+                </template>
+                <template lwc:if={hasData}>
+                    <template for:each={blocks} for:item="block">
+                        <div key={block.key} class="slds-m-top_medium">
+                            <h3 class="slds-text-heading_small">{block.currencyIsoCode}</h3>
+                            <p class="slds-text-body_small slds-text-color_weak">{block.periodLabel}</p>
+                            <div class="slds-grid slds-wrap slds-gutters slds-m-vertical_small">
+                                <div class="slds-col"><p class="slds-text-title">YTD plan / actuals</p><p class="slds-text-heading_small"><lightning-formatted-number value={block.ytdPlan} minimum-fraction-digits="2"></lightning-formatted-number> / <lightning-formatted-number value={block.ytdActuals} minimum-fraction-digits="2"></lightning-formatted-number></p></div>
+                                <div class="slds-col"><p class="slds-text-title">YTD variance (attainment)</p><p class="slds-text-heading_small"><lightning-formatted-number value={block.ytdVariance} minimum-fraction-digits="2"></lightning-formatted-number> ({block.ytdAttainment})</p></div>
+                                <div class="slds-col"><p class="slds-text-title">Year plan / current forecast</p><p class="slds-text-heading_small"><lightning-formatted-number value={block.yearPlan} minimum-fraction-digits="2"></lightning-formatted-number> / <lightning-formatted-number value={block.yearForecast} minimum-fraction-digits="2"></lightning-formatted-number></p></div>
+                                <div class="slds-col"><p class="slds-text-title">Expected outcome (gap to plan)</p><p class="slds-text-heading_small"><lightning-formatted-number value={block.expectedOutcome} minimum-fraction-digits="2"></lightning-formatted-number> (<lightning-formatted-number value={block.gapToPlan} minimum-fraction-digits="2"></lightning-formatted-number>)</p></div>
+                                <template lwc:if={block.showUnallocated}>
+                                    <div class="slds-col"><p class="slds-text-title">Unallocated Entity plan</p><p class="slds-text-heading_small"><lightning-formatted-number value={block.unallocatedPlan} minimum-fraction-digits="2"></lightning-formatted-number></p></div>
+                                </template>
+                                <template lwc:if={block.showEntityWideShipTo}>
+                                    <div class="slds-col"><p class="slds-text-title">Shipped here on Entity-wide agreements (not in Site attainment)</p><p class="slds-text-heading_small"><lightning-formatted-number value={block.entityWideShipToActuals} minimum-fraction-digits="2"></lightning-formatted-number></p></div>
+                                </template>
+                                <div class="slds-col"><p class="slds-text-title">Open new-business pipeline (separate)</p><p class="slds-text-heading_small"><lightning-formatted-number value={block.openPipeline} minimum-fraction-digits="2"></lightning-formatted-number></p></div>
+                            </div>
+                            <div class="table-scroll"><table class="slds-table slds-table_bordered slds-table_cell-buffer slds-m-bottom_small" aria-label="Year by term">
+                                <thead>
+                                    <tr>
+                                        <th>Term (this year)</th><th>Months</th>
+                                        <th class="slds-text-align_right">Original plan</th><th class="slds-text-align_right">Current forecast</th>
+                                        <th class="slds-text-align_right">Order Actuals to date</th><th class="slds-text-align_right">Completed plan / actuals</th>
+                                        <th class="slds-text-align_right">Attainment</th><th class="slds-text-align_right">Expected outcome</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={block.terms} for:item="t">
+                                        <tr key={t.key} class={t.rowClass}>
+                                            <td>{t.label}</td><td>{t.months}</td>
+                                            <td class="slds-text-align_right"><lightning-formatted-number value={t.originalPlan} minimum-fraction-digits="2"></lightning-formatted-number></td>
+                                            <td class="slds-text-align_right"><lightning-formatted-number value={t.currentForecast} minimum-fraction-digits="2"></lightning-formatted-number></td>
+                                            <td class="slds-text-align_right"><lightning-formatted-number value={t.actualsToDate} minimum-fraction-digits="2"></lightning-formatted-number></td>
+                                            <td class="slds-text-align_right"><lightning-formatted-number value={t.completedPlan} minimum-fraction-digits="2"></lightning-formatted-number> / <lightning-formatted-number value={t.completedActuals} minimum-fraction-digits="2"></lightning-formatted-number></td>
+                                            <td class="slds-text-align_right">{t.attainment}</td>
+                                            <td class="slds-text-align_right"><lightning-formatted-number value={t.expectedOutcome} minimum-fraction-digits="2"></lightning-formatted-number></td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table></div>
+                            <div class="table-scroll"><table class="slds-table slds-table_bordered slds-table_cell-buffer" aria-label="Monthly view">
+                                <thead>
+                                    <tr>
+                                        <th>Month</th><th>State</th>
+                                        <th class="slds-text-align_right">Original plan</th><th class="slds-text-align_right">Current forecast</th>
+                                        <th class="slds-text-align_right">Order Actuals</th><th class="slds-text-align_right">Variance to plan</th>
+                                        <th class="slds-text-align_right">Variance to forecast</th><th class="slds-text-align_right">Attainment</th>
+                                        <th class="slds-text-align_right">Shortfall (completed)</th><th class="slds-text-align_right">Pipeline (BD)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={block.months} for:item="m">
+                                        <tr key={m.monthStart} class={m.rowClass}>
+                                            <td>{m.label}</td><td>{m.stateText}</td>
+                                            <td class="slds-text-align_right"><lightning-formatted-number value={m.originalPlan} minimum-fraction-digits="2"></lightning-formatted-number></td>
+                                            <td class="slds-text-align_right"><lightning-formatted-number value={m.currentForecast} minimum-fraction-digits="2"></lightning-formatted-number></td>
+                                            <td class="slds-text-align_right">
+                                                <lightning-formatted-number value={m.orderActuals} minimum-fraction-digits="2"></lightning-formatted-number>
+                                                <template lwc:if={m.hasUnplanned}><div class="slds-text-body_small"><span class="slds-badge slds-theme_warning">Unplanned</span> <lightning-formatted-number value={m.unplannedActuals} minimum-fraction-digits="2"></lightning-formatted-number></div></template>
+                                            </td>
+                                            <td class="slds-text-align_right"><lightning-formatted-number value={m.varianceToPlan} minimum-fraction-digits="2"></lightning-formatted-number></td>
+                                            <td class="slds-text-align_right"><lightning-formatted-number value={m.varianceToForecast} minimum-fraction-digits="2"></lightning-formatted-number></td>
+                                            <td class="slds-text-align_right">{m.attainment}</td>
+                                            <td class="slds-text-align_right"><lightning-formatted-number value={m.shortfall} minimum-fraction-digits="2"></lightning-formatted-number></td>
+                                            <td class="slds-text-align_right"><lightning-formatted-number value={m.pipeline} minimum-fraction-digits="2"></lightning-formatted-number></td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table></div>
+                            <lightning-accordion allow-multiple-sections-open class="slds-m-top_small">
+                                <lightning-accordion-section name="agreements" label="By agreement">
+                                    <div class="table-scroll"><table class="slds-table slds-table_cell-buffer" aria-label="By agreement">
+                                        <thead><tr><th>Agreement</th><th>Scope</th><th class="slds-text-align_right">Original plan</th><th class="slds-text-align_right">Current forecast</th><th class="slds-text-align_right">Order Actuals</th></tr></thead>
+                                        <tbody><template for:each={block.agreements} for:item="a"><tr key={a.key}><td><a data-id={a.recordId} onclick={handleOpen}>{a.name}</a></td><td>{a.detail}</td><td class="slds-text-align_right"><lightning-formatted-number value={a.originalPlan} minimum-fraction-digits="2"></lightning-formatted-number></td><td class="slds-text-align_right"><lightning-formatted-number value={a.currentForecast} minimum-fraction-digits="2"></lightning-formatted-number></td><td class="slds-text-align_right"><lightning-formatted-number value={a.orderActuals} minimum-fraction-digits="2"></lightning-formatted-number><template lwc:if={a.hasUnplanned}><div class="slds-text-body_small"><span class="slds-badge slds-theme_warning">Unplanned</span> <lightning-formatted-number value={a.unplannedActuals} minimum-fraction-digits="2"></lightning-formatted-number></div></template></td></tr></template></tbody>
+                                    </table></div>
+                                </lightning-accordion-section>
+                                <lightning-accordion-section name="sites" label="By Site (plan share and Ship-To actuals)">
+                                    <div class="table-scroll"><table class="slds-table slds-table_cell-buffer" aria-label="By Site">
+                                        <thead><tr><th>Site</th><th class="slds-text-align_right">Original plan</th><th class="slds-text-align_right">Current forecast</th><th class="slds-text-align_right">Ship-To Order amount</th></tr></thead>
+                                        <tbody><template for:each={block.sites} for:item="s"><tr key={s.key}><td><a data-id={s.recordId} onclick={handleOpen}>{s.name}</a></td><td class="slds-text-align_right"><lightning-formatted-number value={s.originalPlan} minimum-fraction-digits="2"></lightning-formatted-number></td><td class="slds-text-align_right"><lightning-formatted-number value={s.currentForecast} minimum-fraction-digits="2"></lightning-formatted-number></td><td class="slds-text-align_right"><lightning-formatted-number value={s.orderActuals} minimum-fraction-digits="2"></lightning-formatted-number></td></tr></template></tbody>
+                                    </table></div>
+                                </lightning-accordion-section>
+                                <template lwc:if={block.hasProducts}>
+                                    <lightning-accordion-section name="products" label="By product (native schedules)">
+                                        <div class="table-scroll"><table class="slds-table slds-table_cell-buffer" aria-label="By product">
+                                            <thead><tr><th>Product</th><th class="slds-text-align_right">Planned</th><th class="slds-text-align_right">Forecast</th><th class="slds-text-align_right">Order Actuals</th></tr></thead>
+                                            <tbody><template for:each={block.products} for:item="p"><tr key={p.key}><td>{p.name}</td><td class="slds-text-align_right"><lightning-formatted-number value={p.originalPlan} minimum-fraction-digits="2"></lightning-formatted-number></td><td class="slds-text-align_right"><lightning-formatted-number value={p.currentForecast} minimum-fraction-digits="2"></lightning-formatted-number></td><td class="slds-text-align_right"><lightning-formatted-number value={p.orderActuals} minimum-fraction-digits="2"></lightning-formatted-number></td></tr></template></tbody>
+                                        </table></div>
+                                    </lightning-accordion-section>
+                                </template>
+                            </lightning-accordion>
+                        </div>
+                    </template>
+                </template>
+                <template lwc:else>
+                    <p class="slds-m-vertical_small">No Sales Agreement plans for {view.accountName} in {year}.</p>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

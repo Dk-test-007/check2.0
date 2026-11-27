@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Remaining_SKU_CC__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Quantity still available to order under the contract.</inlineHelpText>
+    <label>Remaining SKU</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>true</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

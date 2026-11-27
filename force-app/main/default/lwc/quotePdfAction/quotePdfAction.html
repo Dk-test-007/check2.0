@@ -1,0 +1,29 @@
+<template>
+    <lightning-quick-action-panel header="Quote PDF Preview">
+        <template if:true={isRestrictedStatus}>
+            <div class="slds-p-around_large slds-text-align_center">
+                <p class="slds-text-heading_small">
+                    This Quote has been {quoteStatus}.
+                </p>
+                <p class="slds-m-top_small">
+                    Please move the Quote back to Draft status to generate a Document.
+                </p>
+            </div>
+        </template>
+
+        <template if:false={isRestrictedStatus}>
+            <iframe src={pdfUrl} width="100%" height="700px" style="border:none;"></iframe>
+
+            <template if:true={isSaving}>
+                <lightning-spinner alternative-text="Saving"></lightning-spinner>
+            </template>
+
+            <div slot="footer">
+                <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+                <lightning-button variant="brand" label="Save to Quote"
+                                  class="slds-m-left_x-small"
+                                  onclick={handleSave} disabled={isSaving}></lightning-button>
+            </div>
+        </template>
+    </lightning-quick-action-panel>
+</template>
