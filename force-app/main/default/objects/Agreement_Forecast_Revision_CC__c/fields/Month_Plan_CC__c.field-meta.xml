@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Month_Plan_CC__c</fullName>
+    <description>The month whose Current Forecast changed.</description>
+    <label>Month Plan</label>
+    <referenceTo>Agreement_Month_Plan_CC__c</referenceTo>
+    <relationshipLabel>Forecast Revisions</relationshipLabel>
+    <relationshipName>Forecast_Revisions</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

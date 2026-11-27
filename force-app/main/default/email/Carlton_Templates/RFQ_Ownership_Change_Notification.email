@@ -1,0 +1,28 @@
+<html>
+  <body style="font-family: Arial, sans-serif; color: #333333;">
+
+    <p>Hi {!Receiving_User.FirstName},</p>
+
+    <p>Ownership of an RFQ has changed.</p>
+
+    <p>Key Details:</p>
+    <ul>
+      <li><strong>RFQ Number:</strong> {!Case.CaseNumber}</li>
+      <li><strong>Opportunity:</strong> {!Case.Opportunity__c}</li>
+      <li><strong>Customer:</strong> {!Case.Account}</li>
+      <li><strong>Previous Owner:</strong> ##PREVIOUS_OWNER##</li>
+      <li><strong>New Owner:</strong> {!Case.OwnerFullName}</li>
+      <li><strong>Current Status:</strong> {!Case.Status}</li>
+    </ul>
+
+    <p>Please review the RFQ in Salesforce and continue the investigation.</p>
+
+    <p>
+      <a href="{!Case.Link}">{!Case.CaseNumber}</a>
+    </p>
+
+    <p>Thank you,<br>
+    Carlton Packaging CRM</p>
+
+  </body>
+</html>

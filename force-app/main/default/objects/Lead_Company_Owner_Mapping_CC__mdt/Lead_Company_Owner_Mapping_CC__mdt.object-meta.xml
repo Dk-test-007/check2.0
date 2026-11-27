@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Lead Company Owner Mapping CC</label>
+    <pluralLabel>Lead Company Owner Mappings CC</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

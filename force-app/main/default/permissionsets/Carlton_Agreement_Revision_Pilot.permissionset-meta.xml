@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Carlton_Revise_Agreement</name>
+    </customPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Carlton Agreement Revision Pilot</label>
+</PermissionSet>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_Onboarding_Documents_Check_CC</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+				NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Account.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+    ISCHANGED(Client_Onboarding_Status_CC__c),
+    ISPICKVAL(Client_Onboarding_Status_CC__c, &quot;Completed&quot;),
+    NOT(Client_Onboarding_Documents_Uploaded_CC__c)
+)</errorConditionFormula>
+    <errorDisplayField>Client_Onboarding_Documents_Uploaded_CC__c</errorDisplayField>
+    <errorMessage>Please upload and verify that all Onboarding Documents are uploaded before Completing the Onboarding Status</errorMessage>
+</ValidationRule>

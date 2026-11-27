@@ -1,0 +1,15 @@
+<p>Hi Finance Team,</p>
+
+<p>The mandatory onboarding documentation for the following Account has been completed and submitted for Finance review.</p><br>
+<p>Key Details:</p><br>
+<ul>
+    <li>Account Name: {!Account.Name}</li>
+    <li>Onboarding Documentation Status : {!Account.Client_Onboarding_Status_CC__c}</li>
+    <li>Submitted By: {!Account.OwnerFullName}</li>
+</ul>
+
+<p>Please review the onboarding documentation and attachments in Salesforce to proceed with the credit assessment and customer approval process.<br>
+<a href="https://carlton-packaging--qa.sandbox.lightning.force.com//{!Account.Id}">View Account Record</a><br>
+
+<p>Thank you,<br>
+Carlton Packaging CRM"</p>

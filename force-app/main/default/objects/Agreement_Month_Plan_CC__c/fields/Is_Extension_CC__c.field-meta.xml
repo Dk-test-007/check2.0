@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Extension_CC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>True for a month added after the original term (Extend term, or an Order dated past the plan). An Activated Sales Agreement cannot change its native ScheduleCount or EndDate, so extension months exist only as month plans. Original Plan is 0 on these rows.</description>
+    <inlineHelpText>Added after the original term. The original plan for this month is 0; its forecast was set by Extend term or by an Order.</inlineHelpText>
+    <label>Extension Month</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

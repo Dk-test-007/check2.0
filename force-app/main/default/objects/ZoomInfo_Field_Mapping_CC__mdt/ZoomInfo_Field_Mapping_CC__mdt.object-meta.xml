@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Field values applied by ZoomInfoMappingBatch_CC to records inserted by the ZoomInfo service account user. Add a record to add a mapping - no code change needed.</description>
+    <label>ZoomInfo Field Mapping CC</label>
+    <pluralLabel>ZoomInfo Field Mappings CC</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

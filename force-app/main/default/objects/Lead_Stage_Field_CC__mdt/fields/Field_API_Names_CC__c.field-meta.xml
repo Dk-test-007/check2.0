@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Field_API_Names_CC__c</fullName>
+    <description>Lead field API name. For a group, list several comma-separated (for example Email,Phone,MobilePhone) and set Minimum Required. The error is shown on the first field listed.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>One Lead field API name, or a comma-separated group. The error shows on the first field.</inlineHelpText>
+    <label>Field API Names</label>
+    <length>255</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lifecycle_Cycle_CC__c</fullName>
+    <description>Lead UI pilot: the Lead&apos;s current lifecycle cycle. Blank means the first cycle. Restart at Identify adds one, and while it is above 1 the identity and qualification reviews for the cycle must be confirmed before the Lead moves on or converts. Set by LeadLifecycleCycle_CC only.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Blank for the first pass. Goes up by one each time the Lead is restarted at Identify from Re-Nurture.</inlineHelpText>
+    <label>Lifecycle Cycle</label>
+    <precision>4</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

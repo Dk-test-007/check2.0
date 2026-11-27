@@ -1,0 +1,566 @@
+<template>
+    <!-- Related List -->
+    <section class="related-list-card">
+        <div class="related-list-header">
+            <div class="slds-media slds-media_center">
+                <lightning-icon
+                    icon-name={headerIcon}
+                    size="small"
+                    class="related-list-icon slds-m-right_small">
+                </lightning-icon>
+
+                <h2 class="related-list-title">
+                    {header} ({rowCount})
+                </h2>
+            </div>
+
+            <div class="slds-button-group" role="group">
+                <lightning-button-icon
+                    icon-name="utility:refresh"
+                    alternative-text="Refresh"
+                    title="Refresh"
+                    variant="border-filled"
+                    onclick={handleRefresh}
+                    disabled={busy}
+                    class="slds-p-around--xxx-small">
+                </lightning-button-icon>
+
+                <template if:true={shouldShowAddProducts}>
+                    <lightning-button
+                        label="Add Products"
+                        onclick={openAdd}
+                        disabled={isAddDisabled}
+                        class="slds-p-around--xxx-small">
+                    </lightning-button>
+                </template>
+
+                <template if:true={shouldShowEditProducts}>
+                    <lightning-button
+                        label="Edit Products"
+                        onclick={openEdit}
+                        disabled={isEditDisabled}
+                        class="slds-p-around--xxx-small">
+                    </lightning-button>
+                </template>
+
+                <template if:true={shouldShowChoosePricebook}>
+                    <lightning-button
+                        label="Choose Pricebook"
+                        onclick={openChoosePricebook}
+                        disabled={isPricebookDisabled}
+                        class="slds-p-around--xxx-small">
+                    </lightning-button>
+                </template>
+            </div>
+        </div>
+
+        <!-- Related List Records -->
+        <div class="related-list-body">
+            <template if:true={busy}>
+                <lightning-spinner
+                    size="small"
+                    alternative-text="Loading">
+                </lightning-spinner>
+            </template>
+
+            <template if:false={noRows}>
+                <c-product-data-table_-c-c
+                    key-field="Id"
+                    data={rows}
+                    columns={relatedColumns}
+                    hide-checkbox-column
+                    onrowaction={handleRelatedAction}>
+                </c-product-data-table_-c-c>
+            </template>
+        </div>
+
+        <!-- Related List Footer -->
+        <template if:false={noRows}>
+            <div class="related-list-footer">
+                <lightning-button
+                    variant="base"
+                    label="View All"
+                    onclick={viewAll}
+                    disabled={noRows}>
+                </lightning-button>
+            </div>
+        </template>
+    </section>
+
+    <!-- Modal -->
+    <template if:true={showModal}>
+        <section
+            role="dialog"
+            tabindex="-1"
+            aria-modal="true"
+            aria-labelledby="modal-heading"
+            aria-busy={busy}
+            class={modalSectionClass}>
+
+            <div class={modalContainerClass}>
+
+                <!-- Close Button -->
+                <template if:false={showAvailabilityModal}>
+                    <lightning-button-icon
+                        icon-name="utility:close"
+                        alternative-text="Close"
+                        title="Close"
+                        variant="bare"
+                        class="modal-close"
+                        onclick={closeModal}
+                        disabled={busy}>
+                    </lightning-button-icon>
+                </template>
+
+                <!-- Modal Header -->
+                <header class="slds-modal__header">
+                    <h2
+                        id="modal-heading"
+                        class="slds-text-heading_large">
+                        {modalTitle}
+                    </h2>
+
+                    <template if:true={showProductScreen}>
+                        <p class="slds-m-top_x-small">
+                            Price Book: {pricebookName}
+                        </p>
+                    </template>
+                </header>
+
+                <!-- Modal Content -->
+                <div class={modalContentClass}>
+
+                    <!-- Spinner -->
+                    <template if:true={busy}>
+                        <div class="modal-loading-overlay">
+                            <lightning-spinner
+                                alternative-text="Processing"
+                                size="medium">
+                            </lightning-spinner>
+                        </div>
+                    </template>
+
+                    <!-- Choose Pricebook -->
+                    <template if:true={isPricebook}>
+                        <p class="pricebook-instructions">
+                            {pricebookHelpText}
+                        </p>
+
+                        <lightning-combobox
+                            label="Price Book"
+                            value={selectedPricebookId}
+                            options={pricebooks}
+                            onchange={handlePricebookChange}
+                            placeholder="Select a Price Book"
+                            disabled={busy}
+                            dropdown-alignment="auto">
+                        </lightning-combobox>
+                    </template>
+
+                    <!-- Confirm Pricebook Change -->
+                    <template if:true={isConfirm}>
+                        <div class="confirmation-message">
+                            You have changed the price book for this
+                            record. This action permanently deletes all
+                            products from the record. Continue?
+                        </div>
+                    </template>
+
+                    <!-- Add Products -->
+                    <template if:true={showProductScreen}>
+                        <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                            <div class="slds-col">
+                                <lightning-input
+                                    type="search"
+                                    variant="label-hidden"
+                                    placeholder="Search Products..."
+                                    value={searchTerm}
+                                    onchange={handleSearch}
+                                    disabled={busy}>
+                                </lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-grow-none">
+                                <lightning-button
+                                    variant="base"
+                                    label={selectedLabel}
+                                    onclick={toggleSelected}
+                                    disabled={busy}>
+                                </lightning-button>
+                            </div>
+                        </div>
+
+                        <lightning-datatable
+                            class="product-table"
+                            key-field="Id"
+                            data={visibleProductRows}
+                            columns={productColumns}
+                            onrowselection={handleSelection}
+                            selected-rows={selectedProductIds}
+                            sorted-by={sortedBy}
+                            sorted-direction={sortDirection}
+                            onsort={handleProductSort}
+                            is-loading={loadingMoreProducts}
+                            enable-infinite-loading={enableProductInfiniteLoading}
+                            load-more-offset="20"
+                            onloadmore={loadMoreProducts}>
+                        </lightning-datatable>
+                    </template>
+
+                    <!-- Edit Selected Products -->
+                    <template if:true={isEdit}>
+                        <div class="edit-product-table-container">
+                            <div class="edit-product-actions">
+                                <lightning-button
+                                    label="Check Availability"
+                                    variant="brand"
+                                    icon-name="utility:search"
+                                    onclick={openProductAvailability}
+                                    disabled={isAvailabilityButtonDisabled}>
+                                </lightning-button>
+                            </div>
+                            <template if:true={editColumnWidthsReady}>
+                                <c-product-data-table_-c-c
+                                    class="edit-product-table"
+                                    style={editTableHostStyle}
+                                    key-field="Id"
+                                    column-widths-mode="fixed"
+                                    min-column-width="35"
+                                    onresize={handleEditColumnResize}
+                                    data={editRows}
+                                    columns={editColumns}
+                                    hide-checkbox-column
+                                    draft-values={drafts}
+                                    oncellchange={handleCellChange}
+                                    onlookupselectionchange={handleLookupSelectionChange}
+                                    onrowaction={handleEditRowAction}
+                                    suppress-bottom-bar>
+                                </c-product-data-table_-c-c>
+                            </template>
+                            <template if:false={editColumnWidthsReady}>
+                                <div class="edit-table-sizing-placeholder">
+                                    <lightning-spinner
+                                        alternative-text="Preparing columns"
+                                        size="small">
+                                    </lightning-spinner>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+
+                    <!-- Site and Warehouse Allocation -->
+                    <!-- FUTURE PHASE: Entire Site and Warehouse Allocation screen, including product accordions, Site/Warehouse pickers, quantities, warnings and row actions.
+                    <template if:true={showSiteAllocationScreen}>
+                        <div class="site-allocation-screen">
+                            <p class="site-allocation-intro">
+                                Allocate each product quantity across its delivery sites and fulfillment warehouses.
+                            </p>
+
+                            <template for:each={siteAllocationProducts} for:item="product">
+                                <section key={product.key} class="site-allocation-product">
+                                    <div class="site-allocation-product-header">
+                                        <button
+                                            type="button"
+                                            class="site-allocation-toggle"
+                                            data-product-key={product.key}
+                                            onclick={toggleAllocationProduct}
+                                            aria-expanded={product.isExpanded}>
+                                            <lightning-icon
+                                                icon-name={product.chevronIcon}
+                                                size="x-small"
+                                                class="site-allocation-chevron">
+                                            </lightning-icon>
+                                            <span>{product.accordionLabel}</span>
+                                        </button>
+
+                                        <div class="site-allocation-actions">
+                                            <lightning-button
+                                                label="Add Site"
+                                                icon-name="utility:add"
+                                                data-product-key={product.key}
+                                                onclick={handleAddSite}
+                                                disabled={busy}>
+                                            </lightning-button>
+                                            <lightning-button
+                                                class="slds-m-left_x-small"
+                                                variant="brand"
+                                                label="Check Availability"
+                                                icon-name="utility:search"
+                                                data-product-id={product.productId}
+                                                onclick={openProductAvailability}
+                                                disabled={busy}>
+                                            </lightning-button>
+                                        </div>
+                                    </div>
+
+                                    <template if:true={product.isExpanded}>
+                                        <template if:true={product.hasSiteRows}>
+                                            <div class="site-allocation-table-container">
+                                                <table class="slds-table slds-table_cell-buffer slds-table_bordered site-allocation-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="allocation-row-number">#</th>
+                                                            <template for:each={allocationColumns} for:item="column">
+                                                                <th key={column.key} scope="col">{column.label}</th>
+                                                            </template>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template for:each={product.siteRows} for:item="row" for:index="rowIndex">
+                                                            <tr key={row.key}>
+                                                                <td class="allocation-row-number">{row.rowNumber}</td>
+                                                                <template for:each={allocationColumns} for:item="column">
+                                                                    <td key={column.key}>
+                                                                        <template if:true={column.isSite}>
+                                                                            <lightning-record-picker
+                                                                                object-api-name="Account"
+                                                                                label="Site"
+                                                                                variant="label-hidden"
+                                                                                placeholder="Search Sites..."
+                                                                                value={row.siteId}
+                                                                                filter={siteRecordFilter}
+                                                                                data-product-key={product.key}
+                                                                                data-row-key={row.key}
+                                                                                onchange={handleSiteChange}>
+                                                                            </lightning-record-picker>
+                                                                        </template>
+
+                                                                        <template if:true={column.isAddress}>
+                                                                            <lightning-formatted-text
+                                                                                value={row.shippingAddress}>
+                                                                            </lightning-formatted-text>
+                                                                        </template>
+
+                                                                        <template if:true={column.isWarehouse}>
+                                                                            <lightning-record-picker
+                                                                                object-api-name="Warehouse_CC__c"
+                                                                                label="Fulfillment Warehouse"
+                                                                                variant="label-hidden"
+                                                                                placeholder="Search Warehouses..."
+                                                                                value={row.warehouseId}
+                                                                                data-product-key={product.key}
+                                                                                data-row-key={row.key}
+                                                                                onchange={handleWarehouseChange}>
+                                                                            </lightning-record-picker>
+                                                                        </template>
+
+                                                                        <template if:true={column.isQuantity}>
+                                                                            <lightning-input
+                                                                                type="number"
+                                                                                label="Quantity"
+                                                                                variant="label-hidden"
+                                                                                min="1"
+                                                                                step="1"
+                                                                                value={row.quantity}
+                                                                                data-product-key={product.key}
+                                                                                data-row-key={row.key}
+                                                                                onchange={handleSiteQuantityChange}>
+                                                                            </lightning-input>
+                                                                            <template if:true={row.quantityError}>
+                                                                                <div class="slds-text-color_error slds-text-body_small allocation-row-warning">
+                                                                                    {row.quantityError}
+                                                                                </div>
+                                                                            </template>
+                                                                        </template>
+
+                                                                        <template if:true={column.isDelete}>
+                                                                            <lightning-button-icon
+                                                                                icon-name="utility:delete"
+                                                                                alternative-text="Delete Site"
+                                                                                title="Delete Site"
+                                                                                variant="border"
+                                                                                data-product-key={product.key}
+                                                                                data-row-key={row.key}
+                                                                                onclick={handleRemoveSite}>
+                                                                            </lightning-button-icon>
+                                                                        </template>
+                                                                    </td>
+                                                                </template>
+                                                            </tr>
+
+                                                            <template if:true={row.availabilityWarning}>
+                                                                <tr key={row.warningKey} class="allocation-warning-row">
+                                                                    <td colspan={allocationColumnCount}>
+                                                                        <div class="allocation-availability-banner" role="status">
+                                                                            <lightning-icon
+                                                                                icon-name="utility:warning"
+                                                                                size="x-small"
+                                                                                class="allocation-availability-icon">
+                                                                            </lightning-icon>
+                                                                            <span>{row.availabilityWarning}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </template>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+
+                                        <template if:false={product.hasSiteRows}>
+                                            <div class="slds-box slds-theme_shade no-site-allocation-message">
+                                                No Site delivery information has been added yet.
+                                            </div>
+                                        </template>
+                                    </template>
+                                </section>
+                            </template>
+                        </div>
+                    </template>
+
+                    -->
+
+                    <!-- Delete Confirmation -->
+                    <template if:true={isDelete}>
+                        <div class="delete-confirmation-message">
+                            {deleteMessage}
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Modal Footer -->
+                <footer class="slds-modal__footer">
+                    <lightning-button
+                        label="Cancel"
+                        onclick={closeModal}
+                        disabled={busy}>
+                    </lightning-button>
+
+                    <template if:true={isPricebook}>
+                        <lightning-button
+                            class="slds-m-left_small"
+                            variant="brand"
+                            label="Save"
+                            onclick={handlePricebookNext}
+                            disabled={busy}>
+                        </lightning-button>
+                    </template>
+
+                    <template if:true={isConfirm}>
+                        <lightning-button
+                            class="slds-m-left_small"
+                            variant="brand"
+                            label="Save"
+                            onclick={handleConfirmPricebook}
+                            disabled={busy}>
+                        </lightning-button>
+                    </template>
+
+                    <template if:true={showProductScreen}>
+                        <lightning-button
+                            class="slds-m-left_small"
+                            variant="brand"
+                            label="Next"
+                            onclick={handleProductNext}
+                            disabled={noSelection}>
+                        </lightning-button>
+                    </template>
+
+                    <template if:true={isEdit}>
+                        <template if:true={showBackToProducts}>
+                            <lightning-button
+                                class="slds-m-left--x-small"
+                                label="Back"
+                                onclick={handleEditBack}
+                                disabled={busy}>
+                            </lightning-button>
+                        </template>
+
+                        <!-- FUTURE PHASE: Replace the standard Save action with Next when Site/Warehouse allocation is reactivated.
+                        <template if:true={showEditNext}>
+                            <lightning-button
+                                class="slds-m-left_small"
+                                variant="brand"
+                                label="Next"
+                                onclick={handleEditNext}
+                                disabled={busy}>
+                            </lightning-button>
+                        </template>
+                        <template if:true={showEditSave}>
+                            <lightning-button
+                                class="slds-m-left_small"
+                                variant="brand"
+                                label="Save"
+                                onclick={handleSaveProducts}
+                                disabled={busy}>
+                            </lightning-button>
+                        </template>
+                        -->
+                        <lightning-button
+                            class="slds-m-left_small"
+                            variant="brand"
+                            label="Save"
+                            onclick={handleSaveProducts}
+                            disabled={busy}>
+                        </lightning-button>
+                    </template>
+
+                    <!-- FUTURE PHASE: Site Allocation Back and Save footer actions.
+                    <template if:true={showSiteAllocationScreen}>
+                        <lightning-button
+                            class="slds-m-left_small"
+                            label="Back"
+                            onclick={handleAllocationBack}
+                            disabled={busy}>
+                        </lightning-button>
+                        <lightning-button
+                            class="slds-m-left_small"
+                            variant="brand"
+                            label="Save"
+                            onclick={handleSaveProducts}
+                            disabled={allocationSaveDisabled}>
+                        </lightning-button>
+                    </template>
+
+                    -->
+
+                    <template if:true={isDelete}>
+                        <lightning-button
+                            class="slds-m-left_small"
+                            variant="destructive"
+                            label="Delete"
+                            onclick={confirmDelete}
+                            disabled={busy}>
+                        </lightning-button>
+                    </template>
+                </footer>
+
+                <!-- Nested availability layer: covers only this modal panel. -->
+                <template if:true={showAvailabilityModal}>
+                    <div class="availability-modal-overlay">
+                        <section
+                            role="dialog"
+                            tabindex="-1"
+                            aria-modal="true"
+                            aria-labelledby="availability-modal-heading"
+                            class="availability-modal-dialog">
+                            <div class="availability-modal-container">
+                                <header class="availability-modal-header">
+                                    <h2 id="availability-modal-heading" class="slds-text-heading_medium">
+                                        Product Availability
+                                    </h2>
+                                    <lightning-button-icon
+                                        icon-name="utility:close"
+                                        alternative-text="Close Availability"
+                                        title="Close"
+                                        variant="bare"
+                                        onclick={closeProductAvailability}>
+                                    </lightning-button-icon>
+                                </header>
+                                <div class="availability-modal-body">
+                                    <c-product-availability-c-c
+                                        selected-products={availabilityProductIds}>
+                                    </c-product-availability-c-c>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+    </template>
+</template>

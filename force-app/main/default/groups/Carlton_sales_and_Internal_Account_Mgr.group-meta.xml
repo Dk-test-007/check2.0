@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Group xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Users with Profile as Carlton Sales and Carlton Internal Account Manager.</description>
+    <doesIncludeBosses>true</doesIncludeBosses>
+    <name>Carlton sales and Internal Account Mgr</name>
+</Group>

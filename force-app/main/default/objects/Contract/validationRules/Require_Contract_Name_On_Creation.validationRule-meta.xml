@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Contract_Name_On_Creation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISNEW(),
+    ISBLANK(Name),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Contract.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Name</errorDisplayField>
+    <errorMessage>Contract Name cannot be blank when creating a Contract.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,9 @@
+<template>
+    <template if:true={typeAttributes.recordLabel}>
+        <lightning-formatted-url
+            value={typeAttributes.recordUrl}
+            label={typeAttributes.recordLabel}
+            target="_self">
+        </lightning-formatted-url>
+    </template>
+</template>

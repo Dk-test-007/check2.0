@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lifecycle_History_CC__c</fullName>
+    <description>Lead UI pilot: newest-first log of lifecycle events written by LeadLifecycleCycle_CC: entering Re-Nurture (reason, date, comments, outcome, owner), Return to Engage, Restart at Identify (actor, note, previous disposition and cleared values) and review confirmations. Keeps earlier cycles&apos; reasons and comments, which are not field-history tracked. Read-only to users.</description>
+    <inlineHelpText>Written automatically. Each Re-Nurture, return and restart is recorded here, newest first, so earlier cycles&apos; reasons and comments are kept.</inlineHelpText>
+    <label>Lifecycle History</label>
+    <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>LongTextArea</type>
+    <visibleLines>8</visibleLines>
+</CustomField>

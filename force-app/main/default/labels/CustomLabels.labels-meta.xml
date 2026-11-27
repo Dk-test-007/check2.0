@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Opportunity_Stage_Reminder_Days_CC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Stage Reminder Days</shortDescription>
+        <value>2</value>
+    </labels>
+    <labels>
+        <fullName>Accepted_OrderItem_Allowed_Fields_CC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Accepted_OrderItem_Allowed_Fields_CC</shortDescription>
+        <value>Description , Shipment_Date_CC__c</value>
+    </labels>
+    <labels>
+        <fullName>Accepted_Order_Allowed_Fields_CC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Accepted Order Allowed Fields</shortDescription>
+        <value>BillingAddress, BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, ShippingAddress, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet , Status ,Shipment_Date_CC__c, StatusCode, ActivatedDate, ActivatedById</value>
+    </labels>
+    <labels>
+        <fullName>Delete_Restricted_Objects_CC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delete Restricted Objects</shortDescription>
+        <value>Order, OrderItem, Contract, SalesContractLine , Lead</value>
+    </labels>
+    <labels>
+        <fullName>Delete_Restricted_Profiles_CC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delete Restricted Profiles</shortDescription>
+        <value>Carlton Internal Account Manager , Carlton Marketing User</value>
+    </labels>
+    <labels>
+        <fullName>ZoomInfo_Service_User_Name_CC</fullName>
+        <categories>ZoomInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ZoomInfo Service User Name</shortDescription>
+        <value>ZoomInfo User</value>
+    </labels>
+</CustomLabels>

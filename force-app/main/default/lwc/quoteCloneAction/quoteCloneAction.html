@@ -1,0 +1,42 @@
+<template>
+    <lightning-quick-action-panel header="Clone Quote">
+        <div class="slds-p-around_medium">
+            <template lwc:if={isChecking}>
+                <lightning-spinner
+                    alternative-text="Checking Accepted Quotes"
+                    size="small">
+                </lightning-spinner>
+                Checking whether this Quote can be cloned...
+            </template>
+
+            <template lwc:elseif={isBlocked}>
+                An Accepted Quote already exists for the New Business Opportunity. No new Quote can be created.
+            </template>
+
+            <template lwc:else>
+                Are you sure you want to clone this Quote and its Quote Line Items?
+            </template>
+        </div>
+
+        <div slot="footer">
+            <lightning-button
+                label="Cancel"
+                onclick={handleCancel}
+                class="slds-m-right_small">
+            </lightning-button>
+
+            <lightning-button
+                variant="brand"
+                label="Clone Quote"
+                onclick={handleClone}
+                disabled={isCloneDisabled}>
+            </lightning-button>
+        </div>
+
+        <template lwc:if={isLoading}>
+            <lightning-spinner
+                alternative-text="Cloning Quote">
+            </lightning-spinner>
+        </template>
+    </lightning-quick-action-panel>
+</template>

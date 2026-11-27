@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_Email_Required_CC</fullName>
+    <active>true</active>
+    <description>Prevents a Contact from being saved when Email is blank, ensuring the minimum required Contact information is captured.</description>
+    <errorConditionFormula>AND(
+				NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Contact.Bypass_Validation_CC__c),
+    ISBLANK(Email),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorMessage>Email is required for a Contact.</errorMessage>
+</ValidationRule>

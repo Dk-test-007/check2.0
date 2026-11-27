@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Make_Opportunity_Required_for_RFQ</fullName>
+    <active>true</active>
+    <description>Opportunity should be required for RFQ Cases</description>
+    <errorConditionFormula>AND(
+    RecordType.DeveloperName == &quot;RFQ&quot;,
+    ISBLANK(Opportunity__c),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Case.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Opportunity__c</errorDisplayField>
+    <errorMessage>Opportunity is required for a RFQ</errorMessage>
+</ValidationRule>

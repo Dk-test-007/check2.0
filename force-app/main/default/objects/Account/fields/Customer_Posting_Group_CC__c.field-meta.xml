@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Posting_Group_CC__c</fullName>
+    <label>Customer Posting Group</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CAN</fullName>
+                <default>false</default>
+                <label>Canada</label>
+            </value>
+            <value>
+                <fullName>DOM</fullName>
+                <default>false</default>
+                <label>Domestic</label>
+            </value>
+            <value>
+                <fullName>IC</fullName>
+                <default>false</default>
+                <label>Intercompany</label>
+            </value>
+            <value>
+                <fullName>MX</fullName>
+                <default>false</default>
+                <label>Mexico</label>
+            </value>
+            <value>
+                <fullName>ROW</fullName>
+                <default>false</default>
+                <label>Rest of World</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

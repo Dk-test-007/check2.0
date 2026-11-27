@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Error_Logs</fullName>
+    <columns>NAME</columns>
+    <columns>Related_Record_Ids_CC__c</columns>
+    <columns>Exception_Type_CC__c</columns>
+    <columns>Message_CC__c</columns>
+    <columns>Root_Cause_CC__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Object_Name_CC__c</field>
+        <operation>equals</operation>
+        <value>Product</value>
+    </filters>
+    <filters>
+        <field>Log_Level_CC__c</field>
+        <operation>equals</operation>
+        <value>ERROR</value>
+    </filters>
+    <label>Product Error Logs</label>
+</ListView>

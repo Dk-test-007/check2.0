@@ -1,0 +1,27 @@
+<html>
+  <body style="font-family: Arial, sans-serif; color: #333333;">
+
+    <p>Hi {!Receiving_User.FirstName},</p>
+
+    <p>The Commercial Product Team requires additional information to continue investigating your RFQ.</p>
+
+    Key Details:
+    <ul>
+      <li><strong>RFQ Number:</strong> {!Case.CaseNumber}</li>
+      <li><strong>Opportunity:</strong> {!Case.Opportunity__c}</li>
+      <li><strong>Customer:</strong> {!Case.Account}</li>
+      <li><strong>Information Requested:</strong> {!Case.Information_Requested__c}</li>
+      <li><strong>Requested By:</strong> {!Case.OwnerFullName}</li>
+    </ul>
+
+    <p>Please review the RFQ in Salesforce and provide the requested information at the earliest.</p>
+
+    <p>
+      <a href="{!Case.Link}">{!Case.CaseNumber}</a>
+    </p>
+
+    <p>Thank you,<br>
+    Carlton Packaging CRM</p>
+
+  </body>
+</html>

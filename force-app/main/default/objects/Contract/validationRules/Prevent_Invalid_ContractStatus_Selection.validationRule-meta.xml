@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Invalid_ContractStatus_Selection</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    OR(
+        ISNEW(),
+        ISCHANGED(Status)
+    ),
+    OR(
+        ISPICKVAL(Status, &quot;In Approval Process&quot;),
+        ISPICKVAL(Status, &quot;Rejected&quot;),
+        ISPICKVAL(Status, &quot;Negotiating&quot;),
+        ISPICKVAL(Status, &quot;Awaiting Signature&quot;),
+        ISPICKVAL(Status, &quot;Signature Declined&quot;),
+        ISPICKVAL(Status, &quot;Signed&quot;),
+        ISPICKVAL(Status, &quot;Contract Terminated&quot;)
+    ),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Contract.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorMessage>These are not valid statuses and are not allowed to be chosen.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,36 @@
+<template>
+    <lightning-card title="Return to Engage" icon-name="utility:undo">
+        <div class="slds-var-p-horizontal_medium">
+            <template lwc:if={saving}>
+                <lightning-spinner alternative-text="Returning to Engage" size="small"></lightning-spinner>
+            </template>
+            <template lwc:if={error}>
+                <div class="slds-text-color_error slds-var-m-bottom_small" role="alert">{error}</div>
+            </template>
+
+            <template lwc:if={isView}>
+                <template lwc:if={canReturn}>
+                    <p class="slds-var-m-bottom_small">Use this when the contact is ready to talk again and the existing
+                        qualification still stands. The Lead goes back to Engage to record a new meeting outcome. For a
+                        full reassessment, use Restart at Identify instead.</p>
+                    <lightning-button variant="brand-outline" label="Return to Engage" onclick={handleStart}></lightning-button>
+                </template>
+                <template lwc:elseif={blockedMessage}>
+                    <p class="slds-text-color_weak">{blockedMessage}</p>
+                </template>
+            </template>
+
+            <template lwc:if={isConfirm}>
+                <p class="slds-var-m-bottom_x-small"><strong>Return {companyName} to Engage?</strong></p>
+                <p class="slds-var-m-bottom_x-small">Status becomes Engage.</p>
+                <p class="slds-var-m-bottom_small slds-text-color_weak">The Re-Nurture reason, comments and re-engagement
+                    date stay on the Lead, and the status change is kept in its history. The owner does not change. The
+                    previous meeting outcome is saved in Lifecycle History and cleared, so the next meeting needs a new
+                    outcome before converting.</p>
+                <lightning-button label="Cancel" onclick={handleCancel} class="slds-var-m-right_x-small"></lightning-button>
+                <lightning-button variant="brand" label="Confirm Return to Engage" onclick={handleConfirm}
+                    disabled={saving}></lightning-button>
+            </template>
+        </div>
+    </lightning-card>
+</template>

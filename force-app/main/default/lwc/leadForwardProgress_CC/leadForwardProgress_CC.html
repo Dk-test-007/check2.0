@@ -1,0 +1,38 @@
+<template>
+    <div class="slds-var-p-around_x-small">
+        <template lwc:if={isDisposition}>
+            <!-- No current or completed step. lightning-progress-indicator without current-step still marks the first
+                 step as current, so a static list is rendered instead; the outcome banner states the actual status. -->
+            <div class="slds-path" data-id="disposition-path">
+                <div class="slds-grid slds-path__track">
+                    <div class="slds-grid slds-path__scroller-container">
+                        <div class="slds-path__scroller">
+                            <div class="slds-path__scroller_inner">
+                                <ol class="slds-path__nav" aria-label={dispositionLabel}>
+                                    <template for:each={steps} for:item="step">
+                                        <li key={step.value} class="slds-path__item slds-is-incomplete" data-step={step.value}>
+                                            <span class="slds-path__link">
+                                                <span class="slds-path__title">{step.label}</span>
+                                            </span>
+                                        </li>
+                                    </template>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="slds-text-body_small slds-text-color_weak slds-var-p-top_xx-small">{dispositionLabel}</p>
+        </template>
+        <template lwc:elseif={currentStep}>
+            <lightning-progress-indicator type="path" variant="base" current-step={currentStep}>
+                <template for:each={steps} for:item="step">
+                    <lightning-progress-step key={step.value} label={step.label} value={step.value}></lightning-progress-step>
+                </template>
+            </lightning-progress-indicator>
+            <template lwc:if={convertNote}>
+                <p class="slds-text-body_small slds-text-color_weak slds-var-p-top_xx-small" data-id="convert-note">{convertNote}</p>
+            </template>
+        </template>
+    </div>
+</template>

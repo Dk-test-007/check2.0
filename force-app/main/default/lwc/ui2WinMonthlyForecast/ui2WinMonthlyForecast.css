@@ -1,0 +1,8 @@
+.grid-scroll { overflow-x: auto; max-width: 100%; }
+.plan-grid { width: max-content; min-width: 100%; }
+.plan-grid th { white-space: nowrap; }
+.product-cell { min-width: 180px; }
+.mode-cell { min-width: 105px; }
+.start-cell { min-width: 115px; }
+.month-cell { min-width: 112px; }
+.total-row { font-weight: 700; background: #f3f6f9; }

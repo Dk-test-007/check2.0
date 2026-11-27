@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_CC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Only active mappings are applied.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Only active mappings are applied.</inlineHelpText>
+    <label>Active CC</label>
+    <type>Checkbox</type>
+</CustomField>

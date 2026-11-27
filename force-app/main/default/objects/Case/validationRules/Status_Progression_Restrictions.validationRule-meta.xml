@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status_Progression_Restrictions</fullName>
+    <active>true</active>
+    <description>Enforce restrictions on who can update the status and the progression path</description>
+    <errorConditionFormula>AND(
+    RecordType.DeveloperName == &quot;RFQ&quot;,
+    ISCHANGED(Status),
+    NOT(
+        AND(
+            $Profile.Name = &quot;Carlton CPT User&quot;,
+            ISPICKVAL(PRIORVALUE(Status), &quot;Submitted&quot;),
+            ISPICKVAL(Status, &quot;Assigned&quot;)
+        )
+    ),
+
+    OR(
+        /* 1. Invalid status transitions for everyone */
+        NOT(
+            OR(
+                AND(
+                    ISPICKVAL(PRIORVALUE(Status), &quot;Assigned&quot;),
+                    ISPICKVAL(Status, &quot;In Progress&quot;)
+                ),
+                AND(
+                    ISPICKVAL(PRIORVALUE(Status), &quot;In Progress&quot;),
+                    ISPICKVAL(Status, &quot;Awaiting Information&quot;)
+                ),
+                AND(
+                    ISPICKVAL(PRIORVALUE(Status), &quot;Awaiting Information&quot;),
+                    ISPICKVAL(Status, &quot;In Progress&quot;)
+                ),
+                AND(
+                    ISPICKVAL(PRIORVALUE(Status), &quot;In Progress&quot;),
+                    OR(
+                        ISPICKVAL(Status, &quot;Completed&quot;),
+                        ISPICKVAL(Status, &quot;Rejected&quot;),
+                        ISPICKVAL(Status, &quot;Cancelled&quot;)
+                    )
+                )
+            )
+        ),
+
+        /* 2. Block non-CPT users from making any status transitions */
+        $Profile.Name &lt;&gt; &quot;Carlton CPT User&quot;
+    ),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Case.Bypass_Validation_CC__c)
+
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Invalid RFQ status transition. Only CPT Users can make the permitted status transitions.</errorMessage>
+</ValidationRule>

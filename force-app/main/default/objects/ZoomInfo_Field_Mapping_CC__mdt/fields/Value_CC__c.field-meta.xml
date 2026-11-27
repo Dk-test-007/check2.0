@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Value_CC__c</fullName>
+    <description>Fixed value to write. For picklists use the value API name. Checkbox: true/false. Date: yyyy-mm-dd. Ignored when Source Field API Name is set.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Fixed value to write. For picklists use the value API name. Checkbox: true/false. Date: yyyy-mm-dd. Ignored when Source Field API Name is set.</inlineHelpText>
+    <label>Value CC</label>
+    <length>255</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

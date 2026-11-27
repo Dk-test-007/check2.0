@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>OPP_BAU_CLOSED_WON_MEANING</label>
+    <protected>false</protected>
+    <values>
+        <field>Active_CC__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Context_Value_CC__c</field>
+        <value xsi:type="xsd:string">Closed Won</value>
+    </values>
+    <values>
+        <field>Display_Action_CC__c</field>
+        <value xsi:type="xsd:string">SHOW</value>
+    </values>
+    <values>
+        <field>Display_Field_API_Names_CC__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Object_Config_Developer_Name_CC__c</field>
+        <value xsi:type="xsd:string">OPPORTUNITY_BAU</value>
+    </values>
+    <values>
+        <field>Persona_Type_CC__c</field>
+        <value xsi:type="xsd:string">PROFILE</value>
+    </values>
+    <values>
+        <field>Persona_Value_CC__c</field>
+        <value xsi:type="xsd:string">Carlton Sales User</value>
+    </values>
+    <values>
+        <field>Section_Heading_CC__c</field>
+        <value xsi:type="xsd:string">What this means</value>
+    </values>
+    <values>
+        <field>Section_Key_CC__c</field>
+        <value xsi:type="xsd:string">OPP_BAU_CLOSED_WON_MEANING</value>
+    </values>
+    <values>
+        <field>Section_Order_CC__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>Section_Text_CC__c</field>
+        <value xsi:type="xsd:string">&lt;p&gt;Finalise the Opportunity  outcome as Won or Lost.&lt;/p&gt;</value>
+    </values>
+</CustomMetadata>

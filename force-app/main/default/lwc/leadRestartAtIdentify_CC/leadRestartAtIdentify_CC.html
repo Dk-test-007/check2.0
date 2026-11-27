@@ -1,0 +1,70 @@
+<template>
+    <template lwc:if={show}>
+        <lightning-card title={title} icon-name="utility:replay">
+            <div class="slds-var-p-horizontal_medium">
+                <template lwc:if={saving}>
+                    <lightning-spinner alternative-text="Saving" size="small"></lightning-spinner>
+                </template>
+                <template lwc:if={error}>
+                    <div class="slds-text-color_error slds-var-m-bottom_small" role="alert">{error}</div>
+                </template>
+
+                <template lwc:if={isReNurture}>
+                    <template lwc:if={isView}>
+                        <template lwc:if={canRestart}>
+                            <p class="slds-var-m-bottom_small">Use this for a reassessment: the Lead starts again at
+                                Qualify, and its qualification details must be reviewed at Qualify before it reaches
+                                Engage.</p>
+                            <template lwc:if={ownedByQueue}>
+                                <p class="slds-var-m-bottom_small slds-text-color_weak">A pool queue owns this Lead. A pool
+                                    member should take it with Change Owner so one person is responsible.</p>
+                            </template>
+                            <lightning-button variant="brand-outline" label="Restart at Qualify" onclick={handleStart}></lightning-button>
+                        </template>
+                        <template lwc:elseif={restartBlocked}>
+                            <p class="slds-text-color_weak">{restartBlocked}</p>
+                        </template>
+                    </template>
+
+                    <template lwc:if={isConfirm}>
+                        <p class="slds-var-m-bottom_x-small"><strong>Restart {companyName} at Qualify?</strong></p>
+                        <ul class="slds-list_dotted slds-var-m-bottom_x-small">
+                            <li>Status becomes Qualify (cycle {nextCycle}). The owner does not change.</li>
+                            <li>The Re-Nurture reason, comments, date and the previous meeting outcome are saved in
+                                Lifecycle History, then cleared for the new cycle.</li>
+                            <li>Company, contact and qualification details are kept. The qualification details must be
+                                confirmed again at Qualify. A new meeting outcome is needed before converting.</li>
+                        </ul>
+                        <p class="slds-var-m-bottom_small slds-text-color_weak">Return to Engage (Sales) is the other route:
+                            it resumes the existing qualification without this review.</p>
+                        <lightning-textarea label="Why restart now?" required max-length="500" value={note}
+                            onchange={handleNote} class="slds-var-m-bottom_small"></lightning-textarea>
+                        <lightning-button label="Cancel" onclick={handleCancel} class="slds-var-m-right_x-small"></lightning-button>
+                        <lightning-button variant="brand" label="Confirm Restart" onclick={handleRestart}
+                            disabled={confirmDisabled}></lightning-button>
+                    </template>
+                </template>
+
+                <template lwc:if={hasReview}>
+                    <template lwc:if={isIdentityReview}>
+                        <p class="slds-var-m-bottom_small">Before this Lead moves to Qualify, check that the company,
+                            address, Lead Source and contact details on the Work tab are still right. Correct anything
+                            out of date and save, then confirm.</p>
+                    </template>
+                    <template lwc:else>
+                        <p class="slds-var-m-bottom_small">Before this Lead moves to Engage, check that the Entity or Site choice and
+                            the Entity/Site qualification answers on the Work tab are still right. Correct anything out of
+                            date and save, then confirm.</p>
+                    </template>
+                    <template lwc:if={canConfirm}>
+                        <lightning-button variant="brand-outline" label={reviewButtonLabel} onclick={handleConfirmReview}
+                            disabled={saving}></lightning-button>
+                    </template>
+                    <template lwc:elseif={reviewBlocked}>
+                        <p class="slds-text-color_weak">{reviewBlocked}</p>
+                    </template>
+                </template>
+            </div>
+        </lightning-card>
+    </template>
+</template>

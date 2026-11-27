@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BAUCanBeCreatedInRequestOnly</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISNEW(),
+    RecordType.DeveloperName = &apos;BAU&apos;,
+    NOT(ISPICKVAL(StageName, &apos;Request&apos;)),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Opportunity.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>BAU Opportunity can only be created in the Request Stage</errorMessage>
+</ValidationRule>

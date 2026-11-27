@@ -1,0 +1,34 @@
+.wizard-page {
+    padding: 0.75rem;
+}
+
+.wizard-footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0;
+    padding: 0.75rem 1rem;
+    background: var(--slds-g-color-neutral-base-95, #f3f3f3);
+    border-top: 1px solid var(--slds-g-color-border-base-1, #dddbda);
+    border-radius: 0 0 0.25rem 0.25rem;
+}
+
+.wizard-body {
+    min-height: 12rem;
+    padding-bottom: 0.5rem;
+}
+
+.wizard-loading {
+    min-height: 10rem;
+}
+
+.wizard-field {
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.wizard-preline {
+    white-space: pre-line;
+}
