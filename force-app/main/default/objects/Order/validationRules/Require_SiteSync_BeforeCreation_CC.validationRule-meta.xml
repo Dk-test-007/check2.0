@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_SiteSync_BeforeCreation_CC</fullName>
+    <active>true</active>
+    <description>Opportunity route: the Opportunity&apos;s Ship-To Site must be BC-synced (unchanged). Direct Sales Agreement release (no Opp/Quote/Contract): the Order&apos;s Ship-To Site must be synced, except synthetic UI2 accounts.</description>
+    <errorConditionFormula>AND(
+    NOT(ISNEW()),
+    ISCHANGED(Status),
+    ISPICKVAL(Status, &quot;Activated&quot;),
+    IF(
+        AND(
+            NOT(ISBLANK(Agreement_Release_Key_CC__c)),
+            ISBLANK(OpportunityId),
+            ISBLANK(QuoteId),
+            ISBLANK(ContractId)
+        ),
+        AND(
+            NOT(Ship_to_Customer_No_CC__r.Site_Synced_CC__c),
+            NOT(Account.Integration_Test_Record_CC__c)
+        ),
+        NOT(Opportunity.Ship_To_Site_CC__r.Site_Synced_CC__c)
+    ),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Order.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorMessage>Order can only be activated when the associated Site is synced.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,50 @@
+<template>
+    <template lwc:if={isLoading}>
+        <div class="loading-shell">
+            <lightning-spinner alternative-text="Loading guidance" size="small"></lightning-spinner>
+        </div>
+    </template>
+
+    <template lwc:if={hasError}>
+        <div class="slds-p-around_small">
+            <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                <span class="slds-assistive-text">Error</span>
+                <div>{errorMessage}</div>
+            </div>
+        </div>
+    </template>
+
+    <template lwc:if={showGuidance}>
+        <div class="guidance-container">
+            <lightning-accordion
+                allow-multiple-sections-open
+                active-section-name={activeSectionName}
+                onsectiontoggle={handleSectionToggle}>
+
+                <lightning-accordion-section
+                    name="guidance"
+                    label="Guidance for Success">
+
+                    <div class="guidance-content">
+                        <template for:each={guidanceSections} for:item="section">
+                            <section key={section.key} class="guidance-section">
+                                <template lwc:if={section.heading}>
+                                    <h3 class="section-heading">{section.heading}</h3>
+                                </template>
+                                <div class="guidance-copy">
+                                    <lightning-formatted-rich-text value={section.text}></lightning-formatted-rich-text>
+                                </div>
+                            </section>
+                        </template>
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+
+            <template lwc:if={isRefreshing}>
+                <div class="refresh-overlay" role="status" aria-live="polite">
+                    <lightning-spinner alternative-text="Refreshing guidance" size="small"></lightning-spinner>
+                </div>
+            </template>
+        </div>
+    </template>
+</template>

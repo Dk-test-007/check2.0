@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Feature access to the Opportunity, Sales Agreement and Order UI2: Win and Set Monthly Forecast, Revise Forecast, Enter PO and the monthly account view. Checked server-side by every UI2 entry point.</description>
+    <isLicensed>false</isLicensed>
+    <label>Opportunity UI2 Pilot</label>
+</CustomPermission>

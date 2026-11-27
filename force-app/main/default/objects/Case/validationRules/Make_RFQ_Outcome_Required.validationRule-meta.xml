@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Make_RFQ_Outcome_Required</fullName>
+    <active>true</active>
+    <description>RFQ Outcome should be required for &quot;RFQ Completed&quot;, &quot;RFQ Rejected&quot;, and &quot;RFQ Cancelled&quot; statuses</description>
+    <errorConditionFormula>AND (
+    RecordType.DeveloperName == &quot;RFQ&quot;,
+    ISBLANK(TEXT(RFQ_Outcome__c)),
+    OR(
+        ISPICKVAL(Status, &quot;Completed&quot;),
+        ISPICKVAL(Status, &quot;Rejected&quot;),
+        ISPICKVAL(Status, &quot;Cancelled&quot;)
+    ),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Case.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>RFQ_Outcome__c</errorDisplayField>
+    <errorMessage>RFQ Outcome is required when the RFQ status is Completed, Rejected, or Cancelled.</errorMessage>
+</ValidationRule>

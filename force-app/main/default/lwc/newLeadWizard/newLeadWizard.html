@@ -1,0 +1,526 @@
+<template>
+    <div class="wizard-page">
+        <!-- Page header (object home style) -->
+        <div class="slds-page-header slds-m-bottom_small">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="standard:lead" size="medium" alternative-text="Lead"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span>Leads</span>
+                                        <span class="slds-page-header__title slds-truncate" title="New Lead">New Lead</span>
+                                    </h1>
+                                </div>
+                            </div>
+                            <p class="slds-page-header__name-meta">{headerMeta}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <article class="slds-card wizard-card">
+            <div class="slds-card__body slds-card__body_inner slds-is-relative wizard-body">
+                <template lwc:if={showSpinner}>
+                    <lightning-spinner alternative-text={busyMessage} size="medium" variant="brand"></lightning-spinner>
+                </template>
+
+                <template lwc:if={showProgress}>
+                    <div class="slds-p-vertical_medium slds-p-horizontal_large">
+                        <lightning-progress-indicator current-step={progressStep} type="base" variant="base">
+                            <lightning-progress-step label="Company and Source" value="company"></lightning-progress-step>
+                            <lightning-progress-step label="Address" value="address"></lightning-progress-step>
+                            <lightning-progress-step label="Contact" value="contact"></lightning-progress-step>
+                            <lightning-progress-step label="Duplicate Check" value="check"></lightning-progress-step>
+                            <lightning-progress-step label="Review" value="review"></lightning-progress-step>
+                        </lightning-progress-indicator>
+                    </div>
+                </template>
+
+                <template lwc:if={showRequiredLegend}>
+                    <p class="slds-text-align_right slds-text-body_small slds-m-bottom_x-small">
+                        <abbr class="slds-required" title="required">*</abbr> = Required Information
+                    </p>
+                </template>
+
+                <!-- Loading -->
+                <template lwc:if={isLoading}>
+                    <div class="wizard-loading"></div>
+                </template>
+
+                <!-- Load error -->
+                <template lwc:if={isLoadError}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-theme_error" role="alert">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:error" size="small" variant="inverse" alternative-text="error"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title_bold slds-m-bottom_xx-small">The New Lead Wizard could not be loaded.</p>
+                            <p>{loadErrorMessage}</p>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Screen_No_Access -->
+                <template lwc:if={isNoAccess}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light" role="status">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:info" size="small" alternative-text="info"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title_bold slds-m-bottom_xx-small">You do not have permission to create Leads.</p>
+                            <p>Nothing was saved. Ask your administrator for access to create Leads.</p>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Screen_Company_Source -->
+                <template lwc:if={isCompanyStep}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_medium" role="status">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:info" size="small" alternative-text="info"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p>Create a <strong>new</strong> Lead. Qualification details are added later on the Lead record.</p>
+                        </div>
+                    </div>
+
+                    <div class="slds-section slds-is-open">
+                        <h3 class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small" title="Lead Information">Lead Information</span>
+                        </h3>
+                        <div class="slds-section__content">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                    <lightning-input class="wizard-field" label="Company" data-field="company"
+                                        value={form.company} required onchange={handleFieldChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                    <lightning-combobox class="wizard-field" label="Entity (Carlton company)"
+                                        data-field="entity" value={form.entity} options={entityOptions}
+                                        placeholder="Select an option" required
+                                        field-level-help="Decides regional routing (marketing pool). Only active values are offered. Prefilled from your regional Lead queue, or with the only active Entity (today: Carlton Packaging INC); change it if this Lead belongs elsewhere."
+                                        onchange={handleFieldChange}></lightning-combobox>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                    <lightning-combobox class="wizard-field" label="Lead Source" data-field="leadSource"
+                                        value={form.leadSource} options={leadSourceOptions}
+                                        placeholder="Select an option" required
+                                        onchange={handleFieldChange}></lightning-combobox>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                    <lightning-combobox class="wizard-field" label="Entity or Site"
+                                        data-field="leadType" value={form.leadType} options={leadTypeOptions}
+                                        field-level-help="Optional now. Can be set later on the Lead; it is required before the Lead moves on from Qualify."
+                                        onchange={handleFieldChange}></lightning-combobox>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+                    </div>
+
+                    <template lwc:if={hasSourceDetails}>
+                        <div class="slds-section slds-is-open">
+                            <h3 class="slds-section__title slds-theme_shade">
+                                <span class="slds-truncate slds-p-horizontal_small" title="Source Details">Source Details</span>
+                            </h3>
+                            <div class="slds-section__content">
+                                <lightning-layout multiple-rows>
+                                    <template lwc:if={isSourceOther}>
+                                        <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                            <lightning-input class="wizard-field" label="Lead Source (Other)"
+                                                data-field="leadSourceOther" value={form.leadSourceOther} required
+                                                onchange={handleFieldChange}></lightning-input>
+                                        </lightning-layout-item>
+                                    </template>
+                                    <template lwc:if={isSourceTradeShow}>
+                                        <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                            <lightning-input class="wizard-field" label="Trade Show/Expo Name"
+                                                data-field="tradeShowName" value={form.tradeShowName} required
+                                                onchange={handleFieldChange}></lightning-input>
+                                        </lightning-layout-item>
+                                    </template>
+                                    <template lwc:if={isSourceReferral}>
+                                        <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                            <lightning-input class="wizard-field" label="Referrer Name"
+                                                data-field="referrerName" value={form.referrerName} required
+                                                onchange={handleFieldChange}></lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                            <lightning-combobox class="wizard-field" label="Referrer Type"
+                                                data-field="referrerType" value={form.referrerType}
+                                                options={referrerTypeOptions} placeholder="Select an option" required
+                                                onchange={handleFieldChange}></lightning-combobox>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                            <lightning-input class="wizard-field" label="Referrer Company"
+                                                data-field="referrerCompany" value={form.referrerCompany}
+                                                onchange={handleFieldChange}></lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                            <lightning-input class="wizard-field" label="Referrer Email"
+                                                data-field="referrerEmail" value={form.referrerEmail}
+                                                onchange={handleFieldChange}></lightning-input>
+                                        </lightning-layout-item>
+                                    </template>
+                                    <template lwc:if={isSourceLinkedIn}>
+                                        <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                            <lightning-input class="wizard-field" label="LinkedIn Profile URL"
+                                                data-field="linkedInUrl" value={form.linkedInUrl}
+                                                onchange={handleFieldChange}></lightning-input>
+                                        </lightning-layout-item>
+                                    </template>
+                                    <template lwc:if={isSourceZoomInfo}>
+                                        <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                            <lightning-input class="wizard-field" label="ZoomInfo Profile URL"
+                                                data-field="zoomInfoUrl" value={form.zoomInfoUrl}
+                                                onchange={handleFieldChange}></lightning-input>
+                                        </lightning-layout-item>
+                                    </template>
+                                    <template lwc:if={isSourceExistingCustomer}>
+                                        <lightning-layout-item size="12" padding="horizontal-small">
+                                            <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_small" role="status">
+                                                <div class="slds-media__figure">
+                                                    <lightning-icon icon-name="utility:info" size="small" alternative-text="info"></lightning-icon>
+                                                </div>
+                                                <div class="slds-media__body">
+                                                    <p>
+                                                        The source is recorded as Existing Customer Enquiry. The wizard does
+                                                        not link the Lead to an Account; check the possible-matches step for
+                                                        the existing customer before continuing.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </lightning-layout-item>
+                                    </template>
+                                </lightning-layout>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+
+                <!-- Screen_Address -->
+                <template lwc:if={isAddressStep}>
+                    <template lwc:if={showAddressError}>
+                        <div class="slds-scoped-notification slds-media slds-media_center slds-theme_error slds-m-bottom_medium" role="alert">
+                            <div class="slds-media__figure">
+                                <lightning-icon icon-name="utility:error" size="small" variant="inverse" alternative-text="error"></lightning-icon>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-title_bold slds-m-bottom_xx-small">Review the address</p>
+                                <p>{addressMessage}</p>
+                            </div>
+                        </div>
+                    </template>
+                    <div class="slds-section slds-is-open">
+                        <h3 class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small" title="Address Information">Address Information</span>
+                        </h3>
+                        <div class="slds-section__content">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                    <lightning-input-address address-label="Address" street-label="Street"
+                                        city-label="City" province-label="State/Province"
+                                        postal-code-label="Zip/Postal Code" country-label="Country"
+                                        street={form.street} city={form.city} province={form.province}
+                                        postal-code={form.postalCode} country={form.country}
+                                        country-options={countryOptions} province-options={provinceOptions}
+                                        field-level-help="City, State/Province, Postal Code and Country are required. For a second street line, press Enter in the Street box."
+                                        onchange={handleAddressChange}></lightning-input-address>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                    <p class="slds-text-body_small slds-text-color_weak slds-p-top_large">
+                                        Enter the address manually. City, State/Province, Zip/Postal Code and Country are required.
+                                        State/Province choices follow the selected Country (not required when the Country has no states).
+                                    </p>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Screen_Contact -->
+                <template lwc:if={isContactStep}>
+                    <div class="slds-section slds-is-open">
+                        <h3 class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small" title="Contact Information">Contact Information</span>
+                        </h3>
+                        <div class="slds-section__content">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="12" padding="horizontal-small">
+                                    <lightning-radio-group class="wizard-field" label="Contact" data-field="nameKnown"
+                                        options={nameOptions} value={form.nameKnown} required
+                                        onchange={handleFieldChange}></lightning-radio-group>
+                                </lightning-layout-item>
+
+                                <template lwc:if={isNameUnknown}>
+                                    <lightning-layout-item size="12" padding="horizontal-small">
+                                        <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_small" role="status">
+                                            <div class="slds-media__figure">
+                                                <lightning-icon icon-name="utility:info" size="small" alternative-text="info"></lightning-icon>
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <p>The Lead will be saved with the Last Name <strong>{placeholderLastName}</strong>.</p>
+                                                <p>
+                                                    "Needs to Identify" is reserved text that marks the contact as unknown.
+                                                    Replace it with the real name on the Lead record; the Lead cannot be
+                                                    converted until you do.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </lightning-layout-item>
+                                </template>
+
+                                <template lwc:if={isNameKnown}>
+                                    <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                        <lightning-input class="wizard-field" label="First Name" data-field="firstName"
+                                            value={form.firstName} onchange={handleFieldChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                        <lightning-input class="wizard-field" label="Last Name" data-field="lastName"
+                                            value={form.lastName} required onchange={handleFieldChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                        <lightning-input class="wizard-field" label="Title" data-field="title"
+                                            value={form.title} onchange={handleFieldChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                        <lightning-input class="wizard-field" label="Email" data-field="email"
+                                            value={form.email} onchange={handleFieldChange}></lightning-input>
+                                    </lightning-layout-item>
+                                </template>
+
+                                <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                    <lightning-input class="wizard-field" type="tel" label="Phone (main or direct)"
+                                        data-field="phone" value={form.phone}
+                                        field-level-help="Optional. Maximum 15 characters."
+                                        onchange={handleFieldChange}></lightning-input>
+                                </lightning-layout-item>
+                                <template lwc:if={isNameKnown}>
+                                    <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                                        <lightning-input class="wizard-field" type="tel" label="Mobile"
+                                            data-field="mobile" value={form.mobile}
+                                            field-level-help="Optional. Maximum 15 characters."
+                                            onchange={handleFieldChange}></lightning-input>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Screen_Check_Failed -->
+                <template lwc:if={isCheckFailed}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-theme_warning slds-m-bottom_medium" role="status">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:warning" size="small" alternative-text="warning"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title_bold slds-m-bottom_xx-small">The duplicate check could not be completed.</p>
+                            <p>This does not mean there are no duplicates.</p>
+                            <template lwc:if={checkFailedDetail}>
+                                <p class="slds-m-top_xx-small">{checkFailedDetail}</p>
+                            </template>
+                        </div>
+                    </div>
+
+                    <template lwc:if={hasMatchesToShow}>
+                        <div class="slds-section slds-is-open">
+                            <h3 class="slds-section__title slds-theme_shade">
+                                <span class="slds-truncate slds-p-horizontal_small" title={matchesSectionTitle}>{matchesSectionTitle}</span>
+                            </h3>
+                            <div class="slds-section__content">
+                                <template lwc:if={useMatchTable}>
+                                    <div class="slds-border_top slds-border_bottom slds-border_left slds-border_right">
+                                        <lightning-datatable key-field="id" data={matchRows} columns={matchColumns}
+                                            hide-checkbox-column sorted-by={sortedBy}
+                                            sorted-direction={sortedDirection} onsort={handleSort}
+                                            column-widths-mode="auto"></lightning-datatable>
+                                    </div>
+                                </template>
+                                <template lwc:else>
+                                    <lightning-formatted-rich-text value={dup.matchSummaryHtml}></lightning-formatted-rich-text>
+                                </template>
+                                <template lwc:if={hiddenMatchText}>
+                                    <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">{hiddenMatchText}</p>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+
+                    <div class="slds-p-horizontal_small">
+                        <lightning-radio-group class="wizard-field" label="What would you like to do?"
+                            data-field="failAction" options={failOptions} value={form.failAction} required
+                            onchange={handleFieldChange}></lightning-radio-group>
+                        <p class="slds-text-body_small slds-text-color_weak">
+                            To create the Lead without this check, stop here and use the standard
+                            <strong>New</strong> button, which applies the usual duplicate alerts.
+                        </p>
+                    </div>
+                </template>
+
+                <!-- Screen_Possible_Matches -->
+                <template lwc:if={isMatches}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-theme_warning slds-m-bottom_medium" role="status">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:warning" size="small" alternative-text="warning"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title_bold slds-m-bottom_xx-small">It looks as if duplicates exist for this Lead.</p>
+                            <p>Review the possible matches below before you continue. Only records you can access are listed; links open in a new tab.</p>
+                        </div>
+                    </div>
+
+                    <div class="slds-section slds-is-open">
+                        <h3 class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small" title={matchesSectionTitle}>{matchesSectionTitle}</span>
+                        </h3>
+                        <div class="slds-section__content">
+                            <template lwc:if={useMatchTable}>
+                                <div class="slds-border_top slds-border_bottom slds-border_left slds-border_right">
+                                    <lightning-datatable key-field="id" data={matchRows} columns={matchColumns}
+                                        hide-checkbox-column sorted-by={sortedBy}
+                                        sorted-direction={sortedDirection} onsort={handleSort}
+                                        column-widths-mode="auto"></lightning-datatable>
+                                </div>
+                            </template>
+                            <template lwc:else>
+                                <lightning-formatted-rich-text value={dup.matchSummaryHtml}></lightning-formatted-rich-text>
+                            </template>
+                            <template lwc:if={hiddenMatchText}>
+                                <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">{hiddenMatchText}</p>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal_small">
+                        <lightning-radio-group class="wizard-field" label="What would you like to do?"
+                            data-field="matchAction" options={matchOptions} value={form.matchAction} required
+                            onchange={handleFieldChange}></lightning-radio-group>
+                        <template lwc:if={isCreateAnyway}>
+                            <lightning-input class="wizard-field" type="checkbox" data-field="ackDuplicates"
+                                label="I have reviewed the possible matches and this is a new Lead."
+                                checked={form.ackDuplicates} required onchange={handleFieldChange}></lightning-input>
+                        </template>
+                    </div>
+                </template>
+
+                <!-- Screen_Review -->
+                <template lwc:if={isReview}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_medium" role="status">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:info" size="small" alternative-text="info"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title_bold slds-m-bottom_xx-small">Review before creating</p>
+                            <p>
+                                Nothing has been saved yet. The Lead is created with Status Identify. Ownership is assigned
+                                automatically and may move to a regional marketing pool.
+                            </p>
+                        </div>
+                    </div>
+                    <template for:each={reviewSections} for:item="section">
+                        <div key={section.key} class="slds-section slds-is-open">
+                            <h3 class="slds-section__title slds-theme_shade">
+                                <span class="slds-truncate slds-p-horizontal_small" title={section.title}>{section.title}</span>
+                            </h3>
+                            <div class="slds-section__content">
+                                <lightning-layout multiple-rows>
+                                    <template for:each={section.items} for:item="item">
+                                        <lightning-layout-item key={item.key} size="12" medium-device-size="6"
+                                            padding="horizontal-small">
+                                            <div class="slds-form-element slds-form-element_readonly slds-form-element_stacked">
+                                                <span class="slds-form-element__label">{item.label}</span>
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-form-element__static wizard-preline">{item.value}</div>
+                                                </div>
+                                            </div>
+                                        </lightning-layout-item>
+                                    </template>
+                                </lightning-layout>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+
+                <!-- Screen_Create_Error -->
+                <template lwc:if={isCreateError}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-theme_error" role="alert">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:error" size="small" variant="inverse" alternative-text="error"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title_bold slds-m-bottom_xx-small">We hit a snag. The Lead was not created.</p>
+                            <p>{createErrorMessage}</p>
+                            <p class="slds-m-top_xx-small">Your entries are kept. Choose Edit Details to correct them.</p>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Screen_Done -->
+                <template lwc:if={isDone}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-theme_success" role="status">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:success" size="small" variant="inverse" alternative-text="success"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title_bold slds-m-bottom_xx-small">Lead created.</p>
+                            <p>Lead "{createdCompany}" was created.</p>
+                        </div>
+                    </div>
+                    <div class="slds-m-top_medium slds-text-align_center">
+                        <lightning-button variant="brand" label="View Lead" icon-name="utility:open"
+                            onclick={handleOpenLead}></lightning-button>
+                    </div>
+                </template>
+
+                <!-- Screen_Done_No_Access -->
+                <template lwc:if={isDoneNoAccess}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-theme_success" role="status">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:success" size="small" variant="inverse" alternative-text="success"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title_bold slds-m-bottom_xx-small">Lead created.</p>
+                            <p>
+                                Automatic routing assigned it to an owner or queue whose records you cannot open, so no
+                                link is shown. Lead reference: {createdLeadId}
+                            </p>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Screen_Stopped -->
+                <template lwc:if={isStopped}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light" role="status">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:info" size="small" alternative-text="info"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title_bold slds-m-bottom_xx-small">No Lead was created.</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Footer inside the card, like a standard record modal footer; sticks to the bottom while scrolling -->
+            <footer class="slds-card__footer wizard-footer">
+                <template lwc:if={showCancel}>
+                    <lightning-button label="Cancel" onclick={handleCancel} disabled={busy}></lightning-button>
+                </template>
+                <template lwc:if={showBack}>
+                    <lightning-button class="slds-m-left_x-small" label="Back" onclick={handleBack}
+                        disabled={busy}></lightning-button>
+                </template>
+                <template lwc:if={showNext}>
+                    <lightning-button class="slds-m-left_x-small" variant="brand" label={nextLabel}
+                        onclick={handleNext} disabled={busy}></lightning-button>
+                </template>
+            </footer>
+        </article>
+    </div>
+</template>

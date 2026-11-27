@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UI2_Creation_Key_CC__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>WIN- followed by the source Opportunity Id. Unique: a double click, retry, concurrent request or reopen/reclose cannot create a second agreement for the same win.</description>
+    <externalId>true</externalId>
+    <label>Creation Key</label>
+    <length>40</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

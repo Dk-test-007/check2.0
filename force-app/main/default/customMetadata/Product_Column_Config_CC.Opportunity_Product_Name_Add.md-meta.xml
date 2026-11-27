@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Product Name</label>
+    <protected>false</protected>
+    <values>
+        <field>Data_Type_CC__c</field>
+        <value xsi:type="xsd:string">url</value>
+    </values>
+    <values>
+        <field>Default_Value_Field_Path_CC__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Display_Order_CC__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>Editable_CC__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Field_API_Name_CC__c</field>
+        <value xsi:type="xsd:string">Name</value>
+    </values>
+    <values>
+        <field>Field_Source_Type_CC__c</field>
+        <value xsi:type="xsd:string">PRODUCT</value>
+    </values>
+    <values>
+        <field>Label_CC__c</field>
+        <value xsi:type="xsd:string">Product Name</value>
+    </values>
+    <values>
+        <field>Product_Config_CC__c</field>
+        <value xsi:type="xsd:string">Opportunity</value>
+    </values>
+    <values>
+        <field>Required_CC__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Screen_Type_CC__c</field>
+        <value xsi:type="xsd:string">ADD PRODUCT</value>
+    </values>
+    <values>
+        <field>URL_Field_Source_CC__c</field>
+        <value xsi:type="xsd:string">PricebookEntry.Product2.Id</value>
+    </values>
+    <values>
+        <field>Width_Percent_CC__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

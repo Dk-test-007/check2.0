@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Account_Questions_Qualified_Gate_CC</fullName>
+    <active>false</active>
+    <description>CP27 (10 Nov): Account questions are mandatory on the Lead for pilot users: Actual Annual Spend (Q2), and Number of Locations (Q6) on an Entity Lead. Conversion sets Status = Qualified.</description>
+    <errorConditionFormula>AND(
+    ISPICKVAL(Status, &quot;Qualified&quot;),
+    $Permission.Lead_UI_Rework_Access_CC,
+    OR(
+        ISBLANK(Actual_Annual_Spend_CC__c),
+        AND(ISPICKVAL(Lead_Type_CC__c, &quot;Entity&quot;), ISBLANK(Number_of_Locations_CC__c))
+    ),
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Lead.Bypass_Validation_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorMessage>Complete the Account questions before converting: Actual Annual Spend, and Number of Locations for an Entity Lead.</errorMessage>
+</ValidationRule>

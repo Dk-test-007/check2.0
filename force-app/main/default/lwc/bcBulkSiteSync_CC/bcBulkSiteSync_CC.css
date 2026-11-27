@@ -1,0 +1,9 @@
+.panel-body {
+    min-height: 8rem;
+}
+
+/* Keeps long Site lists scrollable inside the modal */
+.table-container {
+    max-height: 15rem;
+    overflow-y: auto;
+}

@@ -1,0 +1,26 @@
+<html>
+  <body style="font-family: Arial, sans-serif; color: #333333;">
+
+    <p>Hi {!Receiving_User.FirstName},</p>
+
+    <p>One of your customer Quotes is approaching its expiry date.</p>
+
+    <p>Key Details:</p>
+    <ul>
+      <li><strong>Quote Number:</strong> {!Quote.QuoteNumber}</li>
+      <li><strong>Customer:</strong> {!Quote.Account}</li>
+      <li><strong>Quote Value:</strong> {!Quote.TotalPrice}</li>
+      <li><strong>Expiry Date:</strong> {!Quote.ExpirationDate}</li>
+    </ul>
+
+    <p>Please review the Quote in Salesforce and contact the customer before the Quote expires.</p>
+
+    <p>
+      <a href="{!Quote.Link}">{!Quote.QuoteNumber}</a>
+    </p>
+
+    <p>Thank you,<br>
+    Carlton Packaging CRM</p>
+
+  </body>
+</html>

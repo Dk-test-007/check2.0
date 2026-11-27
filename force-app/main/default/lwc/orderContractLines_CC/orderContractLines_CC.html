@@ -1,0 +1,58 @@
+<template>
+    <lightning-card title="Contract Lines" icon-name="standard:product">
+        <template lwc:if={canCancel}>
+            <lightning-button
+                slot="actions"
+                label="Cancel Order"
+                variant="destructive-text"
+                icon-name="utility:close"
+                disabled={isBusy}
+                onclick={handleCancelOrder}>
+            </lightning-button>
+        </template>
+
+        <div class="slds-is-relative">
+            <template lwc:if={isBusy}>
+                <lightning-spinner
+                    alternative-text="Loading Contract Lines"
+                    size="small">
+                </lightning-spinner>
+            </template>
+
+            <template lwc:if={statusMessage}>
+                <div class="slds-p-horizontal_medium slds-p-bottom_small">
+                    <div class="slds-box slds-box_x-small slds-theme_shade slds-media slds-media_center">
+                        <div class="slds-media__figure">
+                            <lightning-icon
+                                icon-name="utility:info"
+                                size="x-small"
+                                alternative-text="Information">
+                            </lightning-icon>
+                        </div>
+                        <div class="slds-media__body">{statusMessage}</div>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={hasLines}>
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <lightning-datatable
+                        key-field="rowId"
+                        data={lines}
+                        columns={columns}
+                        draft-values={draftValues}
+                        errors={errors}
+                        onsave={handleSave}
+                        oncancel={handleCancelEdit}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                </div>
+            </template>
+            <template lwc:elseif={showEmptyState}>
+                <div class="slds-p-around_medium slds-text-align_center">
+                    No Contract Lines are available.
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

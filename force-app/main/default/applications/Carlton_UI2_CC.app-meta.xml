@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Carlton UI2: copy of the Carlton Account Entity page with a Forecasting tab.</comment>
+        <content>Account_Entity_Forecasting_Page_CC</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Carlton UI2: Lead pilot record page (stage bar, Next Step, Convert).</comment>
+        <content>Lead_Pilot_Record_Page_CC</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Carlton UI2: Win and Set Monthly Forecast, with the qualification questions from the layout.</comment>
+        <content>Opportunity_UI2_Record_Page_CC</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Carlton UI2: org Order page plus Sales Agreement links and Order Products for release Orders.</comment>
+        <content>Order_UI2_Record_Page_CC</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Order</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Carlton UI2: agreement plan, forecast, actuals, term extension and PO entry.</comment>
+        <content>Sales_Agreement_UI2_Record_Page_CC</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>SalesAgreement</pageOrSobjectType>
+    </actionOverrides>
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <logo>carltonLogo</logo>
+        <logoVersion>1</logoVersion>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>Combined UI2 (sandbox): Lead to conversion, Opportunity win and plan, Sales Agreement and Orders. Replaces Lead UI Pilot and Opportunity UI2. Visible through Lead_UI_Rework_User_CC and Opportunity_UI2_Forecasting_CC.</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
+    <label>Carlton UI2</label>
+    <navType>Standard</navType>
+    <tabs>standard-home</tabs>
+    <tabs>standard-Lead</tabs>
+    <tabs>New_Lead_Wizard_CC</tabs>
+    <tabs>standard-Account</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-Opportunity</tabs>
+    <tabs>standard-SalesAgreement</tabs>
+    <tabs>standard-Order</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>Carlton_Sales_UtilityBar</utilityBar>
+</CustomApplication>

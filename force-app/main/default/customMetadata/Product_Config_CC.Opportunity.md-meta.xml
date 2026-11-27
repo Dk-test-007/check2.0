@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Opportunity</label>
+    <protected>false</protected>
+    <values>
+        <field>Header_Icon_CC__c</field>
+        <value xsi:type="xsd:string">standard:product</value>
+    </values>
+    <values>
+        <field>Header_Label_CC__c</field>
+        <value xsi:type="xsd:string">Opportunity Products</value>
+    </values>
+    <values>
+        <field>Landing_Cost_Field_API_Name_CC__c</field>
+        <value xsi:type="xsd:string">Estimated_Landing_Price_CC__c</value>
+    </values>
+    <values>
+        <field>Line_Item_Object_API_Name_CC__c</field>
+        <value xsi:type="xsd:string">OpportunityLineItem</value>
+    </values>
+    <values>
+        <field>Parent_Account_Field_API_Name_CC__c</field>
+        <value xsi:type="xsd:string">AccountId</value>
+    </values>
+    <values>
+        <field>Parent_Lookup_Field_API_Name_CC__c</field>
+        <value xsi:type="xsd:string">OpportunityId</value>
+    </values>
+    <values>
+        <field>Parent_Object_API_Name_CC__c</field>
+        <value xsi:type="xsd:string">Opportunity</value>
+    </values>
+    <values>
+        <field>Parent_Pricebook_Field_API_Name_CC__c</field>
+        <value xsi:type="xsd:string">Pricebook2Id</value>
+    </values>
+    <values>
+        <field>Pricebook_Entity_Field_API_Name_CC__c</field>
+        <value xsi:type="xsd:string">Entity__c</value>
+    </values>
+    <values>
+        <field>Relationship_API_Name_CC__c</field>
+        <value xsi:type="xsd:string">OpportunityLineItems</value>
+    </values>
+    <values>
+        <field>Show_Sites_Warehouses_Selection_CC__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

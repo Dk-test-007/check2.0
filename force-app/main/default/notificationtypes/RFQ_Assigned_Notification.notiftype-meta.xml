@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomNotificationType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customNotifTypeName>RFQ_Assigned_Notification</customNotifTypeName>
+    <description>Used to send notification to Sales User when the RFQ is moved to &quot;Awaiting Information&quot; status</description>
+    <desktop>true</desktop>
+    <masterLabel>RFQ_Assigned_Notification</masterLabel>
+    <mobile>true</mobile>
+    <slack>false</slack>
+</CustomNotificationType>

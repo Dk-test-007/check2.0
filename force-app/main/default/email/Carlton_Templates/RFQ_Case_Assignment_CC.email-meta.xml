@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>RFQ - Case Assignment CC</name>
+    <style>none</style>
+    <subject>New RFQ Assigned: {!Case.CaseNumber}</subject>
+    <textOnly>Hi Team,
+
+A new RFQ / New Product Request has been assigned to the CPT team.
+
+Key Details:
+
+RFQ Number: {!Case.CaseNumber}
+Opportunity: {!Case.Opportunity__c}
+Customer: {!Case.Account}
+Requested Product: {!Case.Description}
+Submitted By: {!Case.CreatedBy}
+
+Please review the RFQ in Salesforce and claim ownership for starting the investigation process.
+
+{!Case.CaseNumber}
+
+Thank you,
+Carlton Packaging CRM</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

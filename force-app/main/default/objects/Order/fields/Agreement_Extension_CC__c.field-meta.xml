@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Agreement_Extension_CC__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Sales Agreement this Order counts towards when it is dated after the agreement&apos;s native EndDate. The platform refuses Order.SalesAgreementId outside StartDate-EndDate (FIELD_INTEGRITY_EXCEPTION, grace days do not help), so extension-month releases carry this link instead. Exactly one of SalesAgreementId and this field is set on a release.</description>
+    <inlineHelpText>Set when the Order is dated after the agreement&apos;s native end; it counts in the agreement&apos;s extension actuals.</inlineHelpText>
+    <label>Sales Agreement (Extension)</label>
+    <referenceTo>SalesAgreement</referenceTo>
+    <relationshipLabel>Extension Orders</relationshipLabel>
+    <relationshipName>Extension_Orders</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

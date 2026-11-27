@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Overwrite_Existing_CC__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>When checked, the value replaces anything ZoomInfo already sent. When unchecked, the field is only filled if it is blank.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>When checked, the value replaces anything ZoomInfo already sent. When unchecked, the field is only filled if it is blank.</inlineHelpText>
+    <label>Overwrite Existing CC</label>
+    <type>Checkbox</type>
+</CustomField>

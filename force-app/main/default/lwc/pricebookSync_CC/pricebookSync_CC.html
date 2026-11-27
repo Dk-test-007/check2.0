@@ -1,0 +1,186 @@
+<template>
+    <lightning-quick-action-panel header={panelTitle}>
+        <div class="content-wrapper">
+            <template lwc:if={isCreatePricebookOpen}>
+                <div class="create-screen-heading">
+                    <div class="create-modal-title">
+                        <lightning-icon icon-name="standard:pricebook" size="medium"></lightning-icon>
+                        <div>
+                            <h2 class="slds-text-heading_medium">Create Entity Pricebook</h2>
+                            <p class="create-modal-subtitle">Create a pricebook for this Quote's Entity.</p>
+                        </div>
+                    </div>
+                </div>
+                        <div class="create-pricebook-content">
+                            <template lwc:if={isPricebookLayoutLoading}>
+                                <div class="loading-state">Loading Pricebook fields...</div>
+                            </template>
+                            <template lwc:elseif={hasPricebookLayoutError}>
+                                <div class="error-state">
+                                    <lightning-icon icon-name="utility:error" size="small" alternative-text="Error"></lightning-icon>
+                                    <span>{pricebookLayoutError}</span>
+                                </div>
+                            </template>
+                            <template lwc:else>
+                                <lightning-record-edit-form object-api-name="Pricebook2"
+                                    onsubmit={handlePricebookSubmit} onsuccess={handlePricebookCreated}
+                                    oncancel={handleCancelCreatePricebook}>
+                                    <lightning-messages></lightning-messages>
+                                    <template for:each={pricebookLayoutSections} for:item="section">
+                                        <div key={section.key} class="layout-section">
+                                            <template lwc:if={section.heading}>
+                                                <h3 class="layout-section-heading">{section.heading}</h3>
+                                            </template>
+                                            <template for:each={section.rows} for:item="row">
+                                                <lightning-layout key={row.key} multiple-rows>
+                                                    <template for:each={row.items} for:item="item">
+                                                        <lightning-layout-item key={item.key} size="6" padding="horizontal-small">
+                                                            <template for:each={item.fields} for:item="field">
+                                                                <lightning-input-field key={field.apiName}
+                                                                    field-name={field.apiName} value={field.value}>
+                                                                </lightning-input-field>
+                                                            </template>
+                                                        </lightning-layout-item>
+                                                    </template>
+                                                </lightning-layout>
+                                            </template>
+                                        </div>
+                                    </template>
+                                    <div class="create-form-actions">
+                                        <lightning-button label="Cancel" onclick={handleCancelCreatePricebook}></lightning-button>
+                                        <lightning-button type="submit" label="Save" variant="brand" class="footer-button"></lightning-button>
+                                    </div>
+                                </lightning-record-edit-form>
+                            </template>
+                        </div>
+            </template>
+            <template lwc:else>
+
+                <div lwc:if={isBusy} class="loading-overlay">
+                    <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+                </div>
+
+                <lightning-progress-indicator current-step={currentStep} type="base" variant="base" class="step-indicator">
+                    <lightning-progress-step label="Entity Pricebook" value="1"></lightning-progress-step>
+                    <lightning-progress-step label="Review changes" value="2"></lightning-progress-step>
+                </lightning-progress-indicator>
+
+                <template lwc:if={isReview}>
+                    <div class="screen-heading">
+                        <h2 class="screen-title">Review pricebook changes</h2>
+                        <p class="screen-description">Review the proposed changes for <lightning-formatted-url value={pricebookUrl} label={selectedPricebook.Name} target="_blank"></lightning-formatted-url> pricebook. Select the entries you want to create or update. Unselected entries will be left unchanged.</p>
+                    </div>
+
+                    <template lwc:if={noQuoteLines}>
+                        <div class="empty-state">
+                            <lightning-icon icon-name="utility:info" size="large" alternative-text="Information"></lightning-icon>
+                            <h3>No quote line items found</h3>
+                            <p>Add products to this Quote before updating its pricebook.</p>
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <div class="summary-grid">
+                            <div class="summary-card create-summary">
+                                <span class="summary-count">{createCount}</span>
+                                <span class="summary-label">To be created</span>
+                                <span class="summary-selected">{selectedCreateCount} selected</span>
+                            </div>
+                            <div class="summary-card update-summary">
+                                <span class="summary-count">{updateCount}</span>
+                                <span class="summary-label">To be updated</span>
+                                <span class="summary-selected">{selectedUpdateCount} selected</span>
+                            </div>
+                            <div class="summary-card unchanged-summary">
+                                <span class="summary-count">{noChangeCount}</span>
+                                <span class="summary-label">No change</span>
+                            </div>
+                        </div>
+
+                        <div class="review-message">
+                            <template lwc:if={hasChanges}>
+                                <lightning-icon icon-name="utility:info" size="x-small" alternative-text="Information"></lightning-icon>
+                                <span>{reviewChangesMessage} Only selected rows will be saved.</span>
+                            </template>
+                            <template lwc:else>
+                                <lightning-icon icon-name="utility:success" size="x-small" alternative-text="Success"></lightning-icon>
+                                <span>Everything is already in sync. No pricebook changes are required.</span>
+                            </template>
+                        </div>
+
+                        <lightning-accordion allow-multiple-sections-open active-section-name={openSections} class="review-accordion">
+                            <template for:each={sections} for:item="section">
+                                <lightning-accordion-section key={section.name} name={section.name} label={section.label}>
+                                    <div class={section.className}>
+                                        <p class="section-description">{section.description}</p>
+                                        <template lwc:if={section.rows.length}>
+                                            <template lwc:if={section.isCreate}>
+                                                <lightning-datatable key-field="key" data={section.rows}
+                                                    columns={section.columns} selected-rows={selectedCreateKeys}
+                                                    onrowselection={handleCreateSelection}>
+                                                </lightning-datatable>
+                                            </template>
+                                            <template lwc:elseif={section.isUpdate}>
+                                                <lightning-datatable key-field="key" data={section.rows}
+                                                    columns={section.columns} selected-rows={selectedUpdateKeys}
+                                                    onrowselection={handleUpdateSelection}>
+                                                </lightning-datatable>
+                                            </template>
+                                            <template lwc:else>
+                                                <lightning-datatable key-field="key" data={section.rows}
+                                                    columns={section.columns} hide-checkbox-column>
+                                                </lightning-datatable>
+                                            </template>
+                                        </template>
+                                        <template lwc:else>
+                                            <div class="section-empty">No entries in this category.</div>
+                                        </template>
+                                    </div>
+                                </lightning-accordion-section>
+                            </template>
+                        </lightning-accordion>
+                    </template>
+                </template>
+
+                <template lwc:else>
+                    <div class="screen-heading">
+                        <h2 class="screen-title">Create an Entity Pricebook</h2>
+                        <p class="screen-description">There is no active pricebook associated with this Entity yet. Create an Entity Pricebook to continue.</p>
+                    </div>
+
+                    <template lwc:if={hasPricebookError}>
+                        <div class="error-state">
+                            <lightning-icon icon-name="utility:error" size="small" alternative-text="Error"></lightning-icon>
+                            <span>{pricebookErrorMessage}</span>
+                        </div>
+                    </template>
+                    <template lwc:elseif={isPricebooksLoading}>
+                        <div class="loading-state">Checking for an active Entity Pricebook...</div>
+                    </template>
+                    <template lwc:elseif={noPricebook}>
+                        <div class="empty-state">
+                            <lightning-icon icon-name="standard:pricebook" size="large" alternative-text="Pricebooks"></lightning-icon>
+                            <h3>No active Entity Pricebook found</h3>
+                            <p>There isn't an active pricebook linked to this Entity yet. Create one to review and sync the Quote's product prices.</p>
+                            <lightning-button class="create-pricebook-button" label="Create Entity Pricebook"
+                                variant="brand" onclick={handleCreatePricebook}>
+                            </lightning-button>
+                        </div>
+                    </template>
+                </template>
+            </template>
+        </div>
+        <template lwc:if={isCreatePricebookOpen}>
+            <!-- The create form contains its own Cancel and Save buttons. -->
+        </template>
+        <template lwc:else>
+            <div slot="footer" class="modal-footer">
+                <lightning-button label="Cancel" onclick={close}></lightning-button>
+                <template lwc:if={isReview}>
+                    <lightning-button variant="brand" label="Save selected changes" onclick={handleSave}
+                        disabled={saveDisabled} class="footer-button">
+                    </lightning-button>
+                </template>
+            </div>
+        </template>
+    </lightning-quick-action-panel>
+</template>

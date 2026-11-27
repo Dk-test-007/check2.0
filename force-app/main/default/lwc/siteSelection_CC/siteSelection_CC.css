@@ -1,0 +1,261 @@
+.site-selection-container {
+    padding: 0;
+}
+
+.action-option {
+    min-height: 76px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.action-option:hover {
+    background-color: #f3f3f3;
+}
+
+.datatable-container {
+    height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #c9c9c9;
+    border-radius: 0.25rem;
+}
+
+.empty-state {
+    padding: 24px;
+    text-align: center;
+    color: #706e6b;
+}
+
+.primary-table-container {
+    max-height: 350px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid #c9c9c9;
+    border-radius: 0.25rem;
+}
+
+.primary-table-container table {
+    width: 100%;
+}
+
+.primary-table-container thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #f3f3f3;
+}
+
+.radio-column {
+    width: 60px;
+}
+
+.primary-table-container td {
+    vertical-align: middle;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.75rem 1rem;
+}
+
+.footer-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.nested-modal {
+    z-index: 9101;
+}
+
+.nested-backdrop {
+    z-index: 9100;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+}
+
+@media (max-width: 600px) {
+
+    .action-option {
+        margin-bottom: 8px;
+    }
+
+    .footer-actions {
+        flex-wrap: wrap;
+    }
+}
+
+
+.action-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    color: inherit;
+    background: #ffffff;
+    border: 1px solid #c9c9c9;
+}
+
+.action-option:focus {
+    outline: 2px solid #1b96ff;
+    outline-offset: 2px;
+}
+
+.associated-sites-container {
+    display: block;
+    height: 14rem;
+    max-height: 14rem;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid #c9c9c9;
+    border-radius: 0.25rem;
+}
+
+.associated-sites-container table {
+    width: 100%;
+}
+
+.associated-sites-container thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #f3f3f3;
+}
+
+.nested-modal .slds-modal__container {
+    width: 75%;
+    max-width: 60rem;
+    min-width: 40rem;
+}
+
+.nested-modal .slds-modal__content {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 600px) {
+
+    .nested-modal .slds-modal__container {
+        width: 95%;
+        min-width: 0;
+    }
+}
+
+.order-confirmation {
+    width: 100%;
+    background: #ffffff;
+    color: #181818;
+}
+
+.order-confirmation-intro {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.order-warning-icon {
+    flex: 0 0 auto;
+    margin-top: 0.1rem;
+}
+
+.order-confirmation-copy {
+    min-width: 0;
+}
+
+.order-confirmation-heading {
+    margin: 0;
+    color: #181818;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.order-confirmation-description {
+    margin-top: 0.2rem;
+    color: #444444;
+    line-height: 1.45;
+}
+
+.order-site-comparison {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 1.25rem;
+    margin: 1.25rem 0 1rem 1.9rem;
+    padding: 1rem 0;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.order-site-value {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.order-site-label {
+    color: #646464;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.035em;
+}
+
+.order-site-value a {
+    color: #0b5cab;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+}
+
+.order-site-change-arrow {
+    flex: 0 0 auto;
+    --sds-c-icon-color-foreground-default: #706e6b;
+}
+
+.order-confirmation-impact {
+    margin-left: 1.9rem;
+}
+
+.order-confirmation-impact h4 {
+    margin: 0;
+    color: #181818;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.order-confirmation-impact p {
+    margin-top: 0.25rem;
+    color: #333333;
+    line-height: 1.5;
+}
+
+.order-confirmation-footer-text {
+    margin: 0.85rem 0 0 1.9rem;
+    color: #444444;
+    line-height: 1.45;
+}
+
+@media (max-width: 600px) {
+    .order-site-comparison {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 0.75rem;
+        margin-left: 0;
+    }
+
+    .order-site-change-arrow {
+        transform: rotate(90deg);
+    }
+
+    .order-confirmation-impact,
+    .order-confirmation-footer-text {
+        margin-left: 0;
+    }
+}

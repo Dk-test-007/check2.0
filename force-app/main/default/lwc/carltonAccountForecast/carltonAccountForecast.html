@@ -1,0 +1,174 @@
+<template>
+    <lightning-card title="Account forecast" icon-name="standard:forecasts">
+        <a class="download-anchor slds-hide" aria-hidden="true" tabindex="-1"></a>
+        <div slot="actions" class="forecast-actions">
+            <lightning-button-icon icon-name="utility:refresh" alternative-text="Refresh forecast"
+                title="Refresh forecast" onclick={refreshForecast}></lightning-button-icon>
+            <template lwc:if={showSetup}>
+                <lightning-button label={setupLabel} onclick={startForecast} disabled={saving}></lightning-button>
+            </template>
+            <template lwc:if={hasForecast}>
+                <lightning-button label="Export CSV" onclick={exportCsv}></lightning-button>
+                <a href={forecastUrl} class="slds-button slds-button_neutral">{nativeForecastLabel}</a>
+            </template>
+        </div>
+        <template lwc:if={error}>
+            <p class="slds-p-around_medium slds-text-color_error">{error}</p>
+        </template>
+        <template lwc:elseif={hasForecast}>
+            <div class="slds-box slds-m-horizontal_medium slds-m-top_small" role="status">
+                <strong>Forecast currency: {storedCurrencyCode}.</strong>
+                Source sales agreements: {sourceAgreementCurrencyDescription}.
+                Forecast processing stores the resulting values in {storedCurrencyCode}; source amounts in the details below
+                retain their own record currency.
+            </div>
+            <template lwc:if={hasStoredCurrencyMismatch}>
+                <div class="slds-box slds-m-horizontal_medium slds-m-top_small" role="status">
+                    Account Currency is {shownAccountCurrencyCode}. This forecast was generated in
+                    {storedCurrencyCode}; changing the Account Currency does not convert existing forecast records.
+                </div>
+            </template>
+            <template lwc:if={forecastFactCurrencyConsistent}>
+                <p class="slds-p-horizontal_medium slds-p-top_x-small slds-text-color_weak">
+                    Currency check: all visible forecast records are stored in {storedCurrencyCode}.
+                </p>
+            </template>
+            <template lwc:else>
+                <div class="slds-notify slds-notify_alert slds-theme_error" role="alert">
+                    Forecast records have mixed currencies. Ask an administrator to review forecast processing before editing amounts.
+                </div>
+            </template>
+            <p class="slds-p-horizontal_medium slds-p-top_small slds-p-bottom_x-small">
+                Product forecasts and indicative revenue appear together. New opportunity forecasts and existing
+                business products can both contribute. Adjustments change this forecast only; sales agreements and
+                booked order actuals stay separate. Use the standard grid for native CSV import and Mass Update.
+            </p>
+            <div class="slds-p-horizontal_medium slds-p-bottom_small forecast-toolbar">
+                <lightning-button label={monthToggleLabel} onclick={toggleMonths}></lightning-button>
+                <div class="forecast-product-filter">
+                    <span class="slds-text-body_small">Filter:</span>
+                    <lightning-combobox label="Product filter" variant="label-hidden" options={productFilterOptions}
+                        value={productFilter} onchange={handleProductFilter} disabled={editing}></lightning-combobox>
+                </div>
+                <lightning-combobox label="Existing business price-book product" variant="label-hidden"
+                    placeholder="Add existing business product" options={existingProductOptions}
+                    value={selectedExistingProduct} onchange={handleExistingProduct}></lightning-combobox>
+                <lightning-button label="Add product" onclick={handleAddExistingProduct} disabled={addProductDisabled}></lightning-button>
+                <template lwc:if={editing}>
+                    <lightning-button label="Save changes" variant="brand" onclick={save} disabled={saving}></lightning-button>
+                    <lightning-button label="Discard" onclick={discard} disabled={saving}></lightning-button>
+                </template>
+                <template lwc:else>
+                    <lightning-button label="Quick edit across months" onclick={toggleEditing}></lightning-button>
+                </template>
+            </div>
+            <template lwc:if={editing}>
+                <div class="slds-box slds-m-horizontal_medium slds-m-bottom_small">
+                    <p class="slds-text-title_bold">Mass change across months</p>
+                    <div class="mass-fields">
+                        <lightning-combobox label="Forecast lines" value={massProduct} options={massProductOptions} onchange={handleMassProduct}></lightning-combobox>
+                        <lightning-combobox label="Measure" value={massMeasure} options={massMeasureOptions} onchange={handleMassMeasure}></lightning-combobox>
+                        <lightning-combobox label="From" value={massFrom} options={monthOptions} onchange={handleMassFrom}></lightning-combobox>
+                        <lightning-combobox label="Through" value={massThrough} options={monthOptions} onchange={handleMassThrough}></lightning-combobox>
+                        <lightning-combobox label="Action" value={massAction} options={massActionOptions} onchange={handleMassAction}></lightning-combobox>
+                        <lightning-input type="number" label="Value" value={massValue} min="0" step="0.01" onchange={handleMassValue}></lightning-input>
+                    </div>
+                    <div class="forecast-toolbar slds-m-top_x-small">
+                        <lightning-input type="checkbox" label="Use percentage for increase or decrease" checked={massPercent} onchange={handleMassPercent}></lightning-input>
+                        <lightning-button label="Apply to grid" onclick={applyMassChange}></lightning-button>
+                        <span class="slds-text-body_small">Review the staged cells, then save all changes together.</span>
+                    </div>
+                </div>
+            </template>
+            <div class="forecast-scroll" role="region" aria-label="Account forecast by product and month" tabindex="0">
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer forecast-table">
+                    <thead><tr>
+                        <th scope="col" class="product-head">Product / forecast method</th>
+                        <template for:each={displayedPeriods} for:item="period">
+                            <th scope="col" key={period.key}>{period.label}</th>
+                        </template>
+                    </tr></thead>
+                    <tbody>
+                        <template for:each={gridRows} for:item="row">
+                            <tr key={row.key}>
+                                <th scope="row" class="product-head">
+                                    <strong>{row.name}</strong>
+                                    <div class="slds-text-color_weak">{row.businessType}</div>
+                                    <template lwc:if={row.isIndicative}><div class="slds-text-color_weak">Value only</div></template>
+                                    <template lwc:else><div class="slds-text-color_weak">Product quantity + value</div></template>
+                                </th>
+                                <template for:each={row.cells} for:item="cell">
+                                    <td key={cell.key} class="forecast-cell">
+                                        <template lwc:if={cell.hasFact}>
+                                            <template lwc:if={cell.isIndicative}>
+                                                <div class="cell-label">Estimated revenue</div>
+                                            </template>
+                                            <template lwc:else>
+                                                <div class="cell-label">Quantity</div>
+                                                <template lwc:if={editing}>
+                                                    <lightning-input type="number" variant="label-hidden" label={cell.quantityLabel}
+                                                        value={cell.quantity} min="0" step="1" data-fact-id={cell.factId}
+                                                        data-field="quantity" onchange={handleCellChange}></lightning-input>
+                                                </template>
+                                                <template lwc:else><div class="cell-value"><lightning-formatted-number value={cell.quantity}></lightning-formatted-number></div></template>
+                                                <div class="cell-label">Forecast revenue</div>
+                                            </template>
+                                            <template lwc:if={editing}>
+                                                <lightning-input type="number" variant="label-hidden" label={cell.revenueLabel}
+                                                    value={cell.revenue} min="0" step="0.01" data-fact-id={cell.factId}
+                                                    data-field="revenue" onchange={handleCellChange}></lightning-input>
+                                            </template>
+                                            <template lwc:else>
+                                                <div class="cell-value"><lightning-formatted-number value={cell.revenue}
+                                                    format-style="currency" currency-code={currencyCode}></lightning-formatted-number></div>
+                                            </template>
+                                            <template lwc:if={cell.hasSources}>
+                                                <details class="source-detail"><summary>Forecast sources</summary>
+                                                    <template for:each={cell.sources} for:item="source">
+                                                        <div key={source.key} class="source-line">
+                                                            <template lwc:if={source.isAgreement}>
+                                                                <a href={source.agreementUrl}>{source.agreementName}</a>
+                                                            </template>
+                                                            <template lwc:else>{source.businessType} forecast</template>
+                                                            <template lwc:if={source.scheduleUrl}> · <a href={source.scheduleUrl}>Monthly schedule</a></template>
+                                                            <template lwc:if={source.opportunityUrl}>
+                                                                · <a href={source.opportunityUrl}>Opportunity</a>
+                                                            </template>
+                                                            <br/><template lwc:if={source.isValueMode}>Value line · </template>
+                                                            <template lwc:else><lightning-formatted-number value={source.agreementQuantity}></lightning-formatted-number> units · </template>
+                                                            Source amount: <lightning-formatted-number value={source.agreementRevenue}
+                                                                format-style="currency" currency-code={source.currencyCode}></lightning-formatted-number>
+                                                        </div>
+                                                    </template>
+                                                    <template lwc:if={cell.isIndicative}></template>
+                                                    <template lwc:else><div class="slds-text-color_weak">Agreement schedule demand in this cell:
+                                                        <lightning-formatted-number value={cell.agreementQuantity}></lightning-formatted-number> units</div></template>
+                                                </details>
+                                            </template>
+                                        </template>
+                                    </td>
+                                </template>
+                            </tr>
+                        </template>
+                    </tbody>
+                    <tfoot><tr>
+                        <th scope="row" class="product-head">{totalLabel}</th>
+                        <template for:each={totalCells} for:item="cell">
+                            <td key={cell.key} class="total-cell">
+                                <div><lightning-formatted-number value={cell.quantity}></lightning-formatted-number> product units</div>
+                                <strong><lightning-formatted-number value={cell.revenue} format-style="currency"
+                                    currency-code={currencyCode}></lightning-formatted-number></strong>
+                                <div class="slds-text-color_weak">Booked actual:
+                                    <lightning-formatted-number value={cell.actualRevenue} format-style="currency"
+                                        currency-code={currencyCode}></lightning-formatted-number></div>
+                            </td>
+                        </template>
+                    </tr></tfoot>
+                </table>
+            </div>
+        </template>
+        <template lwc:else>
+            <p class="slds-p-around_medium">Start the account forecast to enter indicative monthly revenue even when there is no sales agreement or product forecast.</p>
+        </template>
+    </lightning-card>
+</template>

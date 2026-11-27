@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Shipment_Details_Missing_CC__c</fullName>
+    <description>True when the Order Product has no Location Code or no Shipment Date. Counted on the Order to block activation (Business Central sync).</description>
+    <formula>OR(
+    ISBLANK(TEXT(Location_Code_CC__c)),
+    ISBLANK(Shipment_Date_CC__c)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Shipment Details Missing</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

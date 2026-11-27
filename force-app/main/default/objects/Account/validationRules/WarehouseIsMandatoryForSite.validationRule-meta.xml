@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WarehouseIsMandatoryForSite</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISBLANK(Warehouse_CC__c),
+    $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Account.Bypass_Validation_CC__c),
+    RecordType.Name = &quot;Site&quot;,
+    Generated_From_Lead_CC__c = FALSE
+)</errorConditionFormula>
+    <errorDisplayField>Warehouse_CC__c</errorDisplayField>
+    <errorMessage>Warehouse is required for a Site</errorMessage>
+</ValidationRule>

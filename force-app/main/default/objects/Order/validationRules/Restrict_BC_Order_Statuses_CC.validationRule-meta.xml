@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_BC_Order_Statuses_CC</fullName>
+    <active>true</active>
+    <description>Released, Pending Approval and Pending Prepayment are set by Business Central through the Integration User and cannot be selected manually.</description>
+    <errorConditionFormula>AND(
+    OR(ISNEW(), ISCHANGED(Status)),
+    OR(
+        ISPICKVAL(Status, &quot;Released&quot;),
+        ISPICKVAL(Status, &quot;Pending_Approval&quot;),
+        ISPICKVAL(Status, &quot;Pending_Prepayment&quot;)
+    ),
+    TRIM($User.FirstName &amp; &quot; &quot; &amp; $User.LastName) &lt;&gt; &quot;Integration User&quot;,
+				$Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+    NOT($CustomMetadata.Trigger_Framework_Config_CC__mdt.Order.Bypass_Validation_CC__c)
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Released, Pending Approval and Pending Prepayment can only be set by Business Central.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tender_Exclusive_Pricing_CC__c</fullName>
+    <description>CP27 ten-question qualification Q10 (an Opportunity question): Tender or Exclusive, not Yes/No. Mapped from Lead.Tender_Exculsive_Pricing_CC__c. Unrestricted so legacy Lead values (Yes/No) do not block conversion.</description>
+    <inlineHelpText>Question 10: is this a tender or an exclusive-pricing opportunity?</inlineHelpText>
+    <label>Tender / Exclusive Pricing?</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Tender</fullName>
+                <default>false</default>
+                <label>Tender</label>
+            </value>
+            <value>
+                <fullName>Exclusive</fullName>
+                <default>false</default>
+                <label>Exclusive</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

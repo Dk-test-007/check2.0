@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_Name_Unknown_CC__c</fullName>
+    <description>True while Last Name still holds the reserved New Lead Wizard placeholder &quot;Needs to Identify - {Company}&quot;. Detection ignores case, leading/trailing whitespace and spacing within the prefix. &quot;Needs to Identify&quot; is reserved text: do not use it as a real surname. Used by validation rule Placeholder_Name_Conversion_Block_CC to block conversion until a real name is entered.</description>
+    <formula>BEGINS(
+    SUBSTITUTE(UPPER(TRIM(LastName)), &quot; &quot;, &quot;&quot;),
+    &quot;NEEDSTOIDENTIFY&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Ticked while the contact&apos;s real name is still unknown (Last Name begins with the reserved text &quot;Needs to Identify&quot;). Enter the real First and Last Name to clear it. The Lead cannot be converted while this is ticked.</inlineHelpText>
+    <label>Contact Name Unknown</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

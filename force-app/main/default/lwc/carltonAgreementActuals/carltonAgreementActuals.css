@@ -1,0 +1,28 @@
+.override {
+    font-weight: 700;
+    background: #fff8df;
+}
+
+.actual-total {
+    font-weight: 700;
+}
+
+.agreement-name {
+    min-width: 190px;
+    max-width: 225px;
+    white-space: normal;
+}
+
+.product-name {
+    min-width: 155px;
+    max-width: 180px;
+    white-space: normal;
+}
+
+.action-cell {
+    min-width: 132px;
+}
+
+.action-cell lightning-button {
+    display: block;
+}

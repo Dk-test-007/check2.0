@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Carlton_Value_Mode_CC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Identifies agreement schedule revenue entered as a value rather than physical product units.</description>
+    <label>Carlton Value Mode</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

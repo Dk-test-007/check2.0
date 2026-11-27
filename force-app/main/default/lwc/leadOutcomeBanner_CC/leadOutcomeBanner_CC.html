@@ -1,0 +1,26 @@
+<template>
+    <template lwc:if={show}>
+        <div class={bannerClass} role="status">
+            <span class="slds-icon_container slds-var-m-right_x-small">
+                <lightning-icon icon-name={iconName} size="x-small" variant="inverse" alternative-text={heading}></lightning-icon>
+            </span>
+            <div class="slds-text-align_left">
+                <h2 class="slds-text-heading_small">
+                    {heading}<template lwc:if={reason}>: {reason}</template>
+                </h2>
+                <p>
+                    <template lwc:if={since}>
+                        Since <lightning-formatted-date-time value={since} year="numeric" month="short" day="numeric"
+                            hour="2-digit" minute="2-digit"></lightning-formatted-date-time>.
+                    </template>
+                    <template lwc:elseif={sinceUnknown}>Date not recorded in field history.</template>
+                    <template lwc:else>Checking when this status was recorded…</template>
+                    <template lwc:if={reengagementDate}> Re-engage on {reengagementDate}.</template>
+                </p>
+                <template lwc:if={comments}>
+                    <p class="slds-text-body_small">{comments}</p>
+                </template>
+            </div>
+        </div>
+    </template>
+</template>

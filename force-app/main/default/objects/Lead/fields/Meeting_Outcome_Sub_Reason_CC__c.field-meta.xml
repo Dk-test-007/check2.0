@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Meeting_Outcome_Sub_Reason_CC__c</fullName>
+    <description>Detail behind the Meeting Outcome, entered with it on the Record Meeting Outcome card (leadMeetingOutcome_CC). Cleared together with the Meeting Outcome on Restart at Identify and Return to Engage.</description>
+    <inlineHelpText>Why the meeting ended with this outcome.</inlineHelpText>
+    <label>Meeting Outcome Sub Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>TextArea</type>
+</CustomField>

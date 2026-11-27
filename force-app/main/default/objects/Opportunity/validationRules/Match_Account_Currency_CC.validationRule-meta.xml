@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Match_Account_Currency_CC</fullName>
+    <active>false</active>
+    <description>Retired: Salesforce record currencies are independent and cross-currency Opportunities can be valid.</description>
+    <errorConditionFormula>AND(NOT(ISBLANK(AccountId)), OR(ISNEW(), ISCHANGED(AccountId), ISCHANGED(CurrencyIsoCode)), TEXT(CurrencyIsoCode) != TEXT(Account.CurrencyIsoCode))</errorConditionFormula>
+    <errorDisplayField>CurrencyIsoCode</errorDisplayField>
+    <errorMessage>Opportunity Currency must match the Account Currency. Choose the Account currency before adding products.</errorMessage>
+</ValidationRule>

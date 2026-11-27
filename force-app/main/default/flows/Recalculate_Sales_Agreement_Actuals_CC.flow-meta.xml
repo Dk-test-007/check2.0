@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Standard action: queues the native Order Actuals recalculation for one Sales Agreement. Same inputs as scripts/run-fixtures.ps1 step 4.</description>
+        <name>Refresh_Actuals</name>
+        <label>Refresh Actuals Calculation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>refreshActualsCalculation</actionName>
+        <actionType>refreshActualsCalculation</actionType>
+        <faultConnector>
+            <targetReference>Capture_Fault</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>userId</name>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesAgreementId</name>
+            <value>
+                <elementReference>salesAgreementId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>isCurrentSchedule</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>isCurrentAndFutureSchedules</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>refreshActualsCalculation</nameSegment>
+    </actionCalls>
+    <apiVersion>68.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Returns the fault to the calling Apex instead of raising an unhandled flow error.</description>
+        <name>Capture_Fault</name>
+        <label>Capture Fault</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Opportunity UI2: wraps the standard Refresh Actuals Calculation action, which Apex cannot call directly in this org. Started by name from SalesAgreementForecastService_CC.recalculateActuals (Recalculate actuals button).</description>
+    <environments>Default</environments>
+    <interviewLabel>Recalculate Sales Agreement Actuals {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Recalculate Sales Agreement Actuals CC</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <runInMode>DefaultMode</runInMode>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Refresh_Actuals</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Set when the action faults; the calling Apex reports it.</description>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>salesAgreementId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

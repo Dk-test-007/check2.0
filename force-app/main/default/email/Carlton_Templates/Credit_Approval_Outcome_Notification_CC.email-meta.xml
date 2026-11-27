@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Credit Approval Outcome Notification</name>
+    <style>none</style>
+    <subject>Credit Assessment {!Account.Credit_Risk_Status_CC__c}: {!Account.Name}</subject>
+    <textOnly>Hi {!Recipient.FirstName},  The customer credit assessment for the following Account has been completed. Key Details
+
+Account: {!Account.Name}
+Credit Status: {!Account.Credit_Status__c}
+Credit Limit: {!Account.Credit_Limit__c}
+Assessed By: Finance
+
+Please review the Account in Salesforce and continue with the next appropriate business activity. View Account in Salesforce
+
+Thank you,
+Carlton Packaging CRM</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

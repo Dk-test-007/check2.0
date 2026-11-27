@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status</fullName>
+    <inlineHelpText>Draft while being prepared.
+Activated when ready to send to Business Central.
+Cancelled if no longer needed.</inlineHelpText>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+</CustomField>

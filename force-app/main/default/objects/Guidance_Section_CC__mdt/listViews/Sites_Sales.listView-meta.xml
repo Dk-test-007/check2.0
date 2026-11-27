@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sites_Sales</fullName>
+    <columns>MasterLabel</columns>
+    <columns>DeveloperName</columns>
+    <columns>Object_Config_Developer_Name_CC__c</columns>
+    <columns>Context_Value_CC__c</columns>
+    <columns>Persona_Type_CC__c</columns>
+    <columns>Persona_Value_CC__c</columns>
+    <columns>Section_Key_CC__c</columns>
+    <columns>Section_Heading_CC__c</columns>
+    <columns>Section_Text_CC__c</columns>
+    <columns>Section_Order_CC__c</columns>
+    <columns>Display_Field_API_Names_CC__c</columns>
+    <columns>Display_Action_CC__c</columns>
+    <columns>Active_CC__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Persona_Value_CC__c</field>
+        <operation>equals</operation>
+        <value>Carlton Sales User</value>
+    </filters>
+    <filters>
+        <field>Object_Config_Developer_Name_CC__c</field>
+        <operation>equals</operation>
+        <value>ACCOUNT_SITE</value>
+    </filters>
+    <label>Sites - Sales</label>
+</ListView>

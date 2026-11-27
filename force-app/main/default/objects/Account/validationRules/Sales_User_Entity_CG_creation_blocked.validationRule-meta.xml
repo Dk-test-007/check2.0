@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_User_Entity_CG_creation_blocked</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISNEW(),
+    $Profile.Name = &apos;Carlton Sales User&apos;,
+    NOT(Generated_From_Lead_CC__c),
+    OR(
+        RecordType.DeveloperName = &apos;Entity&apos;,
+        RecordType.DeveloperName = &apos;Corporate_Group&apos;
+    )
+)</errorConditionFormula>
+    <errorMessage>Sales User Cannot create Entities or Corporate Group manually</errorMessage>
+</ValidationRule>

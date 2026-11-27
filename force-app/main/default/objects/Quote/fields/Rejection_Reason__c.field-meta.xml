@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rejection_Reason__c</fullName>
+    <label>Rejection Reason</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Price</fullName>
+                <default>false</default>
+                <label>Price</label>
+            </value>
+            <value>
+                <fullName>Lead Time or Availability</fullName>
+                <default>false</default>
+                <label>Lead Time or Availability</label>
+            </value>
+            <value>
+                <fullName>Product Specification</fullName>
+                <default>false</default>
+                <label>Product Specification</label>
+            </value>
+            <value>
+                <fullName>Delivery Cost</fullName>
+                <default>false</default>
+                <label>Delivery Cost</label>
+            </value>
+            <value>
+                <fullName>Awarded to Competitor</fullName>
+                <default>false</default>
+                <label>Awarded to Competitor</label>
+            </value>
+            <value>
+                <fullName>Requirement Withdrawn</fullName>
+                <default>false</default>
+                <label>Requirement Withdrawn</label>
+            </value>
+            <value>
+                <fullName>No Response</fullName>
+                <default>false</default>
+                <label>No Response</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
